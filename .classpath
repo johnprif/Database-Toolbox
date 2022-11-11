@@ -46,23 +46,23 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Program Files/Java/UCanAccess-5.0.0-bin/lib/commons-lang3-3.8.1.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/UCanAccess-5.0.0-bin/lib/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/hsqldb-2.6.0/hsqldb/lib/hsqldb.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/UCanAccess-5.0.0-bin/lib/jackcess-3.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/mysql-connector-java-8.0.25.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/ojdbc11-full/ojdbc11.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/ojdbc11-full/ons.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/ojdbc11-full/oraclepki.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/ojdbc11-full/orai18n.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/ojdbc11-full/osdt_cert.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/ojdbc11-full/osdt_core.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/ojdbc11-full/rsi.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/ojdbc11-full/simplefan.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/hsqldb-2.6.0/hsqldb/lib/sqltool.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/UCanAccess-5.0.1.bin/ucanaccess-5.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/ojdbc11-full/ucp.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/ojdbc11-full/xdb.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/ojdbc11-full/xmlparserv2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/commons-lang3-3.8.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/hsqldb-2.6.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/jackcess-3.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/mysql-connector-java-8.0.25.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/ojdbc11-21.7.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/ons-21.7.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/oraclepki-21.7.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/orai18n-21.7.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/osdt_cert-21.7.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/osdt_core-21.7.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/rsi-21.7.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/simplefan-21.7.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/sqltool-2.6.0-jdk11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/ucanaccess-5.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/ucp-21.7.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/xdb-21.7.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/xmlparserv2-21.7.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
