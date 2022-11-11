@@ -50,10 +50,10 @@ public class Main extends Application
 {
 	private DataBaseHandler myDB;
 	private String path;
-	private TakeThePath takeThePath;
-	private String button1Text = "Φόρτωση Βάσης Δεδομένων";
-	private String button2Text = "Άνοιγμα Παραγγελιών";
+	private TakeThePath takeThePath;	
 	private String programTitle = "SAITEC";
+	private String button1Text = "Ξ¦ΟΟΟ„Ο‰ΟƒΞ· Ξ’Ξ¬ΟƒΞ·Ο‚ Ξ”ΞµΞ΄ΞΏΞΌΞ­Ξ½Ο‰Ξ½";
+	private String button2Text = "Ξ†Ξ½ΞΏΞΉΞ³ΞΌΞ± Ο€Ξ±ΟΞ±Ξ³Ξ³ΞµΞ»ΞΉΟΞ½";	
 	private Stage pendingStage;
 	
 	@Override
@@ -71,7 +71,7 @@ public class Main extends Application
 			//Creating Buttons     
 		    Button button1 = new Button(button1Text);
 		    Button button2 = new Button(button2Text);
-		    Button button3 = new Button("Έξοδος");
+		    Button button3 = new Button("ΞΞΎΞΏΞ΄ΞΏΟ‚");
 		    
 		    
 		    button1.setMaxWidth(Double.MAX_VALUE);
@@ -184,8 +184,8 @@ public class Main extends Application
 	{
 		Alert alert = new Alert(Alert.AlertType.ERROR);
     	alert.setTitle("Error");
-    	alert.setHeaderText("Ανοιχτή βάση δεδομένων!");
-    	alert.setContentText("Παρακαλώ κλείστε την βάση δεδομένων ή το πρόγραμμα το οποίο χρησιμοποιεί την βάση δεδομένων ώστε να μην προκύψει κα΄ποιο πρόβλημα πρωτού συνεχίσετε'");
+    	alert.setHeaderText("οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½!");
+    	alert.setContentText("οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½ οΏ½ οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½ οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½'");
     	alert.showAndWait();
 	}
 	

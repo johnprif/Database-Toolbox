@@ -90,9 +90,9 @@ public class DataBaseHandler
 	private void readOnlyWindow()
 	{
 		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("������ ���������");
-		alert.setHeaderText("� ���� �������� ���������� ��� �����: ########");
-		alert.setContentText("�� ������ �� ������� ������ ��� ���������� ���� �� �������� �� ������ ������������� ���� ����");
+		alert.setTitle("Σφάλμα ανάγνωσης");
+		alert.setHeaderText("Η βάση περιέχει καταχώρηση που περιέχει πολλαπλές #");
+		alert.setContentText("Θα πρέπει να σβήσετε εκείνη την καταχώρηση στον πίνακα BatchData ώστε να μπορείτε να κάνετε τροποποιήσεις στην βάση");
 
 		alert.showAndWait();
 		
