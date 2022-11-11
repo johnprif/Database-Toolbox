@@ -93,8 +93,8 @@ public class Button3Handler  implements EventHandler<ActionEvent>
 	{
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
-		alert.setHeaderText("����� ������!");
-		alert.setContentText("��� ���� ��������� � ������������ ����� ���������� ���� �� ����� ��������");
+		alert.setHeaderText("Καμία αλλαγή!");
+		alert.setContentText("Δεν έχει επιλεχθεί ή τροποποιηθεί καμία παραγγελία ώστε να γίνει η εκτέλεση");
 
 		alert.showAndWait();
 	}

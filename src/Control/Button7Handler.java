@@ -40,8 +40,8 @@ public class Button7Handler implements EventHandler<ActionEvent>
 	{
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation Dialog");
-		alert.setHeaderText("����� ��������!");
-		alert.setContentText("����� �������� ��� ���������� �� ���������� ��� �� �������� ��� ���������� ���� ����?\n������ 'OK' ��� ��������\n������ 'Cancel' ��� �������");
+		alert.setHeaderText("Ολική Διαγραφή");
+		alert.setContentText("Είστε σίγουρος ότι επιθυμείτε να διαγράψετε όλα τα δεδομένα που βρίσκονται στην βάση; \nΠιέστε 'ΟΚ' για να συνέχεια \nΠιέστε 'Cancel' για ακύρωση");
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK)
