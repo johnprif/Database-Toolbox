@@ -46,7 +46,7 @@ public class TakeThePath implements EventHandler<ActionEvent>
 		FileChooser fileChooser = new FileChooser();
         stage.setWidth(800);
         stage.setHeight(800);
-		fileChooser.setTitle("Επίλεξε το αρχείο που περιέχει την βάση δεδομένων");
+		fileChooser.setTitle("Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ο„ΞΏ Ξ±ΟΟ‡ΞµΞ―ΞΏ Ο€ΞΏΟ… Ο€ΞµΟΞΉΞ­Ο‡ΞµΞΉ Ο„Ξ·Ξ½ Ξ²Ξ¬ΟƒΞ· Ξ΄ΞµΞ΄ΞΏΞΌΞ­Ξ½Ο‰Ξ½");
 		fileChooser.getExtensionFilters().addAll(
 			     new FileChooser.ExtensionFilter("Microsoft Access Data Base 2000-2007 Files", "*.mdb")
 			    ,new FileChooser.ExtensionFilter("Microsoft Access Data Base 2008-2021 Files", "*.accdb")
@@ -138,8 +138,8 @@ public class TakeThePath implements EventHandler<ActionEvent>
 	{
 		Alert alert = new Alert(Alert.AlertType.WARNING);
     	alert.setTitle("Warning");
-    	alert.setHeaderText("Δεν υπάρχει καταχωρημέρνη βάση δεδομένων");
-    	alert.setContentText("Επιλέξτε κάποια βάση δεδομένων πριν προχωρήσετε διότι δεν θα μπορείτε να συνεχίσετε");
+    	alert.setHeaderText("Ξ”ΞµΞ½ Ο…Ο€Ξ¬ΟΟ‡ΞµΞΉ ΞΊΞ±Ο„Ξ±Ο‡Ο‰ΟΞ·ΞΌΞ­Ξ½Ξ· Ξ²Ξ¬ΟƒΞ· Ξ΄ΞµΞ΄ΞΏΞΌΞ­Ξ½Ο‰Ξ½");
+    	alert.setContentText("Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ ΞΊΞ¬Ο€ΞΏΞΉΞ± Ξ²Ξ¬ΟƒΞ· Ξ΄ΞµΞ΄ΞΏΞΌΞ­Ξ½Ο‰Ξ½ Ο€ΟΞΉΞ½ Ο€ΟΞΏΟ‡Ο‰ΟΞ®ΟƒΞµΟ„Ξµ Ξ΄ΞΉΟΟ„ΞΉ Ξ΄ΞµΞ½ ΞΈΞ± ΞΌΟ€ΞΏΟΞµΞ―Ο„Ξµ Ξ½Ξ± ΟƒΟ…Ξ½ΞµΟ‡Ξ―ΟƒΞµΟ„Ξµ");
     	alert.showAndWait();
 	}
 	
