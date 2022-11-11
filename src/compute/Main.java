@@ -184,8 +184,8 @@ public class Main extends Application
 	{
 		Alert alert = new Alert(Alert.AlertType.ERROR);
     	alert.setTitle("Error");
-    	alert.setHeaderText("������� ���� ���������!");
-    	alert.setContentText("�������� ������� ��� ���� ��������� � �� ��������� �� ����� ������������ ��� ���� ��������� ���� �� ��� �������� ������ �������� ������ ����������'");
+    	alert.setHeaderText("Ανοιχτή βάση δεδομένων");
+    	alert.setContentText("Παρακαλώ κλείστε την βάση δεδομένων ή το πρόγραμμα το οποίο χρησιμοποιεί την συγκεκριμένη βάση δεδομενών ώστε να μην προκύψει κάποιο πρόβλημα πρωτού συνεχίσετε");
     	alert.showAndWait();
 	}
 	
