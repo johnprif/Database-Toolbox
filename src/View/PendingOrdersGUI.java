@@ -337,7 +337,7 @@ public class PendingOrdersGUI
     	ExecutionTime.setCellValueFactory(new PropertyValueFactory<Order, String>("ExecutionTime"));
     	ExecutionTime.setEditable(false);
     	
-    	Moistures = new TableColumn<Order, String>("Υγρασίες");
+    	Moistures = new TableColumn<Order, String>("ΥΓΡΑΣΙΕΣ");
     	Moistures.setCellFactory(TextFieldTableCell.forTableColumn());
     	Moistures.setCellValueFactory(new PropertyValueFactory<Order, String>("Moistures"));
     	Moistures.setEditable(false);

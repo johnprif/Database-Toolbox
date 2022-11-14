@@ -77,10 +77,9 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	private void completeWindow()
 	{
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("�������� ���������");
+		alert.setTitle("Επιτυχής Εκτέλεση!");
 		alert.setHeaderText(null);
-		//alert.setContentText("������������ �������� "+changes3.size()+" �����������");
-		alert.setContentText("����������� �������� 1 ����������");
+		alert.setContentText("Ενημερώθηκε επιτυχώς 1 παραγγελία");
 
 		alert.showAndWait();
 	}
@@ -99,8 +98,8 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	{
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation Dialog");
-		alert.setHeaderText("���� ����������!");
-		alert.setContentText("� '���������� ���������' ����� ����!\n������ �� ������� '��' ��� �� ������������ �������� �� ��� ������ ����������\n������ �� ������� �cancel ��� �������");
+		alert.setHeaderText("Κενή Ημερομηνία!");
+		alert.setContentText("Η 'Ημερομηνία Εκτέλεσης' είναι κενή!\nΠατήστε το 'ΟΚ' για να συμπληρωθούς αυτόματα με την τωρινή ημερομηνία\nΠατήστε το 'Cancel' για ακύρωση");
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK)
@@ -126,16 +125,6 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 			{
 				
 			}
-			
-//			order.setExecutionDate(tempDate[0]+tempDate[1]+tempDate[2]);
-//			order.setExecutionTime(tempTime[0]+tempTime[1]+tempTime[2]);
-//			myDB.updateDataBase(order);
-////			table.getItems().remove(order);  
-//			table.getItems().set(table.getSelectionModel().getSelectedIndex(), order);
-//			changes3.put(order.getOrderCode(), order);
-//			completeWindow();
-//			table.getItems().remove(order); 
-//			changes3.clear();
  		    // ... user chose OK
 		} else {
 		    // ... user chose CANCEL or closed the dialog
