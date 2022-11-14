@@ -6,14 +6,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
-
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class TakeThePath implements EventHandler<ActionEvent>
@@ -24,20 +21,29 @@ public class TakeThePath implements EventHandler<ActionEvent>
 	private DataBaseHandler myDB;
 	private Stage mainStage;
 	
-	public TakeThePath(Button button)
+	
+	//create an object of SingleObject
+	private static TakeThePath instance = new TakeThePath();
+
+	   //make the constructor private so that this class cannot be
+	   //instantiated
+	private TakeThePath()
 	{
-		this.button = button;
+		myDB.getInstance();
+	}
+
+	   //Get the only object available
+	public static TakeThePath getInstance()
+	{
+	      return instance;
 	}
 	
-	public TakeThePath()
-	{
-		
-	}
+
 	
-	public TakeThePath(DataBaseHandler myDB)
-	{
-		this.myDB = myDB;
-	}
+//	public TakeThePath(Button button)
+//	{
+//		this.button = button;
+//	}
 	
 	@Override
 	public void handle(ActionEvent arg0)

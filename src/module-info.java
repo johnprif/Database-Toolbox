@@ -1,4 +1,4 @@
-module compute {
+module Saitec {
 	exports View;
 
 	requires java.sql;

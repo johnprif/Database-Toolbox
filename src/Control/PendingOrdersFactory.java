@@ -7,11 +7,7 @@ import View.PendingOrdersGUI;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 
 public class PendingOrdersFactory implements EventHandler<ActionEvent>
 {
@@ -22,7 +18,7 @@ public class PendingOrdersFactory implements EventHandler<ActionEvent>
 	
 	public PendingOrdersFactory()
 	{
-		takeThePath = new TakeThePath();
+		takeThePath = TakeThePath.getInstance();
 	}
 
 	public void setDB(DataBaseHandler myDB)

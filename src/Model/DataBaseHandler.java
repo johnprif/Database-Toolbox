@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.nio.charset.StandardCharsets;
@@ -38,15 +37,30 @@ public class DataBaseHandler
 	private String DateLastEdit;
 	private String ExecutionTime;
 	double doubleQuantity=0;
-	private String path;
-	
+	private String path;	
 	private ArrayList<String> SiloID = new ArrayList<String>();
 	private ArrayList<String> SiloQuantity = new ArrayList<String>();
 	private ArrayList<String> SiloQuantityCopy = new ArrayList<String>();
 	
-	public DataBaseHandler()
+	//create an object of SingleObject
+	private static DataBaseHandler instance = new DataBaseHandler();
+	
+	//make the constructor private so that this class cannot be
+	//instantiated
+	private DataBaseHandler()
 	{
 		data = FXCollections.observableArrayList();	
+	}
+	
+//	public DataBaseHandler()
+//	{
+//		data = FXCollections.observableArrayList();	
+//	}
+	
+	//Get the only object available
+	public static DataBaseHandler getInstance()
+	{
+	      return instance;
 	}
 	
 	public void setPath(String path)

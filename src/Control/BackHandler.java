@@ -2,7 +2,6 @@ package Control;
 
 import java.util.HashMap;
 import java.util.Optional;
-
 import Model.Order;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,7 +10,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
-public class BackHandler   implements EventHandler<ActionEvent>
+public class BackHandler implements EventHandler<ActionEvent>
 {
 	private Stage stage;
 	private HashMap<String, Order> changes3;

@@ -1,51 +1,20 @@
 package View;
 	
 import javafx.stage.WindowEvent;
-
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Scanner;
-
 import Control.PendingOrdersFactory;
 import Model.DataBaseHandler;
 import Model.TakeThePath;
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.WindowEvent;
-
-import java.sql.SQLException;
-
-import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.geometry.Pos;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.event.ActionEvent;
 
@@ -62,8 +31,8 @@ public class Main extends Application
 	@Override
 	public void start(Stage primaryStage) 
 	{
-		myDB = new DataBaseHandler();
-		takeThePath = new TakeThePath(myDB);
+		myDB = DataBaseHandler.getInstance();
+		takeThePath = TakeThePath.getInstance();
 		takeThePath.checkPathFile();
 		checkIfAlreadyOpen(takeThePath.getPath());
 //		path = takeThePath.getPath();

@@ -5,13 +5,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap; // import the HashMap class
 import java.util.Optional;
-
 import Model.DataBaseHandler;
 import Model.Order;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
