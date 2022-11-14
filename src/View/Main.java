@@ -22,8 +22,9 @@ public class Main extends Application
 {
 	private DataBaseHandler myDB;
 	private String path;
-	private TakeThePath takeThePath;	
-	private String programTitle = "SAITEC";
+	private TakeThePath takeThePath;
+	private String version = "-v3.0-";
+	private String programTitle = "SAITEC"+version;
 	
 	private Button openOrdersButton;
 	private Button loadDBButton;
