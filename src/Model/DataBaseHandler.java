@@ -74,34 +74,38 @@ public class DataBaseHandler
 
 	}
 	
+	
+	//PROBLEM! IT NO TAKES ALL THE # PROPERLY
+	//TODO FIX
 	public void checkHashes()
 	{
+		int i=0;
 		try {
 			Statement statement1 = connection.createStatement();
-			statement1.executeUpdate("SELECT FROM BatchData WHERE OrderCode='# %'");
-			
+			statement1.executeQuery("SELECT * FROM BatchData WHERE OrderCode LIKE'#%'");
+			i++;
 			Statement statement2 = connection.createStatement();
-			statement2.executeUpdate("SELECT FROM BatchIngredients WHERE OrderCode='# %'");
-			
+			statement2.executeQuery("SELECT * FROM BatchIngredients WHERE OrderCode LIKE '#%'");
+			i++;
 			Statement statement3 = connection.createStatement();
-			statement3.executeUpdate("SELECT FROM OrderIngredients WHERE OrderCode='# %'");
-			
+			statement3.executeQuery("SELECT * FROM OrderIngredients WHERE OrderCode LIKE '#%'");
+			i++;
 			Statement statement4 = connection.createStatement();
-			statement4.executeUpdate("SELECT FROM Orders WHERE OrderCode='# %'");
-			
+			statement4.executeQuery("SELECT * FROM Orders WHERE OrderCode LIKE '#%'");
+
 			connection.commit();
 			System.out.println("It has not hashes - ok");
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			readOnlyWindow(e.getMessage());
+			readOnlyWindow(e.getMessage(), i);
 		}
 	}
 
-	private void readOnlyWindow(String message)
+	private void readOnlyWindow(String message, int i)
 	{
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle(message);
-		alert.setHeaderText("Η βάση περιέχει καταχωρήσεις που περιέχουν πολλαπλές #");
+		alert.setHeaderText("Η βάση περιέχει καταχωρήσεις που περιέχουν πολλαπλές #\n"+i);
 		alert.setContentText("Θα πρέπει να σβήσετε εκείνες τις καταχωρήσεις σε κάποιους απο τους παρακάτω πίνακα ώστε να μπορείτε να κάνετε τροποποιήσεις στην βάση\n- BatchData\n- BatchIngredients\n- OrderIngredients\n- Orders");
 
 		alert.showAndWait();
@@ -583,8 +587,8 @@ public class DataBaseHandler
 	{
 		Alert alert = new Alert(Alert.AlertType.ERROR);
     	alert.setTitle("Error in connection");
-    	alert.setHeaderText("�������� �� ��� ���� ���������");
-    	alert.setContentText("������� �� �������� �� ����������� �������� � �� ���� ���������");
+    	alert.setHeaderText("Πρόβλημα με την βάση δεδομένων!");
+    	alert.setContentText("Πιθανόν να έχει διαγραφή ή να έχει μετακινηθεί σε άλλο κατάλογο");
     	alert.showAndWait();
 	}
 }
