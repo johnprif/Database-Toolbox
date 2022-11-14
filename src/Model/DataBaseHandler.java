@@ -146,6 +146,7 @@ public class DataBaseHandler
 
 		}catch(Exception e)
 		{
+			System.out.println(e.getMessage());
 			System.out.println("Error in searching");
 		}
 	}

@@ -94,10 +94,10 @@ public class PendingOrdersGUI
     private Stage shippingStage;
     private Label tempLabel_1 = new Label("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     
-	public PendingOrdersGUI(DataBaseHandler myDB, Stage stage)
+	public PendingOrdersGUI(Stage stage)
 	{
 		changes3 = new HashMap<String, Order>();
-		this.myDB = myDB;
+		this.myDB = DataBaseHandler.getInstance();
 //		myDB.initialize();
 		dateStage = new Stage();
 		shippingStage = new Stage();

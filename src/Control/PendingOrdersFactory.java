@@ -38,7 +38,7 @@ public class PendingOrdersFactory implements EventHandler<ActionEvent>
 		myDB.clearOldData();
 		myDB.setPath(takeThePath.getPath());
 		myDB.initialize();
-		PendingOrdersGUI pendingOrdersGUI = new PendingOrdersGUI(myDB, stage);
+		PendingOrdersGUI pendingOrdersGUI = new PendingOrdersGUI(stage);
 		pendingOrdersGUI.initialize();
 	}
 	
