@@ -69,7 +69,7 @@ public class PendingOrdersGUI
 	private Stage stage;	
     private TableView<Order> table;
     private Button changeTimeCreationButton;
-	private Button button2;
+	private Button changeTimeExecutionButton;
 	private Button executeButton;
 	private Button backButton;
 	private Button changeShippingNumberButton;
@@ -111,7 +111,7 @@ public class PendingOrdersGUI
 		createButtons();
 		
 		changeTimeCreationHandler = new ChangeTimeCreationHandler(changeTimeCreationButton, dateStage);
-		button2Handler = new ChangeTimeCreationHandler(button2, dateStage);
+		button2Handler = new ChangeTimeCreationHandler(changeTimeExecutionButton, dateStage);
 		executeHandler = new ExecuteHandler(myDB);
 		backHandler = new BackHandler(stage);
 		changeShippingNumberHandler = new ChangeShippingNumberHandler(myDB, shippingStage);
@@ -126,7 +126,7 @@ public class PendingOrdersGUI
 		BorderPane border = new BorderPane();
 		
 		changeTimeCreationButton.setOnAction(changeTimeCreationHandler);
-	    button2.setOnAction(button2Handler);
+	    changeTimeExecutionButton.setOnAction(button2Handler);
 	    executeButton.setOnAction(executeHandler);
 	    backButton.setOnAction(backHandler);
 	    changeShippingNumberButton.setOnAction(changeShippingNumberHandler);
@@ -151,7 +151,7 @@ public class PendingOrdersGUI
         
         
         
-        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, button2, changeShippingNumberButton, executeButton, backButton, tempLabel_1,  emptyBaseButton);
+        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, changeTimeExecutionButton, changeShippingNumberButton, executeButton, backButton, tempLabel_1,  emptyBaseButton);
 
         border.setStyle("-fx-background-color: dodgerblue;");
 		border.setPadding(new Insets(5));
@@ -179,35 +179,29 @@ public class PendingOrdersGUI
 	}
 	
 	private void createButtons()
-	{
-		
-		
+	{		
+		refreshButton = new Button("Ανανέωση");
 		changeTimeCreationButton = new Button("Αλλαγή Χρόνου Δημιουργίας");
-		button2 = new Button("Αλλαγή Χρόνου Εκτέλεσης");
+		changeTimeExecutionButton = new Button("Αλλαγή Χρόνου Εκτέλεσης");
+		changeShippingNumberButton = new Button("Αλλαγή Αριθμού Αποστολής");		
 		executeButton = new Button("Εκτέλεση");
 		backButton = new Button("Πίσω");
-		changeShippingNumberButton = new Button("Αλλαγή Αριθμού Αποστολής");
-		refreshButton = new Button("Ανανέωση");
 		emptyBaseButton = new Button("Άδειασμα Βάσης");
+		
+		refreshButton.setMaxWidth(Double.MAX_VALUE);
 		changeTimeCreationButton.setMaxWidth(Double.MAX_VALUE);
-	    button2.setMaxWidth(Double.MAX_VALUE);
+	    changeTimeExecutionButton.setMaxWidth(Double.MAX_VALUE);
+	    changeShippingNumberButton.setMaxWidth(Double.MAX_VALUE);
 	    executeButton.setMaxWidth(Double.MAX_VALUE);
 	    backButton.setMaxWidth(Double.MAX_VALUE);
-	    changeShippingNumberButton.setMaxWidth(Double.MAX_VALUE);
-	    refreshButton.setMaxWidth(Double.MAX_VALUE);
 	    emptyBaseButton.setMaxWidth(Double.MAX_VALUE);
 	    
-//	    button1.setOnAction(button1Handler);
-//	    button2.setOnAction(button1Handler);
-//	    button3.setOnAction(button3Handler);
-//	    button4.setOnAction(button4Handler);
-	    
-	    changeTimeCreationButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    button2.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    executeButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    backButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    changeShippingNumberButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 	    refreshButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    changeTimeCreationButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    changeTimeExecutionButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    changeShippingNumberButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    executeButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    backButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");	    
 	    emptyBaseButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 	}
 	
