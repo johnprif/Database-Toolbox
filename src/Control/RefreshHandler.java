@@ -13,9 +13,9 @@ public class RefreshHandler implements EventHandler<ActionEvent>
 	private TableView<Order> table;
 	private Stage stage;
 	
-	public RefreshHandler(DataBaseHandler myDB, Stage stage)
+	public RefreshHandler(Stage stage)
 	{
-		this.myDB = myDB;
+		this.myDB = DataBaseHandler.getInstance();
 		this.stage = stage;
 	}
 	

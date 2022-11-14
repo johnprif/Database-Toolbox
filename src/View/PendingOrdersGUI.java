@@ -114,7 +114,7 @@ public class PendingOrdersGUI
 		executeHandler = new ExecuteHandler(myDB);
 		backHandler = new BackHandler(stage);
 		changeShippingNumberHandler = new ChangeShippingNumberHandler(myDB, shippingStage);
-		refreshHandler = new RefreshHandler(myDB, stage);
+		refreshHandler = new RefreshHandler(stage);
 		emptyBaseHandler = new EmptyBaseHandler(myDB, refreshHandler);
 		
 		changeTimeCreationHandler.setChanges3(changes3);
