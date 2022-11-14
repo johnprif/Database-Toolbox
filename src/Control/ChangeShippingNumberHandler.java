@@ -22,6 +22,12 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
 	private DataBaseHandler myDB;
 	private Stage stage;
 	
+	private Button select;
+	private Button cancel;
+	
+	private HBox hbox;
+	private VBox vbox;
+	
 	public ChangeShippingNumberHandler(Stage stage)
 	{
 		this.stage = stage;
@@ -31,23 +37,18 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
 	@Override
 	public void handle(ActionEvent arg0)
 	{
-		Button button1 = new Button("�������");
-		Button button2 = new Button("�������");
-		button1.setMaxWidth(Double.MAX_VALUE);
-	    button2.setMaxWidth(Double.MAX_VALUE);
-	    button1.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    button2.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+		createButtons();
+		
+		createBoxes();
 	    
-	    
-		HBox hbox = new HBox(5, button1, button2);
-		hbox.setAlignment(Pos.BASELINE_CENTER);
-		VBox vbox = new VBox(20);
-        vbox.setStyle("-fx-padding: 10;");
+		
         Scene scene = new Scene(vbox, 400, 400);
         stage.setScene(scene);
-        stage.setTitle("������ ������� ���������");
+        stage.setTitle("Αλλαγή Αριθμού Αποστολής");
+        
         vbox.setAlignment(Pos.BASELINE_CENTER);
         vbox.setStyle("-fx-background-color: dodgerblue;");
+        
         TextField textField = new TextField();
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);
@@ -55,13 +56,14 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
 
         Label checkInlabel;
         Label currentShippingNumber;
-		try {
-			checkInlabel = new Label("��������� ��� ��������� ������ ���������:");
-			checkInlabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
-	        gridPane.add(checkInlabel, 0, 0);
-	        GridPane.setHalignment(checkInlabel, HPos.CENTER);
-	        
-	        currentShippingNumber = new Label("������ ������� ��������� = "+myDB.getShippingInvoiceNumber());
+		
+        checkInlabel = new Label("Εισάγετε τον επιθυμητό αριθμό αποστολής:");
+		checkInlabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
+        gridPane.add(checkInlabel, 0, 0);
+        GridPane.setHalignment(checkInlabel, HPos.CENTER);
+        
+        try {	        
+	        currentShippingNumber = new Label("Τρέχον Αριθμός Αποστολής = "+myDB.getShippingInvoiceNumber());
 	        currentShippingNumber.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
 	        gridPane.add(currentShippingNumber, 0, 1);
 	        GridPane.setHalignment(currentShippingNumber, HPos.CENTER);
@@ -69,6 +71,8 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
+        
+        
         
         gridPane.add(textField, 0, 2);
         gridPane.add(hbox, 0, 3);
@@ -86,14 +90,14 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
         stage.show();
         
 
-		button2.setOnAction(new EventHandler<ActionEvent>() {
+		cancel.setOnAction(new EventHandler<ActionEvent>() {
 	        @Override public void handle(ActionEvent e) {
 	            stage.close();
 	        }
 	    });
 		
 
-		button1.setOnAction(new EventHandler<ActionEvent>() {
+		select.setOnAction(new EventHandler<ActionEvent>() {
 	        @Override public void handle(ActionEvent e) {
 	            String text = textField.getText();
 
@@ -136,6 +140,28 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
 	    });
 		
 	}
+	
+	private void createButtons()
+	{
+		select = new Button("Επιλογή");
+		cancel = new Button("Ακύρωση");
+		
+		select.setMaxWidth(Double.MAX_VALUE);
+	    cancel.setMaxWidth(Double.MAX_VALUE);
+	    
+	    select.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    cancel.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	}
+	
+	private void createBoxes()
+	{
+		hbox = new HBox(5, select, cancel);
+		hbox.setAlignment(Pos.BASELINE_CENTER);
+		
+		vbox = new VBox(20);
+        vbox.setStyle("-fx-padding: 10;");
+	}
+	
 	
 	private void warningWindowForFlag(String text)
 	{
