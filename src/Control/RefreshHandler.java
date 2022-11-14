@@ -7,13 +7,13 @@ import javafx.event.EventHandler;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
-public class Button6Handler implements EventHandler<ActionEvent>
+public class RefreshHandler implements EventHandler<ActionEvent>
 {
 	private DataBaseHandler myDB;
 	private TableView<Order> table;
 	private Stage stage;
 	
-	public Button6Handler(DataBaseHandler myDB, Stage stage)
+	public RefreshHandler(DataBaseHandler myDB, Stage stage)
 	{
 		this.myDB = myDB;
 		this.stage = stage;

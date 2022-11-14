@@ -29,7 +29,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import java.util.HashMap; // import the HashMap class
 
-public class Button1Handler  implements EventHandler<ActionEvent>
+public class ChangeTimeCreationHandler  implements EventHandler<ActionEvent>
 {
 	private DatePicker checkInDatePicker;
 	private Label checkInlabel;
@@ -46,7 +46,7 @@ public class Button1Handler  implements EventHandler<ActionEvent>
 	private ComboBox minutes;
 	Random rand;
 	
-	public Button1Handler(Button button, Stage stage)
+	public ChangeTimeCreationHandler(Button button, Stage stage)
 	{
 		rand = new Random();
 		//stage = new Stage();

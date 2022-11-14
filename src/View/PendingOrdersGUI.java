@@ -39,12 +39,12 @@ import java.util.ArrayList;
 import javafx.beans.binding.Bindings;
 import java.util.HashMap; // import the HashMap class
 
-import Control.Button1Handler;
-import Control.Button3Handler;
-import Control.Button4Handler;
-import Control.Button5Handler;
-import Control.Button6Handler;
-import Control.Button7Handler;
+import Control.ChangeTimeCreationHandler;
+import Control.ExecuteHandler;
+import Control.BackHandler;
+import Control.ChangeShippingNumberHandler;
+import Control.RefreshHandler;
+import Control.EmptyBaseHandler;
 import Model.DataBaseHandler;
 import Model.Order;
 
@@ -67,24 +67,24 @@ public class PendingOrdersGUI
 	private Scene scene;
 	private Stage stage;	
     private TableView<Order> table;
-    private Button button1;	//������ ����������� �����������
-	private Button button2; //������ ����������� ���������
-	private Button button3; //��������
-	private Button button4; //�������
-	private Button button5; //������ ������� ���������
-	private Button button6; //��������
-	private Button button7; //�������� �����
+    private Button changeTimeCreationButton;
+	private Button button2;
+	private Button executeButton;
+	private Button backButton;
+	private Button changeShippingNumberButton;
+	private Button refreshButton;
+	private Button emptyBaseButton;
 	private GridPane gridPane;
     private int counter = 0;
     private String order;
     private VBox vbox2;
-    private Button1Handler button1Handler;
-    private Button1Handler button2Handler;
-    private Button3Handler button3Handler;
-    private Button4Handler button4Handler;
-    private Button5Handler button5Handler;
-    private Button6Handler button6Handler;
-    private Button7Handler button7Handler;
+    private ChangeTimeCreationHandler changeTimeCreationHandler;
+    private ChangeTimeCreationHandler button2Handler;
+    private ExecuteHandler executeHandler;
+    private BackHandler backHandler;
+    private ChangeShippingNumberHandler changeShippingNumberHandler;
+    private RefreshHandler refreshHandler;
+    private EmptyBaseHandler emptyBaseHandler;
     private VBox kati ;
     private ArrayList<String[]> changes;
     private ArrayList<Order> changes2;
@@ -109,28 +109,28 @@ public class PendingOrdersGUI
 		createStage();
 		createButtons();
 		
-		button1Handler = new Button1Handler(button1, dateStage);
-		button2Handler = new Button1Handler(button2, dateStage);
-		button3Handler = new Button3Handler(myDB);
-		button4Handler = new Button4Handler(stage);
-		button5Handler = new Button5Handler(myDB, shippingStage);
-		button6Handler = new Button6Handler(myDB, stage);
-		button7Handler = new Button7Handler(myDB, button6Handler);
+		changeTimeCreationHandler = new ChangeTimeCreationHandler(changeTimeCreationButton, dateStage);
+		button2Handler = new ChangeTimeCreationHandler(button2, dateStage);
+		executeHandler = new ExecuteHandler(myDB);
+		backHandler = new BackHandler(stage);
+		changeShippingNumberHandler = new ChangeShippingNumberHandler(myDB, shippingStage);
+		refreshHandler = new RefreshHandler(myDB, stage);
+		emptyBaseHandler = new EmptyBaseHandler(myDB, refreshHandler);
 		
-		button1Handler.setChanges3(changes3);
+		changeTimeCreationHandler.setChanges3(changes3);
 		button2Handler.setChanges3(changes3);
-		button3Handler.setChanges3(changes3);
-		button4Handler.setChanges3(changes3);
+		executeHandler.setChanges3(changes3);
+		backHandler.setChanges3(changes3);
 		
 		BorderPane border = new BorderPane();
 		
-		button1.setOnAction(button1Handler);
+		changeTimeCreationButton.setOnAction(changeTimeCreationHandler);
 	    button2.setOnAction(button2Handler);
-	    button3.setOnAction(button3Handler);
-	    button4.setOnAction(button4Handler);
-	    button5.setOnAction(button5Handler);
-	    button6.setOnAction(button6Handler);
-	    button7.setOnAction(button7Handler);;
+	    executeButton.setOnAction(executeHandler);
+	    backButton.setOnAction(backHandler);
+	    changeShippingNumberButton.setOnAction(changeShippingNumberHandler);
+	    refreshButton.setOnAction(refreshHandler);
+	    emptyBaseButton.setOnAction(emptyBaseHandler);;
 		
 		myDB.findAndParse();
 		data = myDB.getData();
@@ -140,17 +140,17 @@ public class PendingOrdersGUI
 		createTable();
         createAndFillCells();
         
-        button1Handler.setTable(table);
+        changeTimeCreationHandler.setTable(table);
         button2Handler.setTable(table);
-        button3Handler.setTable(table);
-        button6Handler.setTable(table);
+        executeHandler.setTable(table);
+        refreshHandler.setTable(table);
         
         scene = new Scene(border);
         setLastThingsOnTable();
         
         
         
-        vbox2 = new VBox(15, button6, button1, button2, button5, button3, button4, tempLabel_1,  button7);
+        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, button2, changeShippingNumberButton, executeButton, backButton, tempLabel_1,  emptyBaseButton);
 
         border.setStyle("-fx-background-color: dodgerblue;");
 		border.setPadding(new Insets(5));
@@ -181,33 +181,33 @@ public class PendingOrdersGUI
 	{
 		
 		
-		button1 = new Button("Αλλαγή Χρόνου Δημιουργίας");
+		changeTimeCreationButton = new Button("Αλλαγή Χρόνου Δημιουργίας");
 		button2 = new Button("Αλλαγή Χρόνου Εκτέλεσης");
-		button3 = new Button("Εκτέλεση");
-		button4 = new Button("Πίσω");
-		button5 = new Button("Αλλαγή Αριθμού Αποστολής");
-		button6 = new Button("Ανανέωση");
-		button7 = new Button("Άδειασμα Βάσης");
-		button1.setMaxWidth(Double.MAX_VALUE);
+		executeButton = new Button("Εκτέλεση");
+		backButton = new Button("Πίσω");
+		changeShippingNumberButton = new Button("Αλλαγή Αριθμού Αποστολής");
+		refreshButton = new Button("Ανανέωση");
+		emptyBaseButton = new Button("Άδειασμα Βάσης");
+		changeTimeCreationButton.setMaxWidth(Double.MAX_VALUE);
 	    button2.setMaxWidth(Double.MAX_VALUE);
-	    button3.setMaxWidth(Double.MAX_VALUE);
-	    button4.setMaxWidth(Double.MAX_VALUE);
-	    button5.setMaxWidth(Double.MAX_VALUE);
-	    button6.setMaxWidth(Double.MAX_VALUE);
-	    button7.setMaxWidth(Double.MAX_VALUE);
+	    executeButton.setMaxWidth(Double.MAX_VALUE);
+	    backButton.setMaxWidth(Double.MAX_VALUE);
+	    changeShippingNumberButton.setMaxWidth(Double.MAX_VALUE);
+	    refreshButton.setMaxWidth(Double.MAX_VALUE);
+	    emptyBaseButton.setMaxWidth(Double.MAX_VALUE);
 	    
 //	    button1.setOnAction(button1Handler);
 //	    button2.setOnAction(button1Handler);
 //	    button3.setOnAction(button3Handler);
 //	    button4.setOnAction(button4Handler);
 	    
-	    button1.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    changeTimeCreationButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 	    button2.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    button3.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    button4.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    button5.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    button6.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    button7.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    executeButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    backButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    changeShippingNumberButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    refreshButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    emptyBaseButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 	}
 	
 	private void createStage()
@@ -357,7 +357,7 @@ public class PendingOrdersGUI
 	    			public void onChanged(Change c)
 	    			{
 	    				flag = true;
-	    				button1Handler.setFlag(flag);
+	    				changeTimeCreationHandler.setFlag(flag);
 	    				button2Handler.setFlag(flag);
 	    			}	
 	    		});

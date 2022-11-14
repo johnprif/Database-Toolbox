@@ -13,12 +13,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 
-public class Button7Handler implements EventHandler<ActionEvent>
+public class EmptyBaseHandler implements EventHandler<ActionEvent>
 {
 	private DataBaseHandler myDB;
-	private Button6Handler refresh;
+	private RefreshHandler refresh;
 	
-	public Button7Handler(DataBaseHandler myDB, Button6Handler refresh)
+	public EmptyBaseHandler(DataBaseHandler myDB, RefreshHandler refresh)
 	{
 		this.myDB = myDB;
 		this.refresh = refresh;

@@ -19,12 +19,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class Button5Handler implements EventHandler<ActionEvent>
+public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
 {
 	private DataBaseHandler myDB;
 	private Stage stage;
 	
-	public Button5Handler(DataBaseHandler myDB, Stage stage)
+	public ChangeShippingNumberHandler(DataBaseHandler myDB, Stage stage)
 	{
 		this.stage = stage;
 		this.myDB = myDB;

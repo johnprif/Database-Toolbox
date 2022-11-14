@@ -19,7 +19,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 
-public class Button3Handler  implements EventHandler<ActionEvent>
+public class ExecuteHandler  implements EventHandler<ActionEvent>
 {
 	private ArrayList<String[]> changes;
 	private DataBaseHandler myDB;
@@ -27,7 +27,7 @@ public class Button3Handler  implements EventHandler<ActionEvent>
 	private HashMap<String, Order> changes3;
 	private TableView<Order> table;
 	
-	public Button3Handler(DataBaseHandler myDB)
+	public ExecuteHandler(DataBaseHandler myDB)
 	{
 		this.myDB = myDB;
 	}
