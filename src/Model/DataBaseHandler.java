@@ -89,17 +89,8 @@ public class DataBaseHandler
 			Statement statement4 = connection.createStatement();
 			statement4.executeUpdate("SELECT FROM Orders WHERE OrderCode='# %'");
 			
-			
-//			String sql = "DELETE FROM 'BatchData' WHERE 'OrderCode' LIKE '#%'";
-//			PreparedStatement pstmt = connection.prepareStatement(sql);
-//			pstmt.executeUpdate();
-//			
-//			String sql2 = "DELETE FROM BatchIngredients WHERE OrderCode='#%'";
-//			PreparedStatement pstmt2 = connection.prepareStatement(sql2);
-//			pstmt2.executeUpdate();
-			
 			connection.commit();
-			System.out.println("Deleted hashes ok");
+			System.out.println("It has not hashes - ok");
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			readOnlyWindow(e.getMessage());
@@ -130,7 +121,7 @@ public class DataBaseHandler
 		{
 			//Using SQL SELECT QUERY
 //			PreparedStatement preparedStatement = connection.prepareStatement("select * from Orders where ExecutionState=0 or ExecutionState=1");
-			PreparedStatement preparedStatement = connection.prepareStatement("select * from Orders where ExecutionState=0");
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Orders WHERE ExecutionState=0");
 			
 			//Creating Java ResultSet object
 			pendingSet = preparedStatement.executeQuery();
@@ -190,7 +181,7 @@ public class DataBaseHandler
 		cooking(order);
 //		System.out.println("EDW EIMAI");
 		Statement update = connection.createStatement();
-		String sql1 = "update Orders set DateCreation="+order.getDateCreation()+" , TimeCreation="+order.getTimeCreation()+" , DateLastEdit="+order.getExecutionDate()+" , ExecutionDate="+order.getExecutionDate()+" , ExecutionTime="+order.getExecutionTime()+" , ExecutionDuration="+computeDurationTime(Integer.parseInt(order.getNoOfBatches()))+" , ExecutionState=2 , BatchesProduced="+order.getNoOfBatches()+" , ShippingInvoiceNumber="+setShippingInvoiceNumber()+" where OrderCode="+"\""+order.getOrderCode()+"\"";
+		String sql1 = "UPDATE Orders SET DateCreation="+order.getDateCreation()+" , TimeCreation="+order.getTimeCreation()+" , DateLastEdit="+order.getExecutionDate()+" , ExecutionDate="+order.getExecutionDate()+" , ExecutionTime="+order.getExecutionTime()+" , ExecutionDuration="+computeDurationTime(Integer.parseInt(order.getNoOfBatches()))+" , ExecutionState=2 , BatchesProduced="+order.getNoOfBatches()+" , ShippingInvoiceNumber="+setShippingInvoiceNumber()+" where OrderCode="+"\""+order.getOrderCode()+"\"";
 		byte[] bytes = sql1.getBytes(StandardCharsets.UTF_8);
 		String utf8EncodedString = new String(bytes, StandardCharsets.UTF_8);
 		
@@ -252,7 +243,7 @@ public class DataBaseHandler
 		int ShippingInvoiceNumber;
 		int next;
 		//Using SQL SELECT QUERY
-		PreparedStatement preparedStatement = connection.prepareStatement("select NextOrderShippingInvoiceNumber from Parameters");
+		PreparedStatement preparedStatement = connection.prepareStatement("SELECT NextOrderShippingInvoiceNumber FROM Parameters");
 		
 		//Creating Java ResultSet object
 		ResultSet pendingSet2 = preparedStatement.executeQuery();
@@ -269,7 +260,7 @@ public class DataBaseHandler
 		{
 			next = ShippingInvoiceNumber+1;
 		}
-		String sql1 = "update Parameters set NextOrderShippingInvoiceNumber="+next;
+		String sql1 = "UPDATE Parameters SET NextOrderShippingInvoiceNumber="+next;
 		
 //		byte[] bytes = sql1.getBytes(StandardCharsets.UTF_8);
 //		String utf8EncodedString = new String(bytes, StandardCharsets.UTF_8);
@@ -283,7 +274,7 @@ public class DataBaseHandler
 	public void setShippingInvoiceNumber(String newNumber) throws SQLException
 	{
 		Statement update = connection.createStatement();
-		String sql1 = "update Parameters set NextOrderShippingInvoiceNumber="+newNumber;
+		String sql1 = "UPDATE Parameters SET NextOrderShippingInvoiceNumber="+newNumber;
 		byte[] bytes = sql1.getBytes(StandardCharsets.UTF_8);
 		String utf8EncodedString = new String(bytes, StandardCharsets.UTF_8);
 		update.executeUpdate(utf8EncodedString);
@@ -294,7 +285,7 @@ public class DataBaseHandler
 	{
 		int ShippingInvoiceNumber;
 		//Using SQL SELECT QUERY
-		PreparedStatement preparedStatement = connection.prepareStatement("select NextOrderShippingInvoiceNumber from Parameters");
+		PreparedStatement preparedStatement = connection.prepareStatement("SELECT NextOrderShippingInvoiceNumber FROM Parameters");
 		
 		//Creating Java ResultSet object
 		ResultSet pendingSet2 = preparedStatement.executeQuery();
@@ -317,7 +308,7 @@ public class DataBaseHandler
 	private void parseOrderIngredients(String OrderCode) throws SQLException
 	{
 		//Using SQL SELECT QUERY
-		PreparedStatement preparedStatement = connection.prepareStatement("select * from OrderIngredients where OrderCode='"+OrderCode+"'");
+		PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM OrderIngredients WHERE OrderCode='"+OrderCode+"'");
 //		System.out.println("EDW EIMAI");
 		ResultSet pendingSet2 = preparedStatement.executeQuery();
 		try {
@@ -478,7 +469,7 @@ public class DataBaseHandler
 	{
 		int WaterAdjustSiloID;
 		
-		PreparedStatement preparedStatement = connection.prepareStatement("select * from Silos where SiloScaleID=203");
+		PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Silos WHERE SiloScaleID=203");
 		ResultSet pendingSet2 = preparedStatement.executeQuery();
 		
 		pendingSet2.next();
