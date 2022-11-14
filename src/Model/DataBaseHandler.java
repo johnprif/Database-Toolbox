@@ -77,22 +77,41 @@ public class DataBaseHandler
 	public void checkHashes()
 	{
 		try {
-			Statement statement = connection.createStatement();
-			statement.executeUpdate("delete from BatchData where OrderCode='##' or OrderCode='###' or OrderCode='####' or OrderCode='#####' or OrderCode='######' or OrderCode='#######' or OrderCode='########' or OrderCode='#########' or OrderCode='##########' or OrderCode='###########' or OrderCode='############' or OrderCode='#############' or OrderCode='##############' or OrderCode='###############' or OrderCode='################'");
+			Statement statement1 = connection.createStatement();
+			statement1.executeUpdate("SELECT FROM BatchData WHERE OrderCode='# %'");
+			
+			Statement statement2 = connection.createStatement();
+			statement2.executeUpdate("SELECT FROM BatchIngredients WHERE OrderCode='# %'");
+			
+			Statement statement3 = connection.createStatement();
+			statement3.executeUpdate("SELECT FROM OrderIngredients WHERE OrderCode='# %'");
+			
+			Statement statement4 = connection.createStatement();
+			statement4.executeUpdate("SELECT FROM Orders WHERE OrderCode='# %'");
+			
+			
+//			String sql = "DELETE FROM 'BatchData' WHERE 'OrderCode' LIKE '#%'";
+//			PreparedStatement pstmt = connection.prepareStatement(sql);
+//			pstmt.executeUpdate();
+//			
+//			String sql2 = "DELETE FROM BatchIngredients WHERE OrderCode='#%'";
+//			PreparedStatement pstmt2 = connection.prepareStatement(sql2);
+//			pstmt2.executeUpdate();
+			
 			connection.commit();
 			System.out.println("Deleted hashes ok");
 		} catch (SQLException e) {
-			System.out.println("Error in searching hashes");
-			readOnlyWindow();
+			System.out.println(e.getMessage());
+			readOnlyWindow(e.getMessage());
 		}
 	}
 
-	private void readOnlyWindow()
+	private void readOnlyWindow(String message)
 	{
 		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Σφάλμα ανάγνωσης");
-		alert.setHeaderText("Η βάση περιέχει καταχώρηση που περιέχει πολλαπλές #");
-		alert.setContentText("Θα πρέπει να σβήσετε εκείνη την καταχώρηση στον πίνακα BatchData ώστε να μπορείτε να κάνετε τροποποιήσεις στην βάση");
+		alert.setTitle(message);
+		alert.setHeaderText("Η βάση περιέχει καταχωρήσεις που περιέχουν πολλαπλές #");
+		alert.setContentText("Θα πρέπει να σβήσετε εκείνες τις καταχωρήσεις σε κάποιους απο τους παρακάτω πίνακα ώστε να μπορείτε να κάνετε τροποποιήσεις στην βάση\n- BatchData\n- BatchIngredients\n- OrderIngredients\n- Orders");
 
 		alert.showAndWait();
 		
