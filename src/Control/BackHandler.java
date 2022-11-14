@@ -41,9 +41,9 @@ public class BackHandler implements EventHandler<ActionEvent>
 	private void alertWindow()
 	{
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("�������!");
-		alert.setHeaderText("�� ������������� �������!");
-		alert.setContentText("����� ����� ������� ��� ��� ������ ��� ����� ������� �� ������� '��������'\n��� ���������� �� ����������� ������� �� ������� '��'\n��� ���������� �� ������ ��� ����� ������� ������� 'Cancel'");
+		alert.setTitle("ΠΟΣΟΧΗ!");
+		alert.setHeaderText("Μη αποθηκευμένες αλλαγές!");
+		alert.setContentText("Έχετε κάνει αλλαγές για τις οποίες δεν έχετε επιλέξει ΄Εκτέλεση'\nΕάν επιθυμείτε να αποχωρήσετε πατήστε το πλήκτρο 'ΟΚ'\nΕάν επιθυμείτε να κάνετε και άλλες αλλαγές πατήστε 'Cancel'");
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
