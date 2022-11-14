@@ -23,9 +23,9 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	private HashMap<String, Order> changes3;
 	private TableView<Order> table;
 	
-	public ExecuteHandler(DataBaseHandler myDB)
+	public ExecuteHandler()
 	{
-		this.myDB = myDB;
+		this.myDB = DataBaseHandler.getInstance();
 	}
 	
 	@Override

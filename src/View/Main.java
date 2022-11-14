@@ -24,8 +24,12 @@ public class Main extends Application
 	private String path;
 	private TakeThePath takeThePath;	
 	private String programTitle = "SAITEC";
-	private String button1Text = "Φόρτωση Βάσης Δεδομένων";
-	private String button2Text = "Άνοιγμα παραγγελιών";	
+	
+	private Button openOrdersButton;
+	private Button loadDBButton;
+	private Button exitButton;
+	
+	private GridPane gridPane;
 	private Stage pendingStage;
 	
 	@Override
@@ -39,62 +43,30 @@ public class Main extends Application
 //		myDB.setPath(path);
 //		myDB.initialize();
 		pendingStage = new Stage();
-		try {
+		try {		
 			//Creating Buttons     
-		    Button button1 = new Button(button1Text);
-		    Button button2 = new Button(button2Text);
-		    Button button3 = new Button("Έξοδος");
+			createButtons();	    		    
 		    
-		    
-		    button1.setMaxWidth(Double.MAX_VALUE);
-		    button2.setMaxWidth(Double.MAX_VALUE);
-		    button3.setMaxWidth(Double.MAX_VALUE);
-		    
-//		    button1.setStyle("-fx-background-color: green; -fx-font-weight: bold; -fx-text-fill: white; -fx-border-color: yellow; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-//		    button2.setStyle("-fx-background-color: green; -fx-font-weight: bold; -fx-text-fill: white; -fx-border-color: yellow; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-		    button1.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-		    button2.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-		    button3.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-		    
-		    
-//		    TakeThePath takeThePath = new TakeThePath(button2);
-		    button1.setOnAction(takeThePath);
+		    loadDBButton.setOnAction(takeThePath);
 		    
 		    PendingOrdersFactory pendingOrdersFactory = new PendingOrdersFactory();
-		    pendingOrdersFactory.setDB(myDB);
+		    pendingOrdersFactory.setDB();
 		    pendingOrdersFactory.setStage(pendingStage);
-		    button2.setOnAction(pendingOrdersFactory);
+		    
+		    openOrdersButton.setOnAction(pendingOrdersFactory);
 		    
 		    
 		    pendingStage.initOwner(primaryStage);
 		    pendingStage.initModality(Modality.WINDOW_MODAL);
 		    
 			//Creating a Grid Pane 
-		    GridPane gridPane = new GridPane();
-
-		    //Setting the Grid alignment 
-		    gridPane.setAlignment(Pos.CENTER); 
-    
-		    //Arranging all the nodes in the grid 
-		    gridPane.add(button2, 0, 0);
-		    gridPane.add(button1, 0, 1);
-		    gridPane.add(button3, 0, 2);
-   
-		    //Spaces between the buttons 
-		    gridPane.setHgap(10);
-		    gridPane.setVgap(10);
+		    createGridPane();
 		    
-		    //Setting the back ground color 
-//		    gridPane.setStyle("-fx-background-color: orangered;");
-		    //gridPane.setStyle("-fx-background-color: navy;");
-		    gridPane.setStyle("-fx-background-color: dodgerblue;");
 		    
 		    //Creating a scene object 
 			Scene scene = new Scene(gridPane,300,300);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			
-//			primaryStage.getIcons().add(new Image("file:\\C:\\Users\\Joanis Prifti\\eclipse-workspace\\First_Version\\SDOE.jpg"));
-			primaryStage.getIcons().add(new Image("file:\\"+System.getProperty("user.dir")+"\\default.png"));
 			//Setting title to the Stage 
 			primaryStage.setTitle(programTitle);
 			
@@ -104,7 +76,7 @@ public class Main extends Application
 			//Displaying the contents of the stage
 			primaryStage.show();
 			
-			button3.setOnAction(new EventHandler<ActionEvent>() {
+			exitButton.setOnAction(new EventHandler<ActionEvent>() {
 			    @Override public void handle(ActionEvent e) {
 			    	primaryStage.close();
 			    	try {
@@ -138,6 +110,44 @@ public class Main extends Application
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	private void createButtons()
+	{
+		openOrdersButton = new Button("Άνοιγμα παραγγελιών");
+	    loadDBButton = new Button("Φόρτωση Βάσης Δεδομένων");
+	    exitButton = new Button("Έξοδος");
+	    
+	    openOrdersButton.setMaxWidth(Double.MAX_VALUE);
+	    loadDBButton.setMaxWidth(Double.MAX_VALUE);		    
+	    exitButton.setMaxWidth(Double.MAX_VALUE);
+	    
+	    openOrdersButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    loadDBButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    exitButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    
+	}
+	
+	private void createGridPane()
+	{
+		gridPane = new GridPane();
+
+	    //Setting the Grid alignment 
+	    gridPane.setAlignment(Pos.CENTER); 
+
+	    //Arranging all the nodes in the grid 
+	    gridPane.add(openOrdersButton, 0, 0);
+	    gridPane.add(loadDBButton, 0, 1);
+	    gridPane.add(exitButton, 0, 2);
+
+	    //Spaces between the buttons 
+	    gridPane.setHgap(10);
+	    gridPane.setVgap(10);
+	    
+	    //Setting the back ground color 
+//	    gridPane.setStyle("-fx-background-color: orangered;");
+	    //gridPane.setStyle("-fx-background-color: navy;");
+	    gridPane.setStyle("-fx-background-color: dodgerblue;");
 	}
 	
 	private void checkIfAlreadyOpen(String path)

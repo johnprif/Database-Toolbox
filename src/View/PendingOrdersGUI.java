@@ -110,12 +110,12 @@ public class PendingOrdersGUI
 		createStage();
 		createButtons();
 		
+		refreshHandler = new RefreshHandler(stage);
 		changeTimeCreationHandler = new ChangeTimeCreationHandler(changeTimeCreationButton, dateStage);
 		button2Handler = new ChangeTimeCreationHandler(changeTimeExecutionButton, dateStage);
-		executeHandler = new ExecuteHandler(myDB);
+		changeShippingNumberHandler = new ChangeShippingNumberHandler(shippingStage);
+		executeHandler = new ExecuteHandler();
 		backHandler = new BackHandler(stage);
-		changeShippingNumberHandler = new ChangeShippingNumberHandler(myDB, shippingStage);
-		refreshHandler = new RefreshHandler(stage);
 		emptyBaseHandler = new EmptyBaseHandler(refreshHandler);
 		
 		changeTimeCreationHandler.setChanges3(changes3);

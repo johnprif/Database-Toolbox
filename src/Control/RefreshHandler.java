@@ -27,7 +27,7 @@ public class RefreshHandler implements EventHandler<ActionEvent>
 //		kati.setDB(myDB);
 		stage.close();
 		PendingOrdersFactory kati = new PendingOrdersFactory();
-		kati.setDB(myDB);
+		kati.setDB();
 		kati.setStage(stage);
 		kati.handle(arg0);
 	}

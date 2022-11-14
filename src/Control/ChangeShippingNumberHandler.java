@@ -22,10 +22,10 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
 	private DataBaseHandler myDB;
 	private Stage stage;
 	
-	public ChangeShippingNumberHandler(DataBaseHandler myDB, Stage stage)
+	public ChangeShippingNumberHandler(Stage stage)
 	{
 		this.stage = stage;
-		this.myDB = myDB;
+		this.myDB = DataBaseHandler.getInstance();
 	}
 	
 	@Override

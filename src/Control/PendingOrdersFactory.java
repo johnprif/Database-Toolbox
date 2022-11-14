@@ -21,9 +21,9 @@ public class PendingOrdersFactory implements EventHandler<ActionEvent>
 		takeThePath = TakeThePath.getInstance();
 	}
 
-	public void setDB(DataBaseHandler myDB)
+	public void setDB()
 	{
-		this.myDB = myDB;
+		this.myDB = DataBaseHandler.getInstance();
 		
 	}
 	
