@@ -185,7 +185,7 @@ public class DataBaseHandler
 	    ExecutionDate = pendingSet.getString("ExecutionDate");
 	    ExecutionTime = pendingSet.getString("ExecutionTime");
 	    
-	    Order order = new Order(OrderCode, RecipeCode, Quantity, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, ExecutionDate, TimeCreation, ExecutionTime, MixerCapacity, BatchQuantity, NoOfBatches, DateLastEdit);
+	    Order order = new Order(OrderCode, RecipeCode, Quantity, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, ExecutionDate, TimeCreation, ExecutionTime, MixerCapacity, BatchQuantity, NoOfBatches, DateLastEdit, "0.0");
 	    data.add(order);
 //	    System.out.println("Order: ", OrderCode, RecipeCode, Quantity, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, ExecutionDate, TimeCreation, ExecutionTime, MixerCapacity, BatchQuantity, NoOfBatches, DateLastEdit);
 	}
@@ -234,6 +234,7 @@ public class DataBaseHandler
 		System.out.println("DateLastEdit = "+order.getDateLastEdit());
 		System.out.println("ExecutionDate = "+order.getExecutionDate());
 		System.out.println("ExecutionTime = "+order.getExecutionTime());
+		System.out.println("Moistures = "+order.getMoistures());
 	}
 	
 	private int computeDurationTime(int cycles)

@@ -64,6 +64,7 @@ public class PendingOrdersGUI
 	private TableColumn<Order, String> TimeCreation;
 	private TableColumn<Order, String> ExecutionDate;    
 	private TableColumn<Order, String> ExecutionTime;
+	private TableColumn<Order, String> Moistures;
 	private Scene scene;
 	private Stage stage;	
     private TableView<Order> table;
@@ -115,7 +116,7 @@ public class PendingOrdersGUI
 		backHandler = new BackHandler(stage);
 		changeShippingNumberHandler = new ChangeShippingNumberHandler(myDB, shippingStage);
 		refreshHandler = new RefreshHandler(stage);
-		emptyBaseHandler = new EmptyBaseHandler(myDB, refreshHandler);
+		emptyBaseHandler = new EmptyBaseHandler(refreshHandler);
 		
 		changeTimeCreationHandler.setChanges3(changes3);
 		button2Handler.setChanges3(changes3);
@@ -341,12 +342,17 @@ public class PendingOrdersGUI
     	ExecutionTime.setCellFactory(TextFieldTableCell.forTableColumn());
     	ExecutionTime.setCellValueFactory(new PropertyValueFactory<Order, String>("ExecutionTime"));
     	ExecutionTime.setEditable(false);
+    	
+    	Moistures = new TableColumn<Order, String>("Υγρασίες");
+    	Moistures.setCellFactory(TextFieldTableCell.forTableColumn());
+    	Moistures.setCellValueFactory(new PropertyValueFactory<Order, String>("Moistures"));
+    	Moistures.setEditable(false);
 	}
 	
 	private void setLastThingsOnTable()
 	{
 		table.setItems(data);
-        table.getColumns().addAll(OrderCode, RecipeCode, Quantity, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, TimeCreation, ExecutionDate, ExecutionTime);
+        table.getColumns().addAll(OrderCode, RecipeCode, Quantity, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, TimeCreation, ExecutionDate, ExecutionTime, Moistures);
      
         table.getSelectionModel().setCellSelectionEnabled(false);
         

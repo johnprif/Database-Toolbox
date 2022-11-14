@@ -26,8 +26,9 @@ public class Order
 //	private String BatchesProduced;
 //	private String UsedInRT;
 //	private String ShippingInvoiceNumber;
+	private SimpleStringProperty Moistures;
 //	
-	public Order(String OrderCode, String RecipeCode, String Quantity, String ProjectCode, String CustomerCode, String VehicleCode, String DriverCode, String DateCreation, String ExecutionDate, String TimeCreation, String ExecutionTime, String MixerCapacity, String BatchQuantity, String NoOfBatches, String DateLastEdit)
+	public Order(String OrderCode, String RecipeCode, String Quantity, String ProjectCode, String CustomerCode, String VehicleCode, String DriverCode, String DateCreation, String ExecutionDate, String TimeCreation, String ExecutionTime, String MixerCapacity, String BatchQuantity, String NoOfBatches, String DateLastEdit, String Moistures)
 	{
 		this.OrderCode = new SimpleStringProperty(OrderCode);
 		this.RecipeCode = new SimpleStringProperty(RecipeCode);
@@ -44,6 +45,7 @@ public class Order
 		this.TimeCreation = new SimpleStringProperty(TimeCreation);
 		this.DateLastEdit = new SimpleStringProperty(DateLastEdit);
 		this.ExecutionTime = new SimpleStringProperty(ExecutionTime);
+		this.Moistures = new SimpleStringProperty(Moistures);
 	}
 	
 	public String getOrderCode()
@@ -195,4 +197,14 @@ public class Order
 	{
 		ExecutionTime.set(input);
     }
+	
+	public String getMoistures()
+	{
+		return Moistures.get();
+	}
+	
+	public void setMoistures(String input)
+	{
+		Moistures.set(input);
+	}
 }

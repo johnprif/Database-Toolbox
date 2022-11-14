@@ -15,9 +15,9 @@ public class EmptyBaseHandler implements EventHandler<ActionEvent>
 	private DataBaseHandler myDB;
 	private RefreshHandler refresh;
 	
-	public EmptyBaseHandler(DataBaseHandler myDB, RefreshHandler refresh)
+	public EmptyBaseHandler(RefreshHandler refresh)
 	{
-		this.myDB = myDB;
+		this.myDB = DataBaseHandler.getInstance();
 		this.refresh = refresh;
 	}
 	
