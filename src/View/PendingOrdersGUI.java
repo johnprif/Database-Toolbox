@@ -42,6 +42,7 @@ import java.util.HashMap; // import the HashMap class
 import Control.ChangeTimeCreationHandler;
 import Control.ExecuteHandler;
 import Control.BackHandler;
+import Control.ChangeHumidityHandler;
 import Control.ChangeShippingNumberHandler;
 import Control.RefreshHandler;
 import Control.EmptyBaseHandler;
@@ -64,28 +65,34 @@ public class PendingOrdersGUI
 	private TableColumn<Order, String> TimeCreation;
 	private TableColumn<Order, String> ExecutionDate;    
 	private TableColumn<Order, String> ExecutionTime;
-	private TableColumn<Order, String> Moistures;
+	private TableColumn<Order, String> Humidity;
 	private Scene scene;
 	private Stage stage;	
     private TableView<Order> table;
+    
+    private Button refreshButton;
     private Button changeTimeCreationButton;
-	private Button changeTimeExecutionButton;
+	private Button changeTimeExecutionButton;	
+	private Button changeShippingNumberButton;
+	private Button changeHumidityButton;
 	private Button executeButton;
 	private Button backButton;
-	private Button changeShippingNumberButton;
-	private Button refreshButton;
 	private Button emptyBaseButton;
+	
 	private GridPane gridPane;
     private int counter = 0;
     private String order;
     private VBox vbox2;
+    
+    private RefreshHandler refreshHandler;
     private ChangeTimeCreationHandler changeTimeCreationHandler;
     private ChangeTimeCreationHandler button2Handler;
-    private ExecuteHandler executeHandler;
-    private BackHandler backHandler;
     private ChangeShippingNumberHandler changeShippingNumberHandler;
-    private RefreshHandler refreshHandler;
+    private ChangeHumidityHandler changeHumidityHandler;
+    private ExecuteHandler executeHandler;
+    private BackHandler backHandler; 
     private EmptyBaseHandler emptyBaseHandler;
+    
     private VBox kati ;
     private ArrayList<String[]> changes;
     private ArrayList<Order> changes2;
@@ -114,6 +121,7 @@ public class PendingOrdersGUI
 		changeTimeCreationHandler = new ChangeTimeCreationHandler(changeTimeCreationButton, dateStage);
 		button2Handler = new ChangeTimeCreationHandler(changeTimeExecutionButton, dateStage);
 		changeShippingNumberHandler = new ChangeShippingNumberHandler(shippingStage);
+		changeHumidityHandler = new ChangeHumidityHandler();
 		executeHandler = new ExecuteHandler();
 		backHandler = new BackHandler(stage);
 		emptyBaseHandler = new EmptyBaseHandler(refreshHandler);
@@ -124,13 +132,13 @@ public class PendingOrdersGUI
 		backHandler.setChanges3(changes3);
 		
 		BorderPane border = new BorderPane();
-		
+		refreshButton.setOnAction(refreshHandler);
 		changeTimeCreationButton.setOnAction(changeTimeCreationHandler);
 	    changeTimeExecutionButton.setOnAction(button2Handler);
+	    changeShippingNumberButton.setOnAction(changeShippingNumberHandler);
+	    changeHumidityButton.setOnAction(changeHumidityHandler);
 	    executeButton.setOnAction(executeHandler);
 	    backButton.setOnAction(backHandler);
-	    changeShippingNumberButton.setOnAction(changeShippingNumberHandler);
-	    refreshButton.setOnAction(refreshHandler);
 	    emptyBaseButton.setOnAction(emptyBaseHandler);;
 		
 		myDB.findAndParse();
@@ -151,7 +159,7 @@ public class PendingOrdersGUI
         
         
         
-        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, changeTimeExecutionButton, changeShippingNumberButton, executeButton, backButton, tempLabel_1,  emptyBaseButton);
+        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, changeTimeExecutionButton, changeShippingNumberButton, changeHumidityButton, executeButton, backButton, tempLabel_1,  emptyBaseButton);
 
         border.setStyle("-fx-background-color: dodgerblue;");
 		border.setPadding(new Insets(5));
@@ -183,7 +191,8 @@ public class PendingOrdersGUI
 		refreshButton = new Button("Ανανέωση");
 		changeTimeCreationButton = new Button("Αλλαγή Χρόνου Δημιουργίας");
 		changeTimeExecutionButton = new Button("Αλλαγή Χρόνου Εκτέλεσης");
-		changeShippingNumberButton = new Button("Αλλαγή Αριθμού Αποστολής");		
+		changeShippingNumberButton = new Button("Αλλαγή Αριθμού Αποστολής");	
+		changeHumidityButton = new Button("Αλλαγή Υγρασίας");
 		executeButton = new Button("Εκτέλεση");
 		backButton = new Button("Πίσω");
 		emptyBaseButton = new Button("Άδειασμα Βάσης");
@@ -192,6 +201,7 @@ public class PendingOrdersGUI
 		changeTimeCreationButton.setMaxWidth(Double.MAX_VALUE);
 	    changeTimeExecutionButton.setMaxWidth(Double.MAX_VALUE);
 	    changeShippingNumberButton.setMaxWidth(Double.MAX_VALUE);
+	    changeHumidityButton.setMaxWidth(Double.MAX_VALUE);
 	    executeButton.setMaxWidth(Double.MAX_VALUE);
 	    backButton.setMaxWidth(Double.MAX_VALUE);
 	    emptyBaseButton.setMaxWidth(Double.MAX_VALUE);
@@ -200,9 +210,10 @@ public class PendingOrdersGUI
 	    changeTimeCreationButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 	    changeTimeExecutionButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 	    changeShippingNumberButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    changeHumidityButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 	    executeButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 	    backButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");	    
-	    emptyBaseButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    emptyBaseButton.setStyle("-fx-font-weight: bold; -fx-text-fill: red; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 	}
 	
 	private void createStage()
@@ -337,16 +348,16 @@ public class PendingOrdersGUI
     	ExecutionTime.setCellValueFactory(new PropertyValueFactory<Order, String>("ExecutionTime"));
     	ExecutionTime.setEditable(false);
     	
-    	Moistures = new TableColumn<Order, String>("ΥΓΡΑΣΙΕΣ");
-    	Moistures.setCellFactory(TextFieldTableCell.forTableColumn());
-    	Moistures.setCellValueFactory(new PropertyValueFactory<Order, String>("Moistures"));
-    	Moistures.setEditable(false);
+    	Humidity = new TableColumn<Order, String>("ΥΓΡΑΣΙΕΣ");
+    	Humidity.setCellFactory(TextFieldTableCell.forTableColumn());
+    	Humidity.setCellValueFactory(new PropertyValueFactory<Order, String>("Moistures"));
+    	Humidity.setEditable(false);
 	}
 	
 	private void setLastThingsOnTable()
 	{
 		table.setItems(data);
-        table.getColumns().addAll(OrderCode, RecipeCode, Quantity, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, TimeCreation, ExecutionDate, ExecutionTime, Moistures);
+        table.getColumns().addAll(OrderCode, RecipeCode, Quantity, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, TimeCreation, ExecutionDate, ExecutionTime, Humidity);
      
         table.getSelectionModel().setCellSelectionEnabled(false);
         
