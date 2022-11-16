@@ -568,7 +568,7 @@ public class ChangeTimeCreationHandler  implements EventHandler<ActionEvent>
 		Alert alert = new Alert(Alert.AlertType.WARNING);
     	alert.setTitle("Warning");
     	alert.setHeaderText("Καμία επιλογή");
-    	alert.setContentText("Δεν 'εχει επιλεγεί καμία απο τις παραγγελίες\nΠαρακαλώ επιλέξτε κάποια πρωτού συνεχίσετε'");
+    	alert.setContentText("Δεν έχει επιλεγεί καμία απο τις παραγγελίες\nΠαρακαλώ επιλέξτε κάποια πρωτού συνεχίσετε");
     	alert.showAndWait();
 	}
 	

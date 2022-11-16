@@ -151,6 +151,7 @@ public class PendingOrdersGUI
         
         changeTimeCreationHandler.setTable(table);
         button2Handler.setTable(table);
+        changeHumidityHandler.setTable(table);
         executeHandler.setTable(table);
         refreshHandler.setTable(table);
         
@@ -370,6 +371,7 @@ public class PendingOrdersGUI
 	    				flag = true;
 	    				changeTimeCreationHandler.setFlag(flag);
 	    				button2Handler.setFlag(flag);
+	    				changeHumidityHandler.setFlag(flag);
 	    			}	
 	    		});
 	}
