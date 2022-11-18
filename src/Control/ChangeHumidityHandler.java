@@ -1,6 +1,8 @@
 package Control;
 
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,7 +98,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 					//nothing?
 				}else if(siloIDs.size()==1)
 				{
-					currentHumidityLabel = currentHumidityLabel + " για το σιλό "+siloIDs.get(0)+" = 0.0";
+					currentHumidityLabel = currentHumidityLabel + " για το σιλό "+siloIDs.get(0)+" = "+order.getHumidity();
 				}else
 				{
 					currentHumidityLabel += " για τα σιλό ";
@@ -133,22 +135,26 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 			        @Override public void handle(ActionEvent e) {
 			            String text = textField.getText();
 
-			            if(text.length() == 1 && text.equals("0"))
-			            {
-			            	order.setHumidity("0.0");
-			            	warningWindowForFlag(text);
-			            }else if(text == null || text.trim().isEmpty())
+			            if(text == null || text.trim().isEmpty())
 			            {
 			            	warningWindowForFlag(text);
-			            }else if(text.matches("[0-9]*"))
+			            }else
 			            {
-			            	if(text.length()<8 && Long.parseLong(text)<=10)
+			            	double humidity=0.0;
+			            	try {
+			            		humidity = DecimalFormat.getNumberInstance().parse(text).doubleValue();
+							} catch (ParseException e2) {
+								// TODO Auto-generated catch block
+								e2.printStackTrace();
+							}
+			            	if(humidity<=10)
 			            	{
 			            		try {
-									myDB.setShippingInvoiceNumber(text);
+									order.setHumidity(""+humidity+"");
 									rigthWindow(text);
+									table.getItems().set(table.getSelectionModel().getSelectedIndex(), order);
 									stage.close();
-								} catch (NumberFormatException | SQLException e1) {
+								} catch (NumberFormatException e1) {
 									e1.printStackTrace();
 								}
 			            	}else
@@ -156,9 +162,6 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 			            		warningWindowForFlag(text);
 			            	}
 			            //	stage.close();
-			            }else
-			            {
-			            	warningWindowForFlag(text);
 			            }
 			        }
 			    });
@@ -210,9 +213,9 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	private void rigthWindow(String text)
 	{
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    	alert.setTitle("Αριθμός Αποστολής");
+    	alert.setTitle("Υγρασία");
     	alert.setHeaderText("Επιτυχής Ενημέρωση!");
-    	alert.setContentText("Ο Αριθμός Αποστολής '" + text +"' ενημερώθηκε επιτυχώς!");
+    	alert.setContentText("Η τιμή της υγρασίας '" + text +"' ενημερώθηκε επιτυχώς!");
     	alert.showAndWait();
 	}
 	

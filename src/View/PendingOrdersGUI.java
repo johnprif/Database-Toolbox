@@ -356,7 +356,7 @@ public class PendingOrdersGUI
     	
     	Humidity = new TableColumn<Order, String>("ΥΓΡΑΣΙΕΣ");
     	Humidity.setCellFactory(TextFieldTableCell.forTableColumn());
-    	Humidity.setCellValueFactory(new PropertyValueFactory<Order, String>("Moistures"));
+    	Humidity.setCellValueFactory(new PropertyValueFactory<Order, String>("Humidity"));
     	Humidity.setEditable(false);
 	}
 	

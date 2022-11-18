@@ -241,7 +241,7 @@ public class DataBaseHandler
 		System.out.println("DateLastEdit = "+order.getDateLastEdit());
 		System.out.println("ExecutionDate = "+order.getExecutionDate());
 		System.out.println("ExecutionTime = "+order.getExecutionTime());
-		System.out.println("Moistures = "+order.getHumidity());
+		System.out.println("Humidity = "+order.getHumidity());
 	}
 	
 	private int computeDurationTime(int cycles)
