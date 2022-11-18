@@ -39,6 +39,7 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 	private ComboBox minutes;
 	Random rand;
 	
+	
 	public ChangeTimeHandler(Button button, Stage stage)
 	{
 		rand = new Random();
@@ -58,8 +59,7 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 		}else
 		{
 			order = table.getSelectionModel().getSelectedItem();
-			
-			
+
 			Button button1 = new Button("Επιλογή");
 			Button button2 = new Button("Ακύρωση");
 			button1.setMaxWidth(Double.MAX_VALUE);

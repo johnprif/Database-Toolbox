@@ -41,8 +41,5 @@ public class PendingOrdersFactory implements EventHandler<ActionEvent>
 		pendingOrdersGUI.initialize();
 	}
 	
-	private void checkIfFileIsLoaded()
-	{
-		
-	}
+	
 }

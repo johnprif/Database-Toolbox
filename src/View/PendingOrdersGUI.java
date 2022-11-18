@@ -133,8 +133,13 @@ public class PendingOrdersGUI
 		
 		BorderPane border = new BorderPane();
 		refreshButton.setOnAction(refreshHandler);
+		
+		
+		//=====================IT WORKS FINE===================================
 		changeTimeCreationButton.setOnAction(changeTimeCreationHandler);
 	    changeTimeExecutionButton.setOnAction(changeTimeExecutionHandler);
+	  //=========================================================================
+
 	    changeShippingNumberButton.setOnAction(changeShippingNumberHandler);
 	    changeHumidityButton.setOnAction(changeHumidityHandler);
 	    executeButton.setOnAction(executeHandler);

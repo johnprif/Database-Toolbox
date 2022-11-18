@@ -30,6 +30,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	private HBox hbox;
 	private VBox vbox;
 	
+	private Order order;
 	private TableView<Order> table;
 	
 	private boolean flag = false;
@@ -53,7 +54,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		{
 			
 			
-			Order order = table.getSelectionModel().getSelectedItem();			
+			order = table.getSelectionModel().getSelectedItem();			
 			
 			createButtons();
 			
@@ -61,7 +62,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 			
 			 Scene scene = new Scene(vbox, 400, 400);
 		        stage.setScene(scene);
-		        stage.setTitle("Αλλαγή Αριθμού Αποστολής");
+		        stage.setTitle("Αλλαγή Υγρασίας -> "+order.getOrderCode());
 		        
 		        vbox.setAlignment(Pos.BASELINE_CENTER);
 		        vbox.setStyle("-fx-background-color: dodgerblue;");
@@ -74,7 +75,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		        Label checkInlabel;
 		        Label currentShippingNumber;
 				
-		        checkInlabel = new Label("Εισάγετε την επιθυμητή υγρασία για το: "+order.getOrderCode());
+		        checkInlabel = new Label("Εισάγετε την επιθυμητή υγρασία");
 				checkInlabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
 		        gridPane.add(checkInlabel, 0, 0);
 		        GridPane.setHalignment(checkInlabel, HPos.CENTER);
