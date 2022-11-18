@@ -23,7 +23,7 @@ public class Main extends Application
 {
 	private DataBaseHandler myDB;
 	private String path;
-	private PathHandler takeThePath;
+	private PathHandler pathHandler;
 	private String version = "-v3.0-";
 	private String programTitle = "SAITEC"+version;
 	
@@ -38,9 +38,9 @@ public class Main extends Application
 	public void start(Stage primaryStage) 
 	{
 		myDB = DataBaseHandler.getInstance();
-		takeThePath = PathHandler.getInstance();
-		takeThePath.checkPathFile();
-		checkIfAlreadyOpen(takeThePath.getPath());
+		pathHandler = PathHandler.getInstance();
+		pathHandler.checkPathFile();
+		checkIfAlreadyOpen(pathHandler.getPath());
 //		path = takeThePath.getPath();
 //		myDB.setPath(path);
 //		myDB.initialize();
@@ -49,7 +49,7 @@ public class Main extends Application
 			//Creating Buttons     
 			createButtons();	    		    
 		    
-		    loadDBButton.setOnAction(takeThePath);
+		    loadDBButton.setOnAction(pathHandler);
 		    
 		    PendingOrdersFactory pendingOrdersFactory = new PendingOrdersFactory();
 		    pendingOrdersFactory.setDB();
