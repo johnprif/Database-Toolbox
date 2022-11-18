@@ -22,7 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class ChangeTimeCreationHandler  implements EventHandler<ActionEvent>
+public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 {
 	private DatePicker checkInDatePicker;
 	private Label checkInlabel;
@@ -39,7 +39,7 @@ public class ChangeTimeCreationHandler  implements EventHandler<ActionEvent>
 	private ComboBox minutes;
 	Random rand;
 	
-	public ChangeTimeCreationHandler(Button button, Stage stage)
+	public ChangeTimeHandler(Button button, Stage stage)
 	{
 		rand = new Random();
 		//stage = new Stage();

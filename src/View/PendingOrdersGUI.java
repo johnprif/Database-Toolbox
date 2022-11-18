@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import javafx.beans.binding.Bindings;
 import java.util.HashMap; // import the HashMap class
 
-import Control.ChangeTimeCreationHandler;
+import Control.ChangeTimeHandler;
 import Control.ExecuteHandler;
 import Control.BackHandler;
 import Control.ChangeHumidityHandler;
@@ -85,8 +85,8 @@ public class PendingOrdersGUI
     private VBox vbox2;
     
     private RefreshHandler refreshHandler;
-    private ChangeTimeCreationHandler changeTimeCreationHandler;
-    private ChangeTimeCreationHandler button2Handler;
+    private ChangeTimeHandler changeTimeCreationHandler;
+    private ChangeTimeHandler button2Handler;
     private ChangeShippingNumberHandler changeShippingNumberHandler;
     private ChangeHumidityHandler changeHumidityHandler;
     private ExecuteHandler executeHandler;
@@ -118,8 +118,8 @@ public class PendingOrdersGUI
 		createButtons();
 		
 		refreshHandler = new RefreshHandler(stage);
-		changeTimeCreationHandler = new ChangeTimeCreationHandler(changeTimeCreationButton, dateStage);
-		button2Handler = new ChangeTimeCreationHandler(changeTimeExecutionButton, dateStage);
+		changeTimeCreationHandler = new ChangeTimeHandler(changeTimeCreationButton, dateStage);
+		button2Handler = new ChangeTimeHandler(changeTimeExecutionButton, dateStage);
 		changeShippingNumberHandler = new ChangeShippingNumberHandler(shippingStage);
 		changeHumidityHandler = new ChangeHumidityHandler(shippingStage);
 		executeHandler = new ExecuteHandler();
