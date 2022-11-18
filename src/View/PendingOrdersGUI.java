@@ -69,6 +69,7 @@ public class PendingOrdersGUI
 	private Scene scene;
 	private Stage stage;	
     private TableView<Order> table;
+    private TableView<Order> table2;
     
     private Button refreshButton;
     private Button changeTimeCreationButton;
@@ -148,12 +149,13 @@ public class PendingOrdersGUI
 	    emptyBaseButton.setOnAction(emptyBaseHandler);;
 		
 		myDB.findAndParse();
-		data = myDB.getData();
-		
-		
+		data = myDB.getData();		
 		
 		createTable();
         createAndFillCells();
+        
+        createTable2();
+        createAndFillCells2();
         
         changeTimeCreationHandler.setTable(table);
         changeTimeExecutionHandler.setTable(table);
@@ -166,8 +168,11 @@ public class PendingOrdersGUI
         
         
         
-        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, changeTimeExecutionButton, changeShippingNumberButton, changeHumidityButton, executeButton, backButton, tempLabel_1,  emptyBaseButton);
+//        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, changeTimeExecutionButton, changeShippingNumberButton, changeHumidityButton, executeButton, backButton, tempLabel_1,  emptyBaseButton);
+        
+        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, changeTimeExecutionButton, changeShippingNumberButton, changeHumidityButton, executeButton, backButton, table2,  emptyBaseButton);
 
+        
         border.setStyle("-fx-background-color: dodgerblue;");
 		border.setPadding(new Insets(5));
         border.setCenter(table);
@@ -240,6 +245,7 @@ public class PendingOrdersGUI
 		table = new TableView<Order>();
 		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         table.setEditable(true);
+        table.setTableMenuButtonVisible(true);
 	}
 
 //	private void createGridPane()
@@ -359,6 +365,25 @@ public class PendingOrdersGUI
     	Humidity.setCellFactory(TextFieldTableCell.forTableColumn());
     	Humidity.setCellValueFactory(new PropertyValueFactory<Order, String>("Humidity"));
     	Humidity.setEditable(false);
+	}
+	
+	private void createTable2()
+	{
+		table2 = new TableView<Order>();
+		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        table.setEditable(true);
+        table2.setTableMenuButtonVisible(true);
+	}
+	
+	private void createAndFillCells2()
+	{
+		Humidity = new TableColumn<Order, String>("ΥΓΡΑΣΙΕΣ");
+    	Humidity.setCellFactory(TextFieldTableCell.forTableColumn());
+    	Humidity.setCellValueFactory(new PropertyValueFactory<Order, String>("Humidity"));
+    	Humidity.setEditable(false);
+    	
+    	table2.setItems(data);
+    	table2.getColumns().addAll(Humidity);
 	}
 	
 	private void setLastThingsOnTable()
