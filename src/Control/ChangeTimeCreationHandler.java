@@ -57,6 +57,9 @@ public class ChangeTimeCreationHandler  implements EventHandler<ActionEvent>
 			stage.close();
 		}else
 		{
+			order = table.getSelectionModel().getSelectedItem();
+			
+			
 			Button button1 = new Button("Επιλογή");
 			Button button2 = new Button("Ακύρωση");
 			button1.setMaxWidth(Double.MAX_VALUE);
@@ -72,7 +75,7 @@ public class ChangeTimeCreationHandler  implements EventHandler<ActionEvent>
 	        vbox.setStyle("-fx-padding: 10;");
 	        Scene scene = new Scene(vbox, 400, 400);
 	        stage.setScene(scene);
-	        stage.setTitle("Αλλαγή Ημερμηνίας");
+	        stage.setTitle("Αλλαγή Ημερμηνίας -> "+order.getOrderCode());
 	        vbox.setAlignment(Pos.BASELINE_CENTER);
 	        vbox.setStyle("-fx-background-color: dodgerblue;");
 	        checkInDatePicker = new DatePicker();
@@ -133,7 +136,7 @@ public class ChangeTimeCreationHandler  implements EventHandler<ActionEvent>
 		        		String stringHours = hours.getValue()+"";
 		        		String stringMinutes = minutes.getValue()+"";
 		        		
-		        		Order order = table.getSelectionModel().getSelectedItem();
+//		        		Order order = table.getSelectionModel().getSelectedItem();
 		        		
 		        		if(button.getText().equals("Αλλαγή Χρόνου Δημιουργίας"))
 		        		{
