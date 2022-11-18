@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import Model.DataBaseHandler;
@@ -39,6 +40,8 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	
 	private ArrayList<String> siloIDs;
 	private boolean flag = false;
+	
+	private HashMap<String, Order> changes3;
 	
 	public ChangeHumidityHandler(Stage stage)
 	{
@@ -150,9 +153,11 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 			            	if(humidity<=10)
 			            	{
 			            		try {
-									order.setHumidity(""+humidity+"");
-									rigthWindow(text);
+									order.setHumidity(""+humidity+"");									
 									table.getItems().set(table.getSelectionModel().getSelectedIndex(), order);
+									changes3.put(order.getOrderCode(), order);
+									
+									rigthWindow(text);
 									stage.close();
 								} catch (NumberFormatException e1) {
 									e1.printStackTrace();
@@ -168,6 +173,11 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		}
 		
 		
+	}
+	
+	public void setChanges3(HashMap<String, Order> changes3)
+	{
+		this.changes3 = changes3;
 	}
 	
 	public void setTable(TableView<Order> table)

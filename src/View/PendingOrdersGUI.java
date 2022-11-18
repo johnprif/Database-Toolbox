@@ -128,6 +128,7 @@ public class PendingOrdersGUI
 		
 		changeTimeCreationHandler.setChanges3(changes3);
 		changeTimeExecutionHandler.setChanges3(changes3);
+		changeHumidityHandler.setChanges3(changes3);
 		executeHandler.setChanges3(changes3);
 		backHandler.setChanges3(changes3);
 		
