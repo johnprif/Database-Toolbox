@@ -306,6 +306,21 @@ public class DataBaseHandler
 		connection.commit();
 	}
 	
+	public void getHumiditySilos() throws SQLException
+	{
+		PreparedStatement preparedStatement = connection.prepareStatement("SELECT SiloID FROM Silos WHERE SiloScaleID=201 AND (AllowManualHumidity=True OR NOT HumidityScaleID=0)");
+		ResultSet pendingSet2 = preparedStatement.executeQuery();
+		
+		try {
+			while(pendingSet2.next())
+			{
+				System.out.println("HERE IS THE HUMIDITY SILOS -> "+ pendingSet2.getString("SiloID"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public int getShippingInvoiceNumber() throws SQLException
 	{
 		int ShippingInvoiceNumber;

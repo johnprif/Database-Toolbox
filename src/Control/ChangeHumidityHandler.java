@@ -56,6 +56,13 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 			
 			order = table.getSelectionModel().getSelectedItem();			
 			
+			try {
+				myDB.getHumiditySilos();
+			} catch (SQLException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			}
+			
 			createButtons();
 			
 			createBoxes();
