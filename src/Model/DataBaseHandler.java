@@ -68,6 +68,11 @@ public class DataBaseHandler
 		this.path = path;
 	}
 	
+	public String getPath()
+	{
+		return path;
+	}
+	
 	public void clearOldData()
 	{
 		data.clear();

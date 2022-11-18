@@ -220,7 +220,7 @@ public class PendingOrdersGUI
 	private void createStage()
 	{
 		//stage = new Stage();
-        stage.setTitle("Λίστα Παραγγελιών σε Εκκρεμότητα");
+        stage.setTitle("Λίστα Παραγγελιών σε Εκκρεμότητα -> "+myDB.getPath());
         stage.setMinWidth(800);
         stage.setMinHeight(600);
         
