@@ -2,7 +2,6 @@ package Control;
 
 import Model.DataBaseHandler;
 import Model.Order;
-import Model.TakeThePath;
 import View.PendingOrdersGUI;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,12 +12,12 @@ public class PendingOrdersFactory implements EventHandler<ActionEvent>
 {
 	private ObservableList<Order> data;
 	private DataBaseHandler myDB;
-	private TakeThePath takeThePath;
+	private PathHandler takeThePath;
 	private Stage stage;
 	
 	public PendingOrdersFactory()
 	{
-		takeThePath = TakeThePath.getInstance();
+		takeThePath = PathHandler.getInstance();
 	}
 
 	public void setDB()

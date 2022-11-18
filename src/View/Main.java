@@ -3,9 +3,10 @@ package View;
 import javafx.stage.WindowEvent;
 import java.io.File;
 import java.sql.SQLException;
+
+import Control.PathHandler;
 import Control.PendingOrdersFactory;
 import Model.DataBaseHandler;
-import Model.TakeThePath;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -22,7 +23,7 @@ public class Main extends Application
 {
 	private DataBaseHandler myDB;
 	private String path;
-	private TakeThePath takeThePath;
+	private PathHandler takeThePath;
 	private String version = "-v3.0-";
 	private String programTitle = "SAITEC"+version;
 	
@@ -37,7 +38,7 @@ public class Main extends Application
 	public void start(Stage primaryStage) 
 	{
 		myDB = DataBaseHandler.getInstance();
-		takeThePath = TakeThePath.getInstance();
+		takeThePath = PathHandler.getInstance();
 		takeThePath.checkPathFile();
 		checkIfAlreadyOpen(takeThePath.getPath());
 //		path = takeThePath.getPath();

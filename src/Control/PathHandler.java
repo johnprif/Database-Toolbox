@@ -1,4 +1,4 @@
-package Model;
+package Control;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
+
+import Model.DataBaseHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
@@ -13,7 +15,7 @@ import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class TakeThePath implements EventHandler<ActionEvent>
+public class PathHandler implements EventHandler<ActionEvent>
 {
 	private File myObj = new File("databaseLocation.txt");
 	private Button button;
@@ -23,17 +25,17 @@ public class TakeThePath implements EventHandler<ActionEvent>
 	
 	
 	//create an object of SingleObject
-	private static TakeThePath instance = new TakeThePath();
+	private static PathHandler instance = new PathHandler();
 
 	   //make the constructor private so that this class cannot be
 	   //instantiated
-	private TakeThePath()
+	private PathHandler()
 	{
 		myDB.getInstance();
 	}
 
 	   //Get the only object available
-	public static TakeThePath getInstance()
+	public static PathHandler getInstance()
 	{
 	      return instance;
 	}
