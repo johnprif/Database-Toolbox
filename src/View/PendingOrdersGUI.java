@@ -86,7 +86,7 @@ public class PendingOrdersGUI
     
     private RefreshHandler refreshHandler;
     private ChangeTimeHandler changeTimeCreationHandler;
-    private ChangeTimeHandler button2Handler;
+    private ChangeTimeHandler changeTimeExecutionHandler;
     private ChangeShippingNumberHandler changeShippingNumberHandler;
     private ChangeHumidityHandler changeHumidityHandler;
     private ExecuteHandler executeHandler;
@@ -119,7 +119,7 @@ public class PendingOrdersGUI
 		
 		refreshHandler = new RefreshHandler(stage);
 		changeTimeCreationHandler = new ChangeTimeHandler(changeTimeCreationButton, dateStage);
-		button2Handler = new ChangeTimeHandler(changeTimeExecutionButton, dateStage);
+		changeTimeExecutionHandler = new ChangeTimeHandler(changeTimeExecutionButton, dateStage);
 		changeShippingNumberHandler = new ChangeShippingNumberHandler(shippingStage);
 		changeHumidityHandler = new ChangeHumidityHandler(shippingStage);
 		executeHandler = new ExecuteHandler();
@@ -127,14 +127,14 @@ public class PendingOrdersGUI
 		emptyBaseHandler = new EmptyBaseHandler(refreshHandler);
 		
 		changeTimeCreationHandler.setChanges3(changes3);
-		button2Handler.setChanges3(changes3);
+		changeTimeExecutionHandler.setChanges3(changes3);
 		executeHandler.setChanges3(changes3);
 		backHandler.setChanges3(changes3);
 		
 		BorderPane border = new BorderPane();
 		refreshButton.setOnAction(refreshHandler);
 		changeTimeCreationButton.setOnAction(changeTimeCreationHandler);
-	    changeTimeExecutionButton.setOnAction(button2Handler);
+	    changeTimeExecutionButton.setOnAction(changeTimeExecutionHandler);
 	    changeShippingNumberButton.setOnAction(changeShippingNumberHandler);
 	    changeHumidityButton.setOnAction(changeHumidityHandler);
 	    executeButton.setOnAction(executeHandler);
@@ -150,7 +150,7 @@ public class PendingOrdersGUI
         createAndFillCells();
         
         changeTimeCreationHandler.setTable(table);
-        button2Handler.setTable(table);
+        changeTimeExecutionHandler.setTable(table);
         changeHumidityHandler.setTable(table);
         executeHandler.setTable(table);
         refreshHandler.setTable(table);
@@ -370,7 +370,7 @@ public class PendingOrdersGUI
 	    			{
 	    				flag = true;
 	    				changeTimeCreationHandler.setFlag(flag);
-	    				button2Handler.setFlag(flag);
+	    				changeTimeExecutionHandler.setFlag(flag);
 	    				changeHumidityHandler.setFlag(flag);
 	    			}	
 	    		});
