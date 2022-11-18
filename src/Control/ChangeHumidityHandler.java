@@ -104,10 +104,10 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 					currentHumidityLabel = currentHumidityLabel + " για το σιλό "+siloIDs.get(0)+" = "+order.getHumidity();
 				}else
 				{
-					currentHumidityLabel += " για τα σιλό ";
+					currentHumidityLabel += " για τα σιλό: ";
 					for(int i=0; i<siloIDs.size(); i++)
 					{
-						currentHumidityLabel += siloIDs.get(i);
+						currentHumidityLabel += ", "+siloIDs.get(i);
 					}
 					
 				}
@@ -226,15 +226,6 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
     	alert.setTitle("Υγρασία");
     	alert.setHeaderText("Επιτυχής Ενημέρωση!");
     	alert.setContentText("Η τιμή της υγρασίας '" + text +"' ενημερώθηκε επιτυχώς!");
-    	alert.showAndWait();
-	}
-	
-	private void maxNumberWindow(String text)
-	{
-		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    	alert.setTitle("Αριθμός Αποστολής");
-    	alert.setHeaderText("Επιτυχής Ενημέρωση!\nΜέγιστη καταχώρηση!");
-    	alert.setContentText("Ο Αριθμός Αποστολής '" + text +"' ενημερώθηκε επιτυχώς!\nΗ τρέχουσα παραγγελία θα ενημερωθεί με αυτόν τον αριθμό αποστολής.\nΕπειδή όμως καταχωρήσατε τον μέγιστο επιτρεπτό Αριθμό Αποστολής δεν θα προσαυξηθεί κατά 1  όπως πάντα αλλά θα καταχωρηθεί η τιμή 1 αυτόματα στην επόμενη παραγγελία!");
     	alert.showAndWait();
 	}
 	
