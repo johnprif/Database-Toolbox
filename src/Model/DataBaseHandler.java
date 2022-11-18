@@ -43,7 +43,7 @@ public class DataBaseHandler
 	private ArrayList<String> SiloID = new ArrayList<String>();
 	private ArrayList<String> SiloQuantity = new ArrayList<String>();
 	private ArrayList<String> SiloQuantityCopy = new ArrayList<String>();
-	
+	private ArrayList<String> siloIDs;
 	//create an object of SingleObject
 	private static DataBaseHandler instance = new DataBaseHandler();
 	
@@ -313,8 +313,7 @@ public class DataBaseHandler
 		PreparedStatement preparedStatement = connection.prepareStatement("SELECT SiloID FROM Silos WHERE SiloScaleID=201 AND (AllowManualHumidity=True OR NOT HumidityScaleID=0)");
 		ResultSet pendingSet2 = preparedStatement.executeQuery();
 		
-		ArrayList<String> siloIDs = new ArrayList<String>();
-		String temp;
+		siloIDs = new ArrayList<String>();
 		
 		try {
 			while(pendingSet2.next())
@@ -531,9 +530,65 @@ public class DataBaseHandler
 	
 	private ArrayList<String[]> computeQuantitys(Order order, int NoOfBatches)
 	{
-//		System.out.println("EDW EIMAI");
 		ArrayList<String[]> Quantitys = new ArrayList<String[]>();
-		//ArrayList<Integer> oldNewQuantity = new ArrayList<Integer>();
+		HashMap<String, Integer> oldNewQuantity = new HashMap<String, Integer>();
+		int intSiloQuantity;
+		int intBatchQuantity;
+		int Quantity;
+		int QuantityActual;
+
+		int oldQuantity;
+		int newQuantity;
+		
+		int max;
+		int min;
+		int range;
+		
+		for(int i=0; i<NoOfBatches; i++)
+		{
+			for(int j=0; j<SiloID.size(); j++)
+			{
+				System.out.println("SILO ID == "+SiloID.get(j));
+				intSiloQuantity = Integer.parseInt(SiloQuantity.get(j));
+				intBatchQuantity = Integer.parseInt(order.getBatchQuantity());
+				
+				if(i>0)
+				{
+					Quantity = oldNewQuantity.get(SiloID.get(j));
+				}else
+				{
+					Quantity = (int) (((intSiloQuantity * 1.0)/100)*intBatchQuantity);
+				}
+				
+				if(i == NoOfBatches-1)
+				{
+					max = (int) (1.005*Quantity);
+					min = (int) (0.995*Quantity);
+					range = (max - min) + 1;
+				}else
+				{
+					max = (int) (1.04*Quantity);
+					min = (int) (0.96*Quantity);
+					range = (max - min) + 1;
+				}
+				
+				QuantityActual = (int) ((Math.random() * range) + min);
+				
+				String[] idQuaAcQua= {(i+1)+"" , SiloID.get(j), Quantity+"", QuantityActual+""};
+				Quantitys.add(idQuaAcQua);
+				
+				oldQuantity =(int) (((intSiloQuantity * 1.0)/100)*intBatchQuantity);
+				newQuantity = (Quantity - QuantityActual)+oldQuantity;
+				oldNewQuantity.put(SiloID.get(j), newQuantity);
+			}			
+		}
+		
+		return Quantitys;
+	}
+	
+	private ArrayList<String[]> computeQuantitys2(Order order, int NoOfBatches)
+	{
+		ArrayList<String[]> Quantitys = new ArrayList<String[]>();
 		HashMap<String, Integer> oldNewQuantity = new HashMap<String, Integer>();
 		int intSiloQuantity;
 		int intBatchQuantity;
@@ -579,7 +634,6 @@ public class DataBaseHandler
 				String[] idQuaAcQua= {(i+1)+"" , SiloID.get(j), Quantity+"", QuantityActual+""};
 				Quantitys.add(idQuaAcQua);
 				
-			//	intOldSiloQuantity = Integer.parseInt(SiloQuantityCopy.get(j));
 				oldQuantity =(int) (((intSiloQuantity * 1.0)/100)*intBatchQuantity);
 				newQuantity = (Quantity - QuantityActual)+oldQuantity;
 				oldNewQuantity.put(SiloID.get(j), newQuantity);

@@ -22,6 +22,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	private ArrayList<Order> changes2;
 	private HashMap<String, Order> changes3;
 	private TableView<Order> table;
+	Order selectedItem;
 	
 	public ExecuteHandler()
 	{
@@ -31,7 +32,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	@Override
 	public void handle(ActionEvent arg0)
 	{	
-		Order selectedItem = table.getSelectionModel().getSelectedItem();
+		selectedItem = table.getSelectionModel().getSelectedItem();
 		
 		if(selectedItem == null)
 		{
@@ -97,7 +98,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	private void emptyDate(Order order) throws SQLException
 	{
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmation Dialog");
+		alert.setTitle("Παραγγελία προς εκτέλεση -> " +selectedItem.getOrderCode());
 		alert.setHeaderText("Κενή Ημερομηνία!");
 		alert.setContentText("Η 'Ημερομηνία Εκτέλεσης' είναι κενή!\nΠατήστε το 'ΟΚ' για να συμπληρωθούς αυτόματα με την τωρινή ημερομηνία\nΠατήστε το 'Cancel' για ακύρωση");
 
