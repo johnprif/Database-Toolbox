@@ -135,7 +135,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 
 			            if(text.length() == 1 && text.equals("0"))
 			            {
-			            	order.setMoistures("0.0");
+			            	order.setHumidity("0.0");
 			            	warningWindowForFlag(text);
 			            }else if(text == null || text.trim().isEmpty())
 			            {
