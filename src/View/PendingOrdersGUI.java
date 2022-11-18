@@ -66,10 +66,11 @@ public class PendingOrdersGUI
 	private TableColumn<Order, String> ExecutionDate;    
 	private TableColumn<Order, String> ExecutionTime;
 	private TableColumn<Order, String> Humidity;
+	private TableColumn<String, String> siloIDs;
+	
 	private Scene scene;
 	private Stage stage;	
     private TableView<Order> table;
-    private TableView<Order> table2;
     
     private Button refreshButton;
     private Button changeTimeCreationButton;
@@ -84,6 +85,7 @@ public class PendingOrdersGUI
     private int counter = 0;
     private String order;
     private VBox vbox2;
+    private VBox vbox3;
     
     private RefreshHandler refreshHandler;
     private ChangeTimeHandler changeTimeCreationHandler;
@@ -102,6 +104,9 @@ public class PendingOrdersGUI
     private Stage dateStage;
     private Stage shippingStage;
     private Label tempLabel_1 = new Label("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    private Label temp;
+    
+    private ArrayList<Label> labelsArrayList;
     
 	public PendingOrdersGUI(Stage stage)
 	{
@@ -154,9 +159,6 @@ public class PendingOrdersGUI
 		createTable();
         createAndFillCells();
         
-        createTable2();
-        createAndFillCells2();
-        
         changeTimeCreationHandler.setTable(table);
         changeTimeExecutionHandler.setTable(table);
         changeHumidityHandler.setTable(table);
@@ -170,7 +172,7 @@ public class PendingOrdersGUI
         
 //        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, changeTimeExecutionButton, changeShippingNumberButton, changeHumidityButton, executeButton, backButton, tempLabel_1,  emptyBaseButton);
         
-        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, changeTimeExecutionButton, changeShippingNumberButton, changeHumidityButton, executeButton, backButton, table2,  emptyBaseButton);
+        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, changeTimeExecutionButton, changeShippingNumberButton, changeHumidityButton, executeButton, backButton, tempLabel_1, emptyBaseButton);
 
         
         border.setStyle("-fx-background-color: dodgerblue;");
@@ -366,31 +368,12 @@ public class PendingOrdersGUI
     	Humidity.setCellValueFactory(new PropertyValueFactory<Order, String>("Humidity"));
     	Humidity.setEditable(false);
 	}
-	
-	private void createTable2()
-	{
-		table2 = new TableView<Order>();
-		table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        table.setEditable(true);
-        table2.setTableMenuButtonVisible(true);
-	}
-	
-	private void createAndFillCells2()
-	{
-		Humidity = new TableColumn<Order, String>("ΥΓΡΑΣΙΕΣ");
-    	Humidity.setCellFactory(TextFieldTableCell.forTableColumn());
-    	Humidity.setCellValueFactory(new PropertyValueFactory<Order, String>("Humidity"));
-    	Humidity.setEditable(false);
-    	
-    	table2.setItems(data);
-    	table2.getColumns().addAll(Humidity);
-	}
-	
+		
 	private void setLastThingsOnTable()
 	{
 		table.setItems(data);
         table.getColumns().addAll(OrderCode, RecipeCode, Quantity, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, TimeCreation, ExecutionDate, ExecutionTime, Humidity);
-     
+                
         table.getSelectionModel().setCellSelectionEnabled(false);
         
         ObservableList<Order> orderList = table.getSelectionModel().getSelectedItems();	    	    
