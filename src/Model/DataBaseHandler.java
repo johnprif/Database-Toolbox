@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.nio.charset.StandardCharsets;
@@ -306,19 +308,26 @@ public class DataBaseHandler
 		connection.commit();
 	}
 	
-	public void getHumiditySilos() throws SQLException
+	public ArrayList<String> getHumiditySilos() throws SQLException
 	{
 		PreparedStatement preparedStatement = connection.prepareStatement("SELECT SiloID FROM Silos WHERE SiloScaleID=201 AND (AllowManualHumidity=True OR NOT HumidityScaleID=0)");
 		ResultSet pendingSet2 = preparedStatement.executeQuery();
 		
+		ArrayList<String> siloIDs = new ArrayList<String>();
+		String temp;
+		
 		try {
 			while(pendingSet2.next())
 			{
+				siloIDs.add(pendingSet2.getString("SiloID"));
 				System.out.println("HERE IS THE HUMIDITY SILOS -> "+ pendingSet2.getString("SiloID"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		System.out.println("HERE IS THE HUMIDITY SILOS length-> "+ siloIDs.size());
+		return siloIDs;
+		
 	}
 	
 	public int getShippingInvoiceNumber() throws SQLException

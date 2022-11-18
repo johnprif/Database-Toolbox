@@ -1,6 +1,8 @@
 package Control;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import Model.DataBaseHandler;
 import Model.Order;
@@ -33,6 +35,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	private Order order;
 	private TableView<Order> table;
 	
+	private ArrayList<String> siloIDs;
 	private boolean flag = false;
 	
 	public ChangeHumidityHandler(Stage stage)
@@ -57,7 +60,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 			order = table.getSelectionModel().getSelectedItem();			
 			
 			try {
-				myDB.getHumiditySilos();
+				siloIDs = new ArrayList<String>(myDB.getHumiditySilos());
 			} catch (SQLException e3) {
 				// TODO Auto-generated catch block
 				e3.printStackTrace();
@@ -80,22 +83,33 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		        gridPane.setVgap(10);
 
 		        Label checkInlabel;
-		        Label currentShippingNumber;
-				
+		        Label currentHumidity;
+				String currentHumidityLabel = "Τρέχουσα Υγρασία";
+		        
 		        checkInlabel = new Label("Εισάγετε την επιθυμητή υγρασία");
 				checkInlabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
 		        gridPane.add(checkInlabel, 0, 0);
 		        GridPane.setHalignment(checkInlabel, HPos.CENTER);
 		        
-		        try {	        
-			        currentShippingNumber = new Label("Τρέχον Αριθμός Αποστολής = "+myDB.getShippingInvoiceNumber());
-			        currentShippingNumber.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
-			        gridPane.add(currentShippingNumber, 0, 1);
-			        GridPane.setHalignment(currentShippingNumber, HPos.CENTER);
-				} catch (SQLException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
+		        if(siloIDs.size()==0)
+				{
+					//nothing?
+				}else if(siloIDs.size()==1)
+				{
+					currentHumidityLabel = currentHumidityLabel + " για το σιλό "+siloIDs.get(0)+" = 0.0";
+				}else
+				{
+					currentHumidityLabel += " για τα σιλό ";
+					for(int i=0; i<siloIDs.size(); i++)
+					{
+						currentHumidityLabel += siloIDs.get(i);
+					}
+					
 				}
+				currentHumidity = new Label(currentHumidityLabel);
+				currentHumidity.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
+				gridPane.add(currentHumidity, 0, 1);
+				GridPane.setHalignment(currentHumidity, HPos.CENTER);
 			
 		        gridPane.add(textField, 0, 2);
 		        gridPane.add(hbox, 0, 3);
@@ -127,22 +141,13 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 			            	warningWindowForFlag(text);
 			            }else if(text.matches("[0-9]*"))
 			            {
-			            	if(text.length()<8 && Long.parseLong(text)<9999999)
+			            	if(text.length()<8 && Long.parseLong(text)<=10)
 			            	{
 			            		try {
 									myDB.setShippingInvoiceNumber(text);
 									rigthWindow(text);
 									stage.close();
 								} catch (NumberFormatException | SQLException e1) {
-									e1.printStackTrace();
-								}
-			            	}else if(text.length()==7 && Long.parseLong(text)==9999999)
-			            	{
-			            		try {
-									myDB.setShippingInvoiceNumber(text);
-									maxNumberWindow(text);
-									stage.close();
-								} catch (SQLException e1) {
 									e1.printStackTrace();
 								}
 			            	}else
@@ -196,8 +201,8 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	{
 		Alert alert = new Alert(Alert.AlertType.ERROR);
     	alert.setTitle("Error");
-    	alert.setHeaderText("Ο"+text+"' δεν αποτελεί έγκυρο Αριθμό Αποστολής!");
-    	alert.setContentText("Παρακαλώ εισάγετε έναν έγυρο Αριθμό Αποστολής πρωτού συνεχίσετε\nΕπιτρέπονται μόνο αριθμοί μέχρι 7 ψηφίων οι οποίοι είναι μετεξύ 0 και 9999999");
+    	alert.setHeaderText("Η τιμή '"+text+"' δεν αποτελεί έγκυρη υγρασία!");
+    	alert.setContentText("Παρακαλώ εισάγετε μια έγκυρη τιμή πρωτού συνεχίσετε\nΕπιτρέπονται μόνο αριθμοί μέχρι 7 ψηφίων οι οποίοι είναι μετεξύ 0 και 10");
     	alert.showAndWait();
 	}
 	
