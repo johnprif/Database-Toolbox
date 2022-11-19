@@ -31,6 +31,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	private DataBaseHandler myDB;
 	
 	private Button select;
+	private Button back;
 	private Button cancel;
 	
 	private HBox hbox;
@@ -94,10 +95,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		        Label currentHumidity;
 //				String currentHumidityLabel = "Τρέχουσα Υγρασία";
 		        
-		        checkInlabel = new Label("Εισάγετε την επιθυμητή υγρασία");
-				checkInlabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
-		        gridPane.add(checkInlabel, 0, 0);
-		        GridPane.setHalignment(checkInlabel, HPos.CENTER);
+		        
 
 				if(siloIDsPerOrder.size()==0)
 				{
@@ -133,16 +131,25 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 //				comboTest.getItems().add("8");
 //				comboTest.getItems().add("9");
 				
+				String checkInlabelText = "Εισάγετε την επιθυμητή υγρασία για το σιλό: ";
+				checkInlabel = new Label(checkInlabelText);
+				
 				makeComboSilos();
 				String currentHumidityString;
 				comboTest.setOnAction(new EventHandler<ActionEvent>() {
 			        @Override public void handle(ActionEvent e) {		
-			        	
+			        	checkInlabel.setText(checkInlabelText+myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()));
 //			        	currentHumidityString = 
 			            textField.setPromptText(myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()));
 			        }
 			    });
 				
+				
+				
+				checkInlabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
+		        gridPane.add(checkInlabel, 0, 0);
+		        GridPane.setHalignment(checkInlabel, HPos.CENTER);
+		        
 				Label textField1 = new Label("Hello");
 				HBox hbox1 = new HBox(5, comboTest, textField, select);			
 				gridPane.add(hbox1, 0, 2);
@@ -153,12 +160,18 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		        vbox.getChildren().add(gridPane);
 		        
 		        stage.setHeight(370);
-		        stage.setWidth(330);
+		        stage.setWidth(350);
 		        stage.setResizable(false);
 		        stage.show();
 		        
 
 				cancel.setOnAction(new EventHandler<ActionEvent>() {
+			        @Override public void handle(ActionEvent e) {
+			            stage.close();
+			        }
+			    });
+				
+				back.setOnAction(new EventHandler<ActionEvent>() {
 			        @Override public void handle(ActionEvent e) {
 			            stage.close();
 			        }
@@ -228,18 +241,22 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	private void createButtons()
 	{
 		select = new Button("Επιλογή");
-		cancel = new Button("Ακύρωση");
+		back = new Button("Επιστροφή");
+		cancel = new Button("Έξοδος");
 		
 		select.setMaxWidth(Double.MAX_VALUE);
+		back.setMaxWidth(Double.MAX_VALUE);
 	    cancel.setMaxWidth(Double.MAX_VALUE);
 	    
 	    select.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    back.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 	    cancel.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 	}
 	
 	private void createBoxes()
 	{
 //		hbox = new HBox(5, select, cancel);
+//		hbox = new HBox(5, back, cancel);
 		hbox = new HBox(5, cancel);
 		hbox.setAlignment(Pos.BASELINE_CENTER);
 		
