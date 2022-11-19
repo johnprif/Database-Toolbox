@@ -45,7 +45,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	private HashMap<String, Order> changes3;
 	
     
-    private ComboBox comboTest = new ComboBox();
+    private ComboBox comboTest;
 	
 	public ChangeHumidityHandler(Stage stage)
 	{
@@ -89,7 +89,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 
 		        Label checkInlabel;
 		        Label currentHumidity;
-				String currentHumidityLabel = "Τρέχουσα Υγρασία";
+//				String currentHumidityLabel = "Τρέχουσα Υγρασία";
 		        
 		        checkInlabel = new Label("Εισάγετε την επιθυμητή υγρασία");
 				checkInlabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
@@ -98,28 +98,25 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 
 				if(siloIDsPerOrder.size()==0)
 				{
-					System.out.println("I AM HERE ");
 					//nothing?
 				} else
 				{
 					if(siloIDsPerOrder.size()==1)
 					{
-						System.out.println("I AM HERE ");
-						currentHumidityLabel = currentHumidityLabel + " για το σιλό "+siloIDsPerOrder.get(0)+" = "+ myDB.getHumiditySilos().get(siloIDsPerOrder.get(0));
+//						currentHumidityLabel = currentHumidityLabel + " για το σιλό "+siloIDsPerOrder.get(0)+" = "+ myDB.getHumiditySilos().get(siloIDsPerOrder.get(0));
 					}else
 					{
-						currentHumidityLabel += " για τα σιλό: ";
+//						currentHumidityLabel += " για τα σιλό: ";
 						for(int i=0; i<siloIDsPerOrder.size(); i++)
 						{
-							comboTest.getItems().add(siloIDsPerOrder.get(i));
-							currentHumidityLabel += siloIDsPerOrder.get(i)+" ,";
+//							currentHumidityLabel += siloIDsPerOrder.get(i)+" ,";
 						}
 					}
 				}
-				currentHumidity = new Label(currentHumidityLabel);
-				currentHumidity.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
-				gridPane.add(currentHumidity, 0, 1);
-				GridPane.setHalignment(currentHumidity, HPos.CENTER);
+//				currentHumidity = new Label(currentHumidityLabel);
+//				currentHumidity.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
+//				gridPane.add(currentHumidity, 0, 1);
+//				GridPane.setHalignment(currentHumidity, HPos.CENTER);
 			
 //=========================================================================================				
 //				comboTest.getItems().add("0");
@@ -133,6 +130,13 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 //				comboTest.getItems().add("8");
 //				comboTest.getItems().add("9");
 				
+				makeComboSilos();
+				
+				comboTest.setOnAction(new EventHandler<ActionEvent>() {
+			        @Override public void handle(ActionEvent e) {
+			            System.out.println(comboTest.getSelectionModel().getSelectedItem());
+			        }
+			    });
 				
 				Label textField1 = new Label("Hello");
 				HBox hbox1 = new HBox(5, comboTest, textField, select);			
@@ -144,14 +148,13 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		        vbox.getChildren().add(gridPane);
 		        
 		        stage.setHeight(370);
-		        stage.setWidth(300);
+		        stage.setWidth(330);
 		        stage.setResizable(false);
 		        stage.show();
 		        
 
 				cancel.setOnAction(new EventHandler<ActionEvent>() {
 			        @Override public void handle(ActionEvent e) {
-			        	comboTest.getItems().removeAll();
 			            stage.close();
 			        }
 			    });
@@ -196,6 +199,15 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		}
 		
 		
+	}
+	
+	private void makeComboSilos()
+	{
+		comboTest = new ComboBox();
+		for(int i=0; i<siloIDsPerOrder.size(); i++)
+		{
+			comboTest.getItems().add(siloIDsPerOrder.get(i));
+		}	
 	}
 	
 	public void setChanges3(HashMap<String, Order> changes3)
