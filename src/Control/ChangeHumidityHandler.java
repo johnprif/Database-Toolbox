@@ -38,7 +38,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	private Order order;
 	private TableView<Order> table;
 	
-	private ArrayList<String> siloIDs;
+	private HashMap<String, String> siloIDs;
 	private boolean flag = false;
 	
 	private HashMap<String, Order> changes3;
@@ -64,12 +64,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 			
 			order = table.getSelectionModel().getSelectedItem();			
 			
-			try {
-				siloIDs = new ArrayList<String>(myDB.getHumiditySilos());
-			} catch (SQLException e3) {
-				// TODO Auto-generated catch block
-				e3.printStackTrace();
-			}
+			siloIDs = new HashMap<String, String>(myDB.getHumiditySilos());
 			
 			createButtons();
 			
@@ -101,13 +96,13 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 					//nothing?
 				}else if(siloIDs.size()==1)
 				{
-					currentHumidityLabel = currentHumidityLabel + " για το σιλό "+siloIDs.get(0)+" = "+order.getHumidity();
+					currentHumidityLabel = currentHumidityLabel + " για το σιλό "+siloIDs.get(order.getOrderCode())+" = "+order.getHumidity();
 				}else
 				{
 					currentHumidityLabel += " για τα σιλό: ";
 					for(int i=0; i<siloIDs.size(); i++)
 					{
-						currentHumidityLabel += ", "+siloIDs.get(i);
+						currentHumidityLabel += ", "+siloIDs.get(order.getOrderCode());
 					}
 					
 				}

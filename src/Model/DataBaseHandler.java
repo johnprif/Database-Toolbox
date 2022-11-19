@@ -38,12 +38,15 @@ public class DataBaseHandler
 	private String TimeCreation;
 	private String DateLastEdit;
 	private String ExecutionTime;
+	private String Humidity;
 	double doubleQuantity=0;
 	private String path;	
 	private ArrayList<String> SiloID = new ArrayList<String>();
 	private ArrayList<String> SiloQuantity = new ArrayList<String>();
 	private ArrayList<String> SiloQuantityCopy = new ArrayList<String>();
-	private ArrayList<String> siloIDs;
+	private HashMap<String, String> siloIDs;
+	private HashMap<String, ArrayList<String>> siloIDsForAllOrders;
+	
 	//create an object of SingleObject
 	private static DataBaseHandler instance = new DataBaseHandler();
 	
@@ -159,8 +162,9 @@ public class DataBaseHandler
 	}
 	
 	private void parseEntries()
-	{
+	{		
 		try {
+			findHumiditySilos();
 			while(pendingSet.next())
 			{
 				addOrders();
@@ -173,12 +177,10 @@ public class DataBaseHandler
 	private void addOrders() throws SQLException
 	{
 		OrderCode =  pendingSet.getString("OrderCode");
-	    RecipeCode = pendingSet.getString("RecipeCode");
-	    
+	    RecipeCode = pendingSet.getString("RecipeCode");	    
 	    Quantity = pendingSet.getString("Quantity");
 	    doubleQuantity = (Double.parseDouble(Quantity))/100.0;
-	    Quantity = doubleQuantity+"";
-	    
+	    Quantity = doubleQuantity+"";	    
 	    MixerCapacity = pendingSet.getString("MixerCapacity");
 	    BatchQuantity = pendingSet.getString("BatchQuantity");
 	    NoOfBatches = pendingSet.getString("NoOfBatches");
@@ -191,8 +193,11 @@ public class DataBaseHandler
 	    DateLastEdit = pendingSet.getString("DateLastEdit");
 	    ExecutionDate = pendingSet.getString("ExecutionDate");
 	    ExecutionTime = pendingSet.getString("ExecutionTime");
+	    System.out.println("-----------------addOrders ------------------------");
+	    Humidity = getHumiditySilosPerOrder(OrderCode);
 	    
-	    Order order = new Order(OrderCode, RecipeCode, Quantity, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, ExecutionDate, TimeCreation, ExecutionTime, MixerCapacity, BatchQuantity, NoOfBatches, DateLastEdit, "0.0");
+	    
+	    Order order = new Order(OrderCode, RecipeCode, Quantity, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, ExecutionDate, TimeCreation, ExecutionTime, MixerCapacity, BatchQuantity, NoOfBatches, DateLastEdit, Humidity);
 	    data.add(order);
 //	    System.out.println("Order: ", OrderCode, RecipeCode, Quantity, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, ExecutionDate, TimeCreation, ExecutionTime, MixerCapacity, BatchQuantity, NoOfBatches, DateLastEdit);
 	}
@@ -308,26 +313,75 @@ public class DataBaseHandler
 		connection.commit();
 	}
 	
-	public ArrayList<String> getHumiditySilos() throws SQLException
+	public void findHumiditySilos() throws SQLException
 	{
-		PreparedStatement preparedStatement = connection.prepareStatement("SELECT SiloID FROM Silos WHERE SiloScaleID=201 AND (AllowManualHumidity=True OR NOT HumidityScaleID=0)");
+		PreparedStatement preparedStatement = connection.prepareStatement("SELECT SiloID, Description FROM Silos WHERE SiloScaleID=201 AND (AllowManualHumidity=True OR NOT HumidityScaleID=0)");
 		ResultSet pendingSet2 = preparedStatement.executeQuery();
 		
-		siloIDs = new ArrayList<String>();
-		
+		siloIDs = new HashMap<String, String>();
+
 		try {
 			while(pendingSet2.next())
 			{
-				siloIDs.add(pendingSet2.getString("SiloID"));
+				siloIDs.put(pendingSet2.getString("SiloID"), pendingSet2.getString("Description"));
 				System.out.println("HERE IS THE HUMIDITY SILOS -> "+ pendingSet2.getString("SiloID"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		System.out.println("HERE IS THE HUMIDITY SILOS length-> "+ siloIDs.size());
-		return siloIDs;
-		
 	}
+	
+	public HashMap<String, String> getHumiditySilos()
+	{
+		return siloIDs;
+	}
+	
+	public String getHumiditySilosPerOrder(String OrderCode) throws SQLException
+	{
+		PreparedStatement preparedStatement = connection.prepareStatement("SELECT SiloID FROM OrderIngredients WHERE OrderCode="+OrderCode);
+		ResultSet pendingSet4 = preparedStatement.executeQuery();
+		
+		try {
+			while(pendingSet4.next())
+			{
+				if(siloIDs.get(pendingSet4.getString("SiloID")) != null)
+				{
+					System.out.println("-----------------getHumiditySilosPerOrder ------------------------");
+					return "ΝΑΙ";
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "ΟΧΙ";
+	}
+	
+	
+//	public HashMap<String, ArrayList<String>> getHumiditySilosForAllOrders() throws SQLException
+//	{
+//		PreparedStatement preparedStatement = connection.prepareStatement("SELECT SiloID FROM OrderIngredients");
+//		ResultSet pendingSet3 = preparedStatement.executeQuery();
+//	
+//		ArrayList<String> temp = new ArrayList<String>();
+//		siloIDsForAllOrders = new HashMap<String, ArrayList<String>>();
+//		
+//		try {
+//			while(pendingSet3.next())
+//			{
+//				temp.add(pendingSet3.getString("SiloID"));
+//				siloIDsForAllOrders.put(pendingSet3.getString("OrderCode"), temp);
+//				
+//				siloIDs.add(pendingSet3.getString("SiloID"));
+//				System.out.println("HERE IS THE HUMIDITY SILOS -> "+ pendingSet3.getString("SiloID"));
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		System.out.println("HERE IS THE HUMIDITY SILOS length-> "+ siloIDs.size());
+//		return siloIDsForAllOrders;
+//	
+//	}
 	
 	public int getShippingInvoiceNumber() throws SQLException
 	{
