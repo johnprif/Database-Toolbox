@@ -200,12 +200,15 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	private void prepareCurrentHumidityValues()
 	{
 		System.out.println("-------------------------------------------------------prepareCurrentHumidityValues()");
-		for(int i=0; i<myDB.getHumiditySilosPerOrder(order.getOrderCode()).size(); i++)
+		if(currentHumidityValues.get(order.getOrderCode())==null)
 		{
-			innerHashMap.put(myDB.getHumiditySilosPerOrder(order.getOrderCode()).get(i), "0.0");
-//			System.out.println(myDB.getHumiditySilosPerOrder(order.getOrderCode()).get(i));
+			for(int i=0; i<myDB.getHumiditySilosPerOrder(order.getOrderCode()).size(); i++)
+			{
+				innerHashMap.put(myDB.getHumiditySilosPerOrder(order.getOrderCode()).get(i), "0.0");
+//				System.out.println(myDB.getHumiditySilosPerOrder(order.getOrderCode()).get(i));
+			}
+			currentHumidityValues.put(order.getOrderCode(), innerHashMap);
 		}		
-		currentHumidityValues.put(order.getOrderCode(), innerHashMap);
 		System.out.println("-------------------------------------------------------"+currentHumidityValues.get(order.getOrderCode()).size());
 	}
 	
