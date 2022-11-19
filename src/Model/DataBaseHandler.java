@@ -46,6 +46,7 @@ public class DataBaseHandler
 	private ArrayList<String> SiloQuantityCopy = new ArrayList<String>();
 	private HashMap<String, String> siloIDs;
 	private HashMap<String, ArrayList<String>> siloIDsForAllOrders;
+	private HashMap<String, ArrayList<String>> humiditySilosPerOrder;
 	
 	//create an object of SingleObject
 	private static DataBaseHandler instance = new DataBaseHandler();
@@ -193,7 +194,7 @@ public class DataBaseHandler
 	    DateLastEdit = pendingSet.getString("DateLastEdit");
 	    ExecutionDate = pendingSet.getString("ExecutionDate");
 	    ExecutionTime = pendingSet.getString("ExecutionTime");
-	    Humidity = getHumiditySilosPerOrder(OrderCode);
+	    Humidity = checkIfSilosContainHumidityPerOrder(OrderCode);
 	    
 	    
 	    Order order = new Order(OrderCode, RecipeCode, Quantity, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, ExecutionDate, TimeCreation, ExecutionTime, MixerCapacity, BatchQuantity, NoOfBatches, DateLastEdit, Humidity);
@@ -336,25 +337,41 @@ public class DataBaseHandler
 		return siloIDs;
 	}
 	
-	public String getHumiditySilosPerOrder(String OrderCode) throws SQLException
+	public String checkIfSilosContainHumidityPerOrder(String OrderCode) throws SQLException
 	{
 		PreparedStatement preparedStatement = connection.prepareStatement("SELECT SiloID FROM OrderIngredients WHERE OrderCode='"+OrderCode+"'");
 		ResultSet pendingSet4 = preparedStatement.executeQuery();
+		
+		humiditySilosPerOrder = new HashMap<String, ArrayList<String>>();
+		ArrayList<String> temp = new ArrayList<String>();
 		
 		try {
 			while(pendingSet4.next())
 			{
 				if(siloIDs.get(pendingSet4.getString("SiloID")) != null)
 				{
-					return "ΝΑΙ";
+					temp.add(siloIDs.get(pendingSet4.getString("SiloID")));
 				}
 			}
+			humiditySilosPerOrder.put(OrderCode, temp);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		
+		if(temp.size()>0)
+		{
+			return "ΝΑΙ";
 		}
 		return "ΟΧΙ";
 	}
 	
+	
+	public HashMap<String, ArrayList<String>> getHumiditySilosPerOrder()
+	{
+		
+		return humiditySilosPerOrder;
+		
+	}
 	
 //	public HashMap<String, ArrayList<String>> getHumiditySilosForAllOrders() throws SQLException
 //	{

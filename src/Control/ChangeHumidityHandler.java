@@ -38,7 +38,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	private Order order;
 	private TableView<Order> table;
 	
-	private HashMap<String, String> siloIDs;
+	private HashMap<String, ArrayList<String>> siloIDs;
 	private boolean flag = false;
 	
 	private HashMap<String, Order> changes3;
@@ -64,8 +64,8 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 			
 			order = table.getSelectionModel().getSelectedItem();			
 			
-			siloIDs = new HashMap<String, String>(myDB.getHumiditySilos());
-			
+			siloIDs = new HashMap<String, ArrayList<String>>(myDB.getHumiditySilosPerOrder());
+			System.out.println("THE SIZE OF siloIDs = "+siloIDs.size());
 			createButtons();
 			
 			createBoxes();
@@ -96,13 +96,14 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 					//nothing?
 				}else if(siloIDs.size()==1)
 				{
-					currentHumidityLabel = currentHumidityLabel + " για το σιλό "+siloIDs.get(order.getOrderCode())+" = "+order.getHumidity();
+					System.out.println("------------siloIDs.get(order.getOrderCode())---------------- = "+siloIDs.get(order.getOrderCode()).size());
+					currentHumidityLabel = currentHumidityLabel + " για το σιλό "+siloIDs.get(order.getOrderCode()).get(0)+" = "+order.getHumidity();
 				}else
 				{
 					currentHumidityLabel += " για τα σιλό: ";
 					for(int i=0; i<siloIDs.size(); i++)
 					{
-						currentHumidityLabel += ", "+siloIDs.get(order.getOrderCode());
+						currentHumidityLabel += ", "+siloIDs.get(order.getOrderCode()).get(i);
 					}
 					
 				}
