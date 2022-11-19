@@ -193,7 +193,6 @@ public class DataBaseHandler
 	    DateLastEdit = pendingSet.getString("DateLastEdit");
 	    ExecutionDate = pendingSet.getString("ExecutionDate");
 	    ExecutionTime = pendingSet.getString("ExecutionTime");
-	    System.out.println("-----------------addOrders ------------------------");
 	    Humidity = getHumiditySilosPerOrder(OrderCode);
 	    
 	    
@@ -339,7 +338,7 @@ public class DataBaseHandler
 	
 	public String getHumiditySilosPerOrder(String OrderCode) throws SQLException
 	{
-		PreparedStatement preparedStatement = connection.prepareStatement("SELECT SiloID FROM OrderIngredients WHERE OrderCode="+OrderCode);
+		PreparedStatement preparedStatement = connection.prepareStatement("SELECT SiloID FROM OrderIngredients WHERE OrderCode='"+OrderCode+"'");
 		ResultSet pendingSet4 = preparedStatement.executeQuery();
 		
 		try {
@@ -347,7 +346,6 @@ public class DataBaseHandler
 			{
 				if(siloIDs.get(pendingSet4.getString("SiloID")) != null)
 				{
-					System.out.println("-----------------getHumiditySilosPerOrder ------------------------");
 					return "ΝΑΙ";
 				}
 			}
