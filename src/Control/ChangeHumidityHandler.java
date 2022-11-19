@@ -56,9 +56,8 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	{
 		this.stage = stage;
 		this.myDB = DataBaseHandler.getInstance();
-		currentHumidityValues = new HashMap<String, HashMap<String, String>>();
 		innerHashMap = new HashMap<String, String>();
-		
+		currentHumidityValues = new HashMap<String, HashMap<String, String>>();
 		
 	}
 	
@@ -201,6 +200,11 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		}
 		
 		
+	}
+	
+	public void setCurrentHumidityValues(HashMap<String, HashMap<String, String>> currentHumidityValues)
+	{
+		this.currentHumidityValues = currentHumidityValues;
 	}
 	
 	private void prepareCurrentHumidityValues()
