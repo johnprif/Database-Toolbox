@@ -69,6 +69,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		
 		System.out.println("ChangeHumidityHandler");
 		order = table.getSelectionModel().getSelectedItem();	
+		innerHashMap = new HashMap<String, String>();
 		
 		prepareCurrentHumidityValues();
 		
@@ -83,6 +84,8 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		{
 			siloIDsPerOrder = new ArrayList<String>(myDB.getHumiditySilosPerOrder(order.getOrderCode()));
 //			System.out.println("THE SIZE OF siloIDs = "+siloIDs.size());
+			makeComboSilos();
+			
 			createButtons();
 			
 			createBoxes();
@@ -104,7 +107,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		    String checkInlabelText = "Εισάγετε την επιθυμητή υγρασία για το σιλό: ";
 			checkInlabel = new Label(checkInlabelText);
 				
-			makeComboSilos();
+//			makeComboSilos();
 				
 			String currentHumidityString;
 			comboTest.setOnAction(new EventHandler<ActionEvent>() {
@@ -169,6 +172,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 								}
 				            	if(humidity<=10)
 				            	{
+//				            		innerHashMap = new HashMap<String, String>();
 				            		try {		
 				            			tempString = (String) comboTest.getSelectionModel().getSelectedItem();
 				            			innerHashMap.put(tempString, humidity+"");
