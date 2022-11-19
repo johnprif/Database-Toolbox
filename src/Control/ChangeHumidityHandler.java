@@ -37,6 +37,8 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	private HBox hbox;
 	private VBox vbox;
 	
+	private TextField textField = new TextField();;
+	
 	private Order order;
 	private TableView<Order> table;
 	
@@ -48,6 +50,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	private HashMap<String, String> innerHashMap;
     
     private ComboBox comboTest;
+    private String tempString;
 	
 	public ChangeHumidityHandler(Stage stage)
 	{
@@ -55,6 +58,8 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		this.myDB = DataBaseHandler.getInstance();
 		currentHumidityValues = new HashMap<String, HashMap<String, String>>();
 		innerHashMap = new HashMap<String, String>();
+		
+		textField.setText("0.0");
 	}
 	
 	@Override
@@ -62,6 +67,8 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	{
 		System.out.println("ChangeHumidityHandler");
 		order = table.getSelectionModel().getSelectedItem();	
+		
+		prepareCurrentHumidityValues();
 		
 		if(order.getHumidity().equals("ΟΧΙ"))
 		{
@@ -85,8 +92,6 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		        vbox.setAlignment(Pos.BASELINE_CENTER);
 		        vbox.setStyle("-fx-background-color: dodgerblue;");
 		        
-		        TextField textField = new TextField();
-		        textField.setPromptText("0.0");
 		        GridPane gridPane = new GridPane();
 		        gridPane.setHgap(10);
 		        gridPane.setVgap(10);
@@ -139,8 +144,12 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 				comboTest.setOnAction(new EventHandler<ActionEvent>() {
 			        @Override public void handle(ActionEvent e) {		
 			        	checkInlabel.setText(checkInlabelText+myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()));
+//			        	checkInlabel.setText(checkInlabelText+currentHumidityValues.get(order.getOrderCode()).get(tempString));
 //			        	currentHumidityString = 
+			        	System.out.println(currentHumidityValues.get(order.getOrderCode()).get(comboTest.getSelectionModel().getSelectedItem()));
+			        	textField.setText(currentHumidityValues.get(order.getOrderCode()).get(comboTest.getSelectionModel().getSelectedItem()));
 			            textField.setPromptText(myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()));
+			            textField.setPromptText(currentHumidityValues.get(order.getOrderCode()).get(innerHashMap.get(myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()))));
 			        }
 			    });
 				
@@ -190,10 +199,10 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 			            	if(humidity<=10)
 			            	{
 			            		try {		
-			            			String temp = (String) comboTest.getSelectionModel().getSelectedItem();
-			            			innerHashMap.put(temp, humidity+"");
+			            			tempString = (String) comboTest.getSelectionModel().getSelectedItem();
+			            			innerHashMap.put(tempString, humidity+"");
 			            			currentHumidityValues.put(order.getOrderCode(), innerHashMap);
-			            			System.out.println(currentHumidityValues.get(order.getOrderCode()).get(temp));
+			            			System.out.println(currentHumidityValues.get(order.getOrderCode()).get(tempString));
 									//order.setHumidity(""+humidity+"");									
 									table.getItems().set(table.getSelectionModel().getSelectedIndex(), order);
 									changes3.put(order.getOrderCode(), order);
@@ -214,6 +223,16 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		}
 		
 		
+	}
+	
+	private void prepareCurrentHumidityValues()
+	{
+		for(int i=0; i<myDB.getHumiditySilosPerOrder(order.getOrderCode()).size(); i++)
+		{
+			innerHashMap.put(myDB.getHumiditySilosPerOrder(order.getOrderCode()).get(i), "0.0");
+			System.out.println(myDB.getHumiditySilosPerOrder(order.getOrderCode()).get(i));
+		}		
+		currentHumidityValues.put(order.getOrderCode(), innerHashMap);
 	}
 	
 	private void makeComboSilos()
