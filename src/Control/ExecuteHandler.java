@@ -21,6 +21,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	private DataBaseHandler myDB;
 	private ArrayList<Order> changes2;
 	private HashMap<String, Order> changes3;
+	private HashMap<String, HashMap<String, String>> currentHumidityValues;
 	private TableView<Order> table;
 	Order selectedItem;
 	
@@ -44,7 +45,8 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 			{
 				try {
 //					myDB.updateDataBase(changes3.get(selectedItem.getOrderCode()));
-					myDB.updateDataBase(selectedItem);
+//					myDB.updateDataBase(selectedItem);
+					myDB.updateDataBase2(selectedItem, currentHumidityValues);
 //					table.getItems().remove(selectedItem);   
 					completeWindow();
 					table.getItems().remove(selectedItem); 
@@ -68,6 +70,11 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	public void setChanges3(HashMap<String, Order> changes3)
 	{
 		this.changes3 = changes3;
+	}
+	
+	public void setCurrentHumidityValues(HashMap<String, HashMap<String, String>> currentHumidityValues)
+	{
+		this.currentHumidityValues = currentHumidityValues;
 	}
 	
 	public void setTable(TableView<Order> table)

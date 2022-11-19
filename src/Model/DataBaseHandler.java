@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +47,7 @@ public class DataBaseHandler
 	private ArrayList<String> SiloQuantity = new ArrayList<String>();
 	private ArrayList<String> SiloQuantityCopy = new ArrayList<String>();
 	private HashMap<String, String> siloIDs;
+	private ArrayList<String> siloIDsArrayList;
 	private HashMap<String, ArrayList<String>> siloIDsForAllOrders;
 	private HashMap<String, ArrayList<String>> humiditySilosPerOrder;
 	
@@ -229,6 +232,28 @@ public class DataBaseHandler
 //		cooking(order);
 	}
 
+	public void updateDataBase2(Order order, HashMap<String, HashMap<String, String>> currentHumidityValues) throws SQLException
+	{
+		cooking2(order, currentHumidityValues);
+//		System.out.println("EDW EIMAI");
+		Statement update = connection.createStatement();
+		String sql1 = "UPDATE Orders SET DateCreation="+order.getDateCreation()+" , TimeCreation="+order.getTimeCreation()+" , DateLastEdit="+order.getExecutionDate()+" , ExecutionDate="+order.getExecutionDate()+" , ExecutionTime="+order.getExecutionTime()+" , ExecutionDuration="+computeDurationTime(Integer.parseInt(order.getNoOfBatches()))+" , ExecutionState=2 , BatchesProduced="+order.getNoOfBatches()+" , ShippingInvoiceNumber="+setShippingInvoiceNumber()+" where OrderCode="+"\""+order.getOrderCode()+"\"";
+		byte[] bytes = sql1.getBytes(StandardCharsets.UTF_8);
+		String utf8EncodedString = new String(bytes, StandardCharsets.UTF_8);
+		
+		//update.executeUpdate(utf8EncodedString);
+//		System.out.println("EDW EIMAI");
+		update.executeUpdate(sql1);
+		
+		
+		
+		connection.commit();
+		
+		printOrder(order);
+		
+//		cooking(order);
+	}
+	
 	private void printOrder(Order order)
 	{
 		System.out.println("OrderCode = "+order.getOrderCode());
@@ -319,10 +344,12 @@ public class DataBaseHandler
 		ResultSet pendingSet2 = preparedStatement.executeQuery();
 		
 		siloIDs = new HashMap<String, String>();
-
+		siloIDsArrayList = new ArrayList<String>();
+		
 		try {
 			while(pendingSet2.next())
 			{
+				siloIDsArrayList.add(pendingSet2.getString("SiloID"));
 				siloIDs.put(pendingSet2.getString("SiloID"), pendingSet2.getString("Description"));
 				System.out.println("HERE IS THE HUMIDITY SILOS -> "+ pendingSet2.getString("SiloID"));
 			}
@@ -439,6 +466,16 @@ public class DataBaseHandler
 		clearOldBatches();
 	}
 	
+	private void cooking2(Order order, HashMap<String, HashMap<String, String>> currentHumidityValues) throws SQLException
+	{	
+		parseOrderIngredients(order.getOrderCode());
+		//System.out.println("EDW EIMAI");
+		addEntriesToBatchIngredientsTable2(order, currentHumidityValues);
+		addEntriesToBatchData2(order, currentHumidityValues);
+		clearOldBatches();
+	}
+
+	
 	private void parseOrderIngredients(String OrderCode) throws SQLException
 	{
 		//Using SQL SELECT QUERY
@@ -455,6 +492,28 @@ public class DataBaseHandler
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void addEntriesToBatchIngredientsTable2(Order order, HashMap<String, HashMap<String, String>> currentHumidityValues) throws SQLException
+	{
+		int NoOfBatches = Integer.parseInt(order.getNoOfBatches());
+		ArrayList<String[]> Quantitys = computeQuantitys2(order, NoOfBatches, currentHumidityValues);
+		
+		int batchNumber;
+		int siloID;
+		int Quantity;
+		int ActualQuantity;
+//		System.out.println("EDW EIMAI");
+		for(int i=0; i<Quantitys.size(); i++)
+		{
+			batchNumber = Integer.parseInt(Quantitys.get(i)[0]);
+			siloID = Integer.parseInt(Quantitys.get(i)[1]);
+			Quantity = Integer.parseInt(Quantitys.get(i)[2]);
+			ActualQuantity = Integer.parseInt(Quantitys.get(i)[3]);
+			Statement statement = connection.createStatement();
+			statement.executeUpdate("INSERT INTO BatchIngredients " + "VALUES ( '"+order.getOrderCode()+"' , "+batchNumber+" , "+siloID+" , "+Quantity+" , "+Quantity+" , "+ActualQuantity+" , 0 )");		
+		}
+		connection.commit();
 	}
 	
 	private void addEntriesToBatchIngredientsTable(Order order) throws SQLException
@@ -477,6 +536,143 @@ public class DataBaseHandler
 			statement.executeUpdate("INSERT INTO BatchIngredients " + "VALUES ( '"+order.getOrderCode()+"' , "+batchNumber+" , "+siloID+" , "+Quantity+" , "+Quantity+" , "+ActualQuantity+" , 0 )");		
 		}
 		connection.commit();
+	}
+	
+	private void addEntriesToBatchData2(Order order, HashMap<String, HashMap<String, String>> currentHumidityValues) throws SQLException
+	{
+		int noOfBatches = Integer.parseInt(order.getNoOfBatches());
+		int mixingStartTime;
+		int max;
+		int min;
+		int range;
+		int newHours;
+		int newMinutes;
+		int newSeconds;
+		String newCoockedTime;
+		String temp;
+		String[] tempMixingStartTime;
+		
+		double percentageOfWater = computeWaterAdjustement(order, currentHumidityValues);
+		
+	//	mixingStartTime = Integer.parseInt(order.getExecutionTime());
+	//	newCoockedTime = mixingStartTime + "";
+		newCoockedTime = order.getExecutionTime();
+		for(int i=0; i<noOfBatches; i++)
+		{
+			
+			Statement statement = connection.createStatement();
+			statement.executeUpdate("INSERT INTO BatchData " + "VALUES ( "+order.getOrderCode()+" , "+(i+1)+" , "+newCoockedTime+" , "+0+" , "+0+" , "+(getWaterAdjustSiloID()*(1-percentageOfWater))+")");
+
+			tempMixingStartTime = newCoockedTime.split("");
+			
+			if(tempMixingStartTime.length == 5) //4 54 18
+			{
+				max = (int) (5.0 + (Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2]))); //change minutes
+				min = (int) (2.5 + (Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2])));
+				range = (max - min) + 1;
+				
+				int randomMinutes = (int) ((Math.random() * range) + min);
+				
+				if(randomMinutes>59)
+				{
+					newHours = Integer.parseInt(tempMixingStartTime[0])+1;
+//					newMinutes = (int) Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2])-60;
+					newMinutes = randomMinutes-60;
+				}else
+				{
+					newHours = Integer.parseInt(tempMixingStartTime[0]);
+//					newMinutes = (int) Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2]);
+					newMinutes = randomMinutes;
+				}
+				tempMixingStartTime[0] = newHours + ""; //Hours
+				if(newMinutes < 10)
+				{
+					tempMixingStartTime[1] = 0 + ""; //firstMinute
+					tempMixingStartTime[2] = newMinutes + ""; //secondMinute
+				}else
+				{
+					String[] tempNewMinutes = (newMinutes+"").split("");
+//					tempMixingStartTime[1] = (newMinutes / 10) + ""; //firstMinute
+//					tempMixingStartTime[2] = (newMinutes % 10) + ""; //secondMinute
+					tempMixingStartTime[1] = tempNewMinutes[0]; //firstMinute
+					tempMixingStartTime[2] = tempNewMinutes[1]; //secondMinute
+				}
+				tempMixingStartTime[3] = ((int) ((Math.random() * 4) + 1)) + ""; //firstSecond
+				tempMixingStartTime[4] = ((int) ((Math.random() * 8) + 1)) + ""; //secondSecong
+				
+				newCoockedTime = tempMixingStartTime[0]+tempMixingStartTime[1]+tempMixingStartTime[2]+tempMixingStartTime[3]+tempMixingStartTime[4];
+			}else								//12 54 89 == length == 6
+			{
+				System.out.println("tempMixingStartTime == "+ tempMixingStartTime.length);
+				max = (int) (5.0 + (Integer.parseInt(tempMixingStartTime[2]+tempMixingStartTime[3]))); //change minutes
+				min = (int) (2.5 + (Integer.parseInt(tempMixingStartTime[2]+tempMixingStartTime[3])));
+				range = (max - min) + 1;
+
+				int randomMinutes = (int) (Math.random() * range) + min;
+				int oldHours = Integer.parseInt(tempMixingStartTime[0]+tempMixingStartTime[1]);
+				if(randomMinutes > 59)
+				{
+					if(oldHours == 23)
+					{
+						newHours = 0;
+					}else
+					{
+						newHours = Integer.parseInt(tempMixingStartTime[0]+tempMixingStartTime[1])+1;	
+					}
+					newMinutes = randomMinutes-60;
+				}else
+				{
+					newHours = Integer.parseInt(tempMixingStartTime[0]+tempMixingStartTime[1]);
+					newMinutes = randomMinutes;
+				}
+				
+				if(newHours < 10)
+				{
+					tempMixingStartTime[0] = 0 + ""; //firsHours
+					tempMixingStartTime[1] = newHours + ""; //secondHours
+				}else
+				{
+					String[] tempNewHour = (newHours+"").split("");
+//					tempMixingStartTime[0] = (newHours / 10) + ""; //firsHours
+//					tempMixingStartTime[1] = (newHours % 10) + ""; //secondHours
+					tempMixingStartTime[0] = tempNewHour[0];
+					tempMixingStartTime[1] = tempNewHour[1];
+				}
+				if(newMinutes < 10)
+				{
+					tempMixingStartTime[2] = 0 + ""; //firstMinute
+					tempMixingStartTime[3] = newMinutes + ""; //secondMinute
+				}else
+				{
+					String[] tempNewMinutes = (newMinutes+"").split("");
+//					tempMixingStartTime[2] = (int)(newMinutes / 10) + ""; //firstMinute
+//					tempMixingStartTime[3] = (int)(newMinutes % 10) + ""; //secondMinute
+					tempMixingStartTime[2] = tempNewMinutes[0]; //firstMinute
+					tempMixingStartTime[3] = tempNewMinutes[1]; //secondMinute
+				}
+				tempMixingStartTime[4] = ((int) ((Math.random() * 4) + 1)) + ""; //firstSecond
+				tempMixingStartTime[5] = ((int) ((Math.random() * 8) + 1)) + ""; //secondSecong
+					
+				newCoockedTime = tempMixingStartTime[0]+tempMixingStartTime[1]+tempMixingStartTime[2]+tempMixingStartTime[3]+tempMixingStartTime[4]+tempMixingStartTime[5];
+			}
+		//	mixingStartTime = Integer.parseInt(newCoockedTime);
+		}
+		connection.commit();
+	}
+	
+	private double computeWaterAdjustement(Order order, HashMap<String, HashMap<String, String>> currentHumidityValues)
+	{
+		double percentageOfWater = 0.0;
+		for(int i=0; i<siloIDsArrayList.size(); i++)
+		{
+			try {
+				percentageOfWater += DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(siloIDsArrayList.get(i))).doubleValue();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return percentageOfWater;
 	}
 	
 	private void addEntriesToBatchData(Order order) throws SQLException
@@ -672,7 +868,7 @@ public class DataBaseHandler
 		return Quantitys;
 	}
 	
-	private ArrayList<String[]> computeQuantitys2(Order order, int NoOfBatches)
+	private ArrayList<String[]> computeQuantitys2(Order order, int NoOfBatches, HashMap<String, HashMap<String, String>> currentHumidityValues)
 	{
 		ArrayList<String[]> Quantitys = new ArrayList<String[]>();
 		HashMap<String, Integer> oldNewQuantity = new HashMap<String, Integer>();

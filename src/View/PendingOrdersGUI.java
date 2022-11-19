@@ -141,6 +141,7 @@ public class PendingOrdersGUI
 		changeHumidityHandler.setChanges3(changes3);
 //		changeHumidityHandler.setCurrentHumidityValues(currentHumidityValues);
 		executeHandler.setChanges3(changes3);
+		executeHandler.setCurrentHumidityValues(currentHumidityValues);
 		backHandler.setChanges3(changes3);
 		
 		BorderPane border = new BorderPane();
