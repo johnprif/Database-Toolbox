@@ -38,7 +38,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	private Order order;
 	private TableView<Order> table;
 	
-	private HashMap<String, ArrayList<String>> siloIDs;
+	private ArrayList<String> siloIDsPerOrder;
 	private boolean flag = false;
 	
 	private HashMap<String, Order> changes3;
@@ -63,9 +63,9 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 			
 			
 			order = table.getSelectionModel().getSelectedItem();			
-			
-			siloIDs = new HashMap<String, ArrayList<String>>(myDB.getHumiditySilosPerOrder());
-			System.out.println("THE SIZE OF siloIDs = "+siloIDs.size());
+
+			siloIDsPerOrder = new ArrayList<String>(myDB.getHumiditySilosPerOrder(order.getOrderCode()));
+//			System.out.println("THE SIZE OF siloIDs = "+siloIDs.size());
 			createButtons();
 			
 			createBoxes();
@@ -90,22 +90,25 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 				checkInlabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
 		        gridPane.add(checkInlabel, 0, 0);
 		        GridPane.setHalignment(checkInlabel, HPos.CENTER);
-		        
-		        if(siloIDs.size()==0)
+
+				if(siloIDsPerOrder.size()==0)
 				{
+					System.out.println("I AM HERE ");
 					//nothing?
-				}else if(siloIDs.size()==1)
+				} else
 				{
-					System.out.println("------------siloIDs.get(order.getOrderCode())---------------- = "+siloIDs.get(order.getOrderCode()).size());
-					currentHumidityLabel = currentHumidityLabel + " για το σιλό "+siloIDs.get(order.getOrderCode()).get(0)+" = "+order.getHumidity();
-				}else
-				{
-					currentHumidityLabel += " για τα σιλό: ";
-					for(int i=0; i<siloIDs.size(); i++)
+					if(siloIDsPerOrder.size()==1)
 					{
-						currentHumidityLabel += ", "+siloIDs.get(order.getOrderCode()).get(i);
+						System.out.println("I AM HERE ");
+						currentHumidityLabel = currentHumidityLabel + " για το σιλό "+siloIDsPerOrder.get(0)+" = "+order.getHumidity();
+					}else
+					{
+						currentHumidityLabel += " για τα σιλό: ";
+						for(int i=0; i<siloIDsPerOrder.size(); i++)
+						{
+							currentHumidityLabel += ", "+siloIDsPerOrder.get(i);
+						}								
 					}
-					
 				}
 				currentHumidity = new Label(currentHumidityLabel);
 				currentHumidity.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");

@@ -342,34 +342,53 @@ public class DataBaseHandler
 		PreparedStatement preparedStatement = connection.prepareStatement("SELECT SiloID FROM OrderIngredients WHERE OrderCode='"+OrderCode+"'");
 		ResultSet pendingSet4 = preparedStatement.executeQuery();
 		
-		humiditySilosPerOrder = new HashMap<String, ArrayList<String>>();
-		ArrayList<String> temp = new ArrayList<String>();
-		
 		try {
 			while(pendingSet4.next())
 			{
 				if(siloIDs.get(pendingSet4.getString("SiloID")) != null)
 				{
-					temp.add(siloIDs.get(pendingSet4.getString("SiloID")));
+					return "ΝΑΙ";
 				}
 			}
-			humiditySilosPerOrder.put(OrderCode, temp);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		if(temp.size()>0)
-		{
-			return "ΝΑΙ";
-		}
+
 		return "ΟΧΙ";
 	}
 	
-	
-	public HashMap<String, ArrayList<String>> getHumiditySilosPerOrder()
+	public void findHumiditySilosPerOrder(String OrderCode) throws SQLException
 	{
+		PreparedStatement preparedStatement = connection.prepareStatement("SELECT SiloID FROM OrderIngredients WHERE OrderCode='"+OrderCode+"'");
+		ResultSet pendingSet5 = preparedStatement.executeQuery();
 		
-		return humiditySilosPerOrder;
+		humiditySilosPerOrder = new HashMap<String, ArrayList<String>>();
+		ArrayList<String> test2 = new ArrayList<String>();
+		try {
+			while(pendingSet5.next())
+			{
+				System.out.println("siloIDs.get(pendingSet5.getString(\"SiloID\") =========== "+siloIDs.get(pendingSet5.getString("SiloID")));
+				if(siloIDs.get(pendingSet5.getString("SiloID"))!=null)
+				{
+					test2.add(pendingSet5.getString("SiloID"));
+				}				
+			} 
+			humiditySilosPerOrder.put(OrderCode, test2);
+		}catch (SQLException e) {
+				e.printStackTrace();
+			}
+		System.out.println("I AM findHumiditySilosPerOrder AND THE SIZE OF TEST IS ------=-------"+humiditySilosPerOrder.size());
+	}
+	
+	public ArrayList<String> getHumiditySilosPerOrder(String OrderCode)
+	{
+		try {
+			findHumiditySilosPerOrder(OrderCode);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return humiditySilosPerOrder.get(OrderCode);
 		
 	}
 	
