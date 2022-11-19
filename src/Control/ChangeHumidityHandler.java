@@ -43,7 +43,8 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	private boolean flag = false;
 	
 	private HashMap<String, Order> changes3;
-	
+	private HashMap<String, HashMap<String, String>> currentHumidityValues;
+	private HashMap<String, String> innerHashMap;
     
     private ComboBox comboTest;
 	
@@ -51,6 +52,8 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	{
 		this.stage = stage;
 		this.myDB = DataBaseHandler.getInstance();
+		currentHumidityValues = new HashMap<String, HashMap<String, String>>();
+		innerHashMap = new HashMap<String, String>();
 	}
 	
 	@Override
@@ -131,10 +134,12 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 //				comboTest.getItems().add("9");
 				
 				makeComboSilos();
-				
+				String currentHumidityString;
 				comboTest.setOnAction(new EventHandler<ActionEvent>() {
-			        @Override public void handle(ActionEvent e) {
-			            System.out.println(comboTest.getSelectionModel().getSelectedItem());
+			        @Override public void handle(ActionEvent e) {		
+			        	
+//			        	currentHumidityString = 
+			            textField.setPromptText(myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()));
 			        }
 			    });
 				
