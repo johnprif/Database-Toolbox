@@ -46,6 +46,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 				try {
 //					myDB.updateDataBase(changes3.get(selectedItem.getOrderCode()));
 //					myDB.updateDataBase(selectedItem);
+					System.out.println("====================The water is ==================================HELLLLLLLLLLLLLLLLLLLLLLLLLLLO");
 					myDB.updateDataBase2(selectedItem, currentHumidityValues);
 //					table.getItems().remove(selectedItem);   
 					completeWindow();
@@ -58,7 +59,8 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 			}else
 			{
 				try {
-					emptyDate(selectedItem);
+//					emptyDate(selectedItem);
+					emptyDate2(selectedItem, currentHumidityValues);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -138,6 +140,44 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 		    // ... user chose CANCEL or closed the dialog
 		}
 	}
+	
+	private void emptyDate2(Order order, HashMap<String, HashMap<String, String>> currentHumidityValues) throws SQLException
+	{
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Παραγγελία προς εκτέλεση -> " +selectedItem.getOrderCode());
+		alert.setHeaderText("Κενή Ημερομηνία!");
+		alert.setContentText("Η 'Ημερομηνία Εκτέλεσης' είναι κενή!\nΠατήστε το 'ΟΚ' για να συμπληρωθούς αυτόματα με την τωρινή ημερομηνία\nΠατήστε το 'Cancel' για ακύρωση");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK)
+		{
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+			LocalDateTime now = LocalDateTime.now();  
+			String[] temp = dtf.format(now).split(" ");
+			String[] tempDate = temp[0].split("/");
+			String[] tempTime = temp[1].split(":");
+			
+			if(checkDate(tempDate, order, 1, tempTime[0], tempTime[1]))
+			{
+				order.setExecutionDate(tempDate[0]+tempDate[1]+tempDate[2]);
+				order.setExecutionTime(tempTime[0]+tempTime[1]+tempTime[2]);
+				myDB.updateDataBase2(order, currentHumidityValues);
+//				table.getItems().remove(order);  
+				table.getItems().set(table.getSelectionModel().getSelectedIndex(), order);
+				changes3.put(order.getOrderCode(), order);
+				completeWindow();
+				table.getItems().remove(order); 
+				changes3.clear();
+			}else
+			{
+				
+			}
+ 		    // ... user chose OK
+		} else {
+		    // ... user chose CANCEL or closed the dialog
+		}
+	}
+	
 		private boolean checkDate(String[] medianDate, Order order, int mode, String hours, String minutes)
 		{
 			if(order.getDateCreation() == null)
@@ -237,6 +277,8 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 		return false;
 	}
 	
+		
+		
 	private void dateWindow(int mode)
 	{
 		Alert alert = new Alert(Alert.AlertType.WARNING);

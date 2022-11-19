@@ -234,6 +234,7 @@ public class DataBaseHandler
 
 	public void updateDataBase2(Order order, HashMap<String, HashMap<String, String>> currentHumidityValues) throws SQLException
 	{
+		System.out.println("====================The water is ==================================HELLLLLLLLLLLLLLLLLLLLLLLLLLLO");
 		cooking2(order, currentHumidityValues);
 //		System.out.println("EDW EIMAI");
 		Statement update = connection.createStatement();
@@ -471,6 +472,7 @@ public class DataBaseHandler
 		parseOrderIngredients(order.getOrderCode());
 		//System.out.println("EDW EIMAI");
 		addEntriesToBatchIngredientsTable2(order, currentHumidityValues);
+		System.out.println("====================The water is ==================================HELLLLLLLLLLLLLLLLLLLLLLLLLLLO");
 		addEntriesToBatchData2(order, currentHumidityValues);
 		clearOldBatches();
 	}
@@ -553,12 +555,14 @@ public class DataBaseHandler
 		String[] tempMixingStartTime;
 		
 		double percentageOfWater = computeWaterAdjustement(order, currentHumidityValues);
-		
+		System.out.println("====================The water is =================================="+percentageOfWater);
 	//	mixingStartTime = Integer.parseInt(order.getExecutionTime());
 	//	newCoockedTime = mixingStartTime + "";
 		newCoockedTime = order.getExecutionTime();
 		for(int i=0; i<noOfBatches; i++)
 		{
+			
+			System.out.println("====================The water is =================================="+(getWaterAdjustSiloID()*(1-percentageOfWater)));
 			
 			Statement statement = connection.createStatement();
 			statement.executeUpdate("INSERT INTO BatchData " + "VALUES ( "+order.getOrderCode()+" , "+(i+1)+" , "+newCoockedTime+" , "+0+" , "+0+" , "+(getWaterAdjustSiloID()*(1-percentageOfWater))+")");
