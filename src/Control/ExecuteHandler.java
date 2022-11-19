@@ -47,7 +47,14 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 //					myDB.updateDataBase(changes3.get(selectedItem.getOrderCode()));
 //					myDB.updateDataBase(selectedItem);
 					System.out.println("====================The water is ==================================HELLLLLLLLLLLLLLLLLLLLLLLLLLLO");
-					myDB.updateDataBase2(selectedItem, currentHumidityValues);
+					if(currentHumidityValues.size()==0)
+					{
+						myDB.updateDataBase(selectedItem);
+					}else
+					{
+						myDB.updateDataBase2(selectedItem, currentHumidityValues);
+					}
+					
 //					table.getItems().remove(selectedItem);   
 					completeWindow();
 					table.getItems().remove(selectedItem); 
@@ -161,7 +168,14 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 			{
 				order.setExecutionDate(tempDate[0]+tempDate[1]+tempDate[2]);
 				order.setExecutionTime(tempTime[0]+tempTime[1]+tempTime[2]);
-				myDB.updateDataBase2(order, currentHumidityValues);
+				if(currentHumidityValues.size()==0)
+				{
+					myDB.updateDataBase(order);
+				}else
+				{
+					myDB.updateDataBase2(order, currentHumidityValues);
+				}
+				
 //				table.getItems().remove(order);  
 				table.getItems().set(table.getSelectionModel().getSelectedIndex(), order);
 				changes3.put(order.getOrderCode(), order);
