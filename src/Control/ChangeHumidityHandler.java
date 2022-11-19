@@ -110,7 +110,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 			        	checkInlabel.setText(checkInlabelText+myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()));
 //			        	checkInlabel.setText(checkInlabelText+currentHumidityValues.get(order.getOrderCode()).get(tempString));
 //			        	currentHumidityString = 
-			        	System.out.println(currentHumidityValues.get(order.getOrderCode()).get(comboTest.getSelectionModel().getSelectedItem()));
+//			        	System.out.println(currentHumidityValues.get(order.getOrderCode()).get(comboTest.getSelectionModel().getSelectedItem()));
 			        	textField.setText(currentHumidityValues.get(order.getOrderCode()).get(comboTest.getSelectionModel().getSelectedItem()));
 			            textField.setPromptText(myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()));
 			            textField.setPromptText(currentHumidityValues.get(order.getOrderCode()).get(innerHashMap.get(myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()))));
@@ -199,13 +199,14 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	
 	private void prepareCurrentHumidityValues()
 	{
+		System.out.println("-------------------------------------------------------prepareCurrentHumidityValues()");
 		for(int i=0; i<myDB.getHumiditySilosPerOrder(order.getOrderCode()).size(); i++)
 		{
 			innerHashMap.put(myDB.getHumiditySilosPerOrder(order.getOrderCode()).get(i), "0.0");
-			System.out.println(myDB.getHumiditySilosPerOrder(order.getOrderCode()).get(i));
+//			System.out.println(myDB.getHumiditySilosPerOrder(order.getOrderCode()).get(i));
 		}		
 		currentHumidityValues.put(order.getOrderCode(), innerHashMap);
-		System.out.println("-------------------------------------------------------"+currentHumidityValues.size());
+		System.out.println("-------------------------------------------------------"+currentHumidityValues.get(order.getOrderCode()).size());
 	}
 	
 	private void makeComboSilos()
