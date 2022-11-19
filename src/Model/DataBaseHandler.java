@@ -150,7 +150,7 @@ public class DataBaseHandler
 		{
 			//Using SQL SELECT QUERY
 //			PreparedStatement preparedStatement = connection.prepareStatement("select * from Orders where ExecutionState=0 or ExecutionState=1");
-			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Orders WHERE ExecutionState=0");
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT OrderCode, RecipeCode, Quantity, MixerCapacity, BatchQuantity, NoOfBatches, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, TimeCreation, DateLastEdit, ExecutionDate, ExecutionTime FROM Orders WHERE ExecutionState=0");
 			
 			//Creating Java ResultSet object
 			pendingSet = preparedStatement.executeQuery();
@@ -425,7 +425,7 @@ public class DataBaseHandler
 	private void parseOrderIngredients(String OrderCode) throws SQLException
 	{
 		//Using SQL SELECT QUERY
-		PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM OrderIngredients WHERE OrderCode='"+OrderCode+"'");
+		PreparedStatement preparedStatement = connection.prepareStatement("SELECT SiloID, Quantity FROM OrderIngredients WHERE OrderCode='"+OrderCode+"'");
 //		System.out.println("EDW EIMAI");
 		ResultSet pendingSet2 = preparedStatement.executeQuery();
 		try {
