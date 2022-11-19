@@ -65,7 +65,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	@Override
 	public void handle(ActionEvent arg0) 
 	{
-		textField.setText("0.0");
+		textField.setText("0,0");
 		
 		System.out.println("ChangeHumidityHandler");
 		order = table.getSelectionModel().getSelectedItem();	
@@ -201,12 +201,13 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	
 	private void prepareCurrentHumidityValues()
 	{
-		System.out.println("-------------------------------------------------------prepareCurrentHumidityValues()");
+		System.out.println("order.getOrderCode()================="+order.getOrderCode());
 		if(currentHumidityValues.get(order.getOrderCode())==null)
 		{
+			System.out.println(currentHumidityValues.get(order.getOrderCode())==null);
 			for(int i=0; i<myDB.getHumiditySilosPerOrder(order.getOrderCode()).size(); i++)
 			{
-				innerHashMap.put(myDB.getHumiditySilosPerOrder(order.getOrderCode()).get(i), "0.0");
+				innerHashMap.put(myDB.getHumiditySilosPerOrder(order.getOrderCode()).get(i), "0,0");
 //				System.out.println(myDB.getHumiditySilosPerOrder(order.getOrderCode()).get(i));
 			}
 			currentHumidityValues.put(order.getOrderCode(), innerHashMap);
