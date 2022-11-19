@@ -603,7 +603,7 @@ public class DataBaseHandler
 	{
 		int WaterAdjustSiloID;
 		
-		PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Silos WHERE SiloScaleID=203");
+		PreparedStatement preparedStatement = connection.prepareStatement("SELECT SiloID FROM Silos WHERE SiloScaleID=203");
 		ResultSet pendingSet2 = preparedStatement.executeQuery();
 		
 		pendingSet2.next();
