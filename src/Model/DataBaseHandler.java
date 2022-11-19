@@ -367,7 +367,6 @@ public class DataBaseHandler
 		try {
 			while(pendingSet5.next())
 			{
-				System.out.println("siloIDs.get(pendingSet5.getString(\"SiloID\") =========== "+siloIDs.get(pendingSet5.getString("SiloID")));
 				if(siloIDs.get(pendingSet5.getString("SiloID"))!=null)
 				{
 					test2.add(pendingSet5.getString("SiloID"));
@@ -377,7 +376,6 @@ public class DataBaseHandler
 		}catch (SQLException e) {
 				e.printStackTrace();
 			}
-		System.out.println("I AM findHumiditySilosPerOrder AND THE SIZE OF TEST IS ------=-------"+humiditySilosPerOrder.size());
 	}
 	
 	public ArrayList<String> getHumiditySilosPerOrder(String OrderCode)
