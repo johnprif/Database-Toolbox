@@ -101,7 +101,7 @@ public class PendingOrdersGUI
     private ArrayList<String[]> changes;
     private ArrayList<Order> changes2;
     private HashMap<String, Order> changes3;
-    private HashMap<String, HashMap<String, String>> currentHumidityValues;
+    private HashMap<String, HashMap<String, String>> currentHumidityValues = new HashMap<String, HashMap<String, String>>();
     private boolean flag = false; 
     private Stage dateStage;
     private Stage shippingStage;
@@ -139,7 +139,7 @@ public class PendingOrdersGUI
 		changeTimeCreationHandler.setChanges3(changes3);
 		changeTimeExecutionHandler.setChanges3(changes3);
 		changeHumidityHandler.setChanges3(changes3);
-//		changeHumidityHandler.setCurrentHumidityValues(currentHumidityValues);
+		changeHumidityHandler.setCurrentHumidityValues(currentHumidityValues);
 		executeHandler.setChanges3(changes3);
 		executeHandler.setCurrentHumidityValues(currentHumidityValues);
 		backHandler.setChanges3(changes3);

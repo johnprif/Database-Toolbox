@@ -47,7 +47,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	
 	private HashMap<String, Order> changes3;
 	private HashMap<String, HashMap<String, String>> currentHumidityValues;
-	private HashMap<String, String> innerHashMap;
+	private HashMap<String, String> innerHashMap = new HashMap<String, String>();
     
     private ComboBox comboTest;
     private String tempString;
@@ -56,8 +56,8 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	{
 		this.stage = stage;
 		this.myDB = DataBaseHandler.getInstance();
-		innerHashMap = new HashMap<String, String>();
-		currentHumidityValues = new HashMap<String, HashMap<String, String>>();
+//		innerHashMap = new HashMap<String, String>();
+//		currentHumidityValues = new HashMap<String, HashMap<String, String>>();
 		
 	}
 	

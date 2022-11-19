@@ -553,8 +553,9 @@ public class DataBaseHandler
 		String newCoockedTime;
 		String temp;
 		String[] tempMixingStartTime;
-		
+		System.out.println("====================currentHumidityValues =================================="+currentHumidityValues.get(order.getOrderCode()).size());
 		double percentageOfWater = computeWaterAdjustement(order, currentHumidityValues);
+		System.out.println("====================currentHumidityValues =================================="+currentHumidityValues.get(order.getOrderCode()).size());
 		System.out.println("====================The water is =================================="+percentageOfWater);
 	//	mixingStartTime = Integer.parseInt(order.getExecutionTime());
 	//	newCoockedTime = mixingStartTime + "";
@@ -562,7 +563,7 @@ public class DataBaseHandler
 		for(int i=0; i<noOfBatches; i++)
 		{
 			
-			System.out.println("====================The water is =================================="+(getWaterAdjustSiloID()*(1-percentageOfWater)));
+			System.out.println("====================The water is =================================="+(getWaterAdjustSiloID()*(1-percentageOfWater/100)));
 			
 			Statement statement = connection.createStatement();
 			statement.executeUpdate("INSERT INTO BatchData " + "VALUES ( "+order.getOrderCode()+" , "+(i+1)+" , "+newCoockedTime+" , "+0+" , "+0+" , "+(getWaterAdjustSiloID()*(1-percentageOfWater))+")");
