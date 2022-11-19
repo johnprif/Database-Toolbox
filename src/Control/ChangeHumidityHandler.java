@@ -171,7 +171,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 				            			tempString = (String) comboTest.getSelectionModel().getSelectedItem();
 				            			innerHashMap.put(tempString, humidity+"");
 				            			currentHumidityValues.put(order.getOrderCode(), innerHashMap);
-				            			System.out.println(currentHumidityValues.get(order.getOrderCode()).get(tempString));
+//				            			System.out.println(currentHumidityValues.get(order.getOrderCode()).get(tempString));
 										//order.setHumidity(""+humidity+"");									
 										table.getItems().set(table.getSelectionModel().getSelectedIndex(), order);
 										changes3.put(order.getOrderCode(), order);
