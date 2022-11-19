@@ -170,13 +170,6 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 			            stage.close();
 			        }
 			    });
-				
-				back.setOnAction(new EventHandler<ActionEvent>() {
-			        @Override public void handle(ActionEvent e) {
-			            stage.close();
-			        }
-			    });
-				
 
 				select.setOnAction(new EventHandler<ActionEvent>() {
 			        @Override public void handle(ActionEvent e) {
@@ -196,13 +189,17 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 							}
 			            	if(humidity<=10)
 			            	{
-			            		try {
-									order.setHumidity(""+humidity+"");									
+			            		try {		
+			            			String temp = (String) comboTest.getSelectionModel().getSelectedItem();
+			            			innerHashMap.put(temp, humidity+"");
+			            			currentHumidityValues.put(order.getOrderCode(), innerHashMap);
+			            			System.out.println(currentHumidityValues.get(order.getOrderCode()).get(temp));
+									//order.setHumidity(""+humidity+"");									
 									table.getItems().set(table.getSelectionModel().getSelectedIndex(), order);
 									changes3.put(order.getOrderCode(), order);
 									
 									rigthWindow(text);
-									stage.close();
+									//stage.close();
 								} catch (NumberFormatException e1) {
 									e1.printStackTrace();
 								}
