@@ -59,12 +59,14 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		currentHumidityValues = new HashMap<String, HashMap<String, String>>();
 		innerHashMap = new HashMap<String, String>();
 		
-		textField.setText("0.0");
+		
 	}
 	
 	@Override
 	public void handle(ActionEvent arg0) 
 	{
+		textField.setText("0.0");
+		
 		System.out.println("ChangeHumidityHandler");
 		order = table.getSelectionModel().getSelectedItem();	
 		
