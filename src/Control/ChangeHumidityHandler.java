@@ -16,6 +16,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -43,6 +44,9 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	
 	private HashMap<String, Order> changes3;
 	
+    
+    private ComboBox comboTest = new ComboBox();
+	
 	public ChangeHumidityHandler(Stage stage)
 	{
 		this.stage = stage;
@@ -53,17 +57,17 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	public void handle(ActionEvent arg0) 
 	{
 		System.out.println("ChangeHumidityHandler");
+		order = table.getSelectionModel().getSelectedItem();	
 		
-		if(flag == false)
+		if(order.getHumidity().equals("ΟΧΙ"))
+		{
+			noHumidityWindow();
+		}else if(flag == false)
 		{
 			warningWindowForFlag();
 			stage.close();
 		}else
 		{
-			
-			
-			order = table.getSelectionModel().getSelectedItem();			
-
 			siloIDsPerOrder = new ArrayList<String>(myDB.getHumiditySilosPerOrder(order.getOrderCode()));
 //			System.out.println("THE SIZE OF siloIDs = "+siloIDs.size());
 			createButtons();
@@ -78,6 +82,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		        vbox.setStyle("-fx-background-color: dodgerblue;");
 		        
 		        TextField textField = new TextField();
+		        textField.setPromptText("0.0");
 		        GridPane gridPane = new GridPane();
 		        gridPane.setHgap(10);
 		        gridPane.setVgap(10);
@@ -100,14 +105,15 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 					if(siloIDsPerOrder.size()==1)
 					{
 						System.out.println("I AM HERE ");
-						currentHumidityLabel = currentHumidityLabel + " για το σιλό "+siloIDsPerOrder.get(0)+" = "+order.getHumidity();
+						currentHumidityLabel = currentHumidityLabel + " για το σιλό "+siloIDsPerOrder.get(0)+" = "+ myDB.getHumiditySilos().get(siloIDsPerOrder.get(0));
 					}else
 					{
 						currentHumidityLabel += " για τα σιλό: ";
 						for(int i=0; i<siloIDsPerOrder.size(); i++)
 						{
-							currentHumidityLabel += ", "+siloIDsPerOrder.get(i);
-						}								
+							comboTest.getItems().add(siloIDsPerOrder.get(i));
+							currentHumidityLabel += siloIDsPerOrder.get(i)+" ,";
+						}
 					}
 				}
 				currentHumidity = new Label(currentHumidityLabel);
@@ -115,7 +121,24 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 				gridPane.add(currentHumidity, 0, 1);
 				GridPane.setHalignment(currentHumidity, HPos.CENTER);
 			
-		        gridPane.add(textField, 0, 2);
+//=========================================================================================				
+//				comboTest.getItems().add("0");
+//				comboTest.getItems().add("1");
+//				comboTest.getItems().add("2");
+//				comboTest.getItems().add("3");
+//				comboTest.getItems().add("4");
+//				comboTest.getItems().add("5");
+//				comboTest.getItems().add("6");
+//				comboTest.getItems().add("7");
+//				comboTest.getItems().add("8");
+//				comboTest.getItems().add("9");
+				
+				
+				Label textField1 = new Label("Hello");
+				HBox hbox1 = new HBox(5, comboTest, textField, select);			
+				gridPane.add(hbox1, 0, 2);
+//=============================================================================================				 
+//		        gridPane.add(textField, 0, 2);
 		        gridPane.add(hbox, 0, 3);
 		        gridPane.setAlignment(Pos.CENTER); 
 		        vbox.getChildren().add(gridPane);
@@ -128,6 +151,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 
 				cancel.setOnAction(new EventHandler<ActionEvent>() {
 			        @Override public void handle(ActionEvent e) {
+			        	comboTest.getItems().removeAll();
 			            stage.close();
 			        }
 			    });
@@ -198,7 +222,8 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	
 	private void createBoxes()
 	{
-		hbox = new HBox(5, select, cancel);
+//		hbox = new HBox(5, select, cancel);
+		hbox = new HBox(5, cancel);
 		hbox.setAlignment(Pos.BASELINE_CENTER);
 		
 		vbox = new VBox(20);
@@ -237,4 +262,13 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
     	alert.showAndWait();
 	}
 
+	private void noHumidityWindow()
+	{
+		Alert alert = new Alert(Alert.AlertType.WARNING);
+    	alert.setTitle("Υγρασία");
+    	alert.setHeaderText("Αδύνατη αλλαγή υγρασίας!");
+    	alert.setContentText("Δεν γίνεται να αλλάξετε την υγρασία διότι δεν υπάρχει κάποιο σιλό που περιέχει αισθητήρα ούτε επιτρέπεται η χειροκίνητη ρύθμιση");
+    	alert.showAndWait();
+	}
+	
 }

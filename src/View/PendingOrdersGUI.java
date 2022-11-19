@@ -10,6 +10,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -107,6 +108,7 @@ public class PendingOrdersGUI
     private Label temp;
     
     private ArrayList<Label> labelsArrayList;
+
     
 	public PendingOrdersGUI(Stage stage)
 	{
