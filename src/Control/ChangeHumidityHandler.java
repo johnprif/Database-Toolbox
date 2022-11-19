@@ -87,75 +87,75 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 			
 			createBoxes();
 			
-			 Scene scene = new Scene(vbox, 400, 400);
-		        stage.setScene(scene);
-		        stage.setTitle("Αλλαγή Υγρασίας -> "+order.getOrderCode());
+			Scene scene = new Scene(vbox, 400, 400);
+		    stage.setScene(scene);
+		    stage.setTitle("Αλλαγή Υγρασίας -> "+order.getOrderCode());
+		       
+		    vbox.setAlignment(Pos.BASELINE_CENTER);
+		    vbox.setStyle("-fx-background-color: dodgerblue;");
 		        
-		        vbox.setAlignment(Pos.BASELINE_CENTER);
-		        vbox.setStyle("-fx-background-color: dodgerblue;");
+		    GridPane gridPane = new GridPane();
+		    gridPane.setHgap(10);
+		    gridPane.setVgap(10);
+		    
+		    Label checkInlabel;
+		    Label currentHumidity;
+				
+		    String checkInlabelText = "Εισάγετε την επιθυμητή υγρασία για το σιλό: ";
+			checkInlabel = new Label(checkInlabelText);
+				
+			makeComboSilos();
+				
+			String currentHumidityString;
+			comboTest.setOnAction(new EventHandler<ActionEvent>() {
+			       @Override public void handle(ActionEvent e) {		
+			        checkInlabel.setText(checkInlabelText+myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()));
+//			        checkInlabel.setText(checkInlabelText+currentHumidityValues.get(order.getOrderCode()).get(tempString));
+//			        currentHumidityString = 
+//			        System.out.println(currentHumidityValues.get(order.getOrderCode()).get(comboTest.getSelectionModel().getSelectedItem()));
+			        textField.setText(currentHumidityValues.get(order.getOrderCode()).get(comboTest.getSelectionModel().getSelectedItem()));
+//			           textField.setPromptText(myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()));
+//			           textField.setPromptText(currentHumidityValues.get(order.getOrderCode()).get(innerHashMap.get(myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()))));
+			       }
+			   });
+				
+				
+				
+			checkInlabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
+		    gridPane.add(checkInlabel, 0, 0);
+		    GridPane.setHalignment(checkInlabel, HPos.CENTER);
 		        
-		        GridPane gridPane = new GridPane();
-		        gridPane.setHgap(10);
-		        gridPane.setVgap(10);
-
-		        Label checkInlabel;
-		        Label currentHumidity;
-				
-				String checkInlabelText = "Εισάγετε την επιθυμητή υγρασία για το σιλό: ";
-				checkInlabel = new Label(checkInlabelText);
-				
-				makeComboSilos();
-				
-				String currentHumidityString;
-				comboTest.setOnAction(new EventHandler<ActionEvent>() {
-			        @Override public void handle(ActionEvent e) {		
-			        	checkInlabel.setText(checkInlabelText+myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()));
-//			        	checkInlabel.setText(checkInlabelText+currentHumidityValues.get(order.getOrderCode()).get(tempString));
-//			        	currentHumidityString = 
-//			        	System.out.println(currentHumidityValues.get(order.getOrderCode()).get(comboTest.getSelectionModel().getSelectedItem()));
-			        	textField.setText(currentHumidityValues.get(order.getOrderCode()).get(comboTest.getSelectionModel().getSelectedItem()));
-//			            textField.setPromptText(myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()));
-//			            textField.setPromptText(currentHumidityValues.get(order.getOrderCode()).get(innerHashMap.get(myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()))));
-			        }
-			    });
-				
-				
-				
-				checkInlabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
-		        gridPane.add(checkInlabel, 0, 0);
-		        GridPane.setHalignment(checkInlabel, HPos.CENTER);
-		        
-				Label textField1 = new Label("Hello");
-				HBox hbox1 = new HBox(5, comboTest, textField, select);			
-				gridPane.add(hbox1, 0, 2);
+		    Label textField1 = new Label("Hello");
+		    HBox hbox1 = new HBox(5, comboTest, textField, select);			
+			gridPane.add(hbox1, 0, 2);
 //=============================================================================================				 
-//		        gridPane.add(textField, 0, 2);
-		        gridPane.add(hbox, 0, 3);
-		        gridPane.setAlignment(Pos.CENTER); 
-		        vbox.getChildren().add(gridPane);
+//		    gridPane.add(textField, 0, 2);
+		    gridPane.add(hbox, 0, 3);
+		    gridPane.setAlignment(Pos.CENTER); 
+		    vbox.getChildren().add(gridPane);
 		        
-		        stage.setHeight(370);
-		        stage.setWidth(350);
-		        stage.setResizable(false);
-		        stage.show();
+		    stage.setHeight(370);
+		    stage.setWidth(350);
+		    stage.setResizable(false);
+		    stage.show();
 		        
 
-				cancel.setOnAction(new EventHandler<ActionEvent>() {
-			        @Override public void handle(ActionEvent e) {
-			            stage.close();
-			        }
-			    });
+		    cancel.setOnAction(new EventHandler<ActionEvent>() {
+			       @Override public void handle(ActionEvent e) {
+			           stage.close();
+			       }
+			   });
 
-				select.setOnAction(new EventHandler<ActionEvent>() {
-			        @Override public void handle(ActionEvent e) {
-			            String text = textField.getText();
+		    select.setOnAction(new EventHandler<ActionEvent>() {
+			       @Override public void handle(ActionEvent e) {
+			          String text = textField.getText();
 			            
-			            if(comboTest.getSelectionModel().isEmpty())
-			            {
-			            	warningWindowForComboBox();
-			            }else
-			            {
-			            	if(text == null || text.trim().isEmpty())
+			           if(comboTest.getSelectionModel().isEmpty())
+			           {
+			        	   warningWindowForComboBox();
+			           }else
+			           {
+			        	   if(text == null || text.trim().isEmpty())
 				            {
 				            	warningWindowForFlag(text);
 				            }else
