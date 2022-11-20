@@ -110,16 +110,16 @@ public class DataBaseHandler
 		int i=0;
 		try {
 			Statement statement1 = connection.createStatement();
-			statement1.executeQuery("SELECT * FROM BatchData WHERE OrderCode LIKE'#%'");
+			statement1.executeQuery("SELECT OrderCode FROM BatchData WHERE OrderCode LIKE'#%'");
 			i++;
 			Statement statement2 = connection.createStatement();
-			statement2.executeQuery("SELECT * FROM BatchIngredients WHERE OrderCode LIKE '#%'");
+			statement2.executeQuery("SELECT OrderCode FROM BatchIngredients WHERE OrderCode LIKE '#%'");
 			i++;
 			Statement statement3 = connection.createStatement();
-			statement3.executeQuery("SELECT * FROM OrderIngredients WHERE OrderCode LIKE '#%'");
+			statement3.executeQuery("SELECT OrderCode FROM OrderIngredients WHERE OrderCode LIKE '#%'");
 			i++;
 			Statement statement4 = connection.createStatement();
-			statement4.executeQuery("SELECT * FROM Orders WHERE OrderCode LIKE '#%'");
+			statement4.executeQuery("SELECT OrderCode FROM Orders WHERE OrderCode LIKE '#%'");
 
 			connection.commit();
 			System.out.println("It has not hashes - ok");
@@ -880,7 +880,7 @@ public class DataBaseHandler
 		HashMap<String, Integer> oldNewQuantity = new HashMap<String, Integer>();
 		int intSiloQuantity;
 		int intBatchQuantity;
-		int Quantity;
+		int Quantity=0;
 		int QuantityActual;
 
 		int oldQuantity;
@@ -890,42 +890,104 @@ public class DataBaseHandler
 		int min;
 		int range;
 		
-		for(int i=0; i<NoOfBatches; i++)
+		if(currentHumidityValues.get(order.getOrderCode())!=null)
 		{
-			for(int j=0; j<SiloID.size(); j++)
+			for(int i=0; i<NoOfBatches; i++)
 			{
-				intSiloQuantity = Integer.parseInt(SiloQuantity.get(j));
-				intBatchQuantity = Integer.parseInt(order.getBatchQuantity());
-				
-				if(i>0)
+				for(int j=0; j<SiloID.size(); j++)
 				{
-					Quantity = oldNewQuantity.get(SiloID.get(j));
-				}else
-				{
-					Quantity = (int) (((intSiloQuantity * 1.0)/100)*intBatchQuantity);
+					intSiloQuantity = Integer.parseInt(SiloQuantity.get(j));
+					intBatchQuantity = Integer.parseInt(order.getBatchQuantity());
+					
+					System.out.println("---------intSiloQuantity----------"+intSiloQuantity);
+					System.out.println("---------intBatchQuantity----------"+intBatchQuantity);					
+					
+					if(i>0)
+					{
+						try {
+							Quantity = (int) (oldNewQuantity.get(SiloID.get(j))*(1+DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue()));
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						System.out.println("---------SiloID.get(j)----------"+SiloID.get(j));
+					}else
+					{
+						try {
+							Quantity = (int) ((((intSiloQuantity * 1.0)/100)*intBatchQuantity)*(1+DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue()));
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						
+						System.out.println("---------intBatchQuantity----------"+intBatchQuantity);
+					}
+					
+					if(i == NoOfBatches-1)
+					{
+						max = (int) (1.005*Quantity);
+						min = (int) (0.995*Quantity);
+						range = (max - min) + 1;
+					}else
+					{
+						max = (int) (1.04*Quantity);
+						min = (int) (0.96*Quantity);
+						range = (max - min) + 1;
+					}
+					
+					QuantityActual = (int) ((Math.random() * range) + min);
+					
+					String[] idQuaAcQua= {(i+1)+"" , SiloID.get(j), Quantity+"", QuantityActual+""};
+					Quantitys.add(idQuaAcQua);
+					
+					oldQuantity =(int) (((intSiloQuantity * 1.0)/100)*intBatchQuantity);
+					newQuantity = (Quantity - QuantityActual)+oldQuantity;
+					oldNewQuantity.put(SiloID.get(j), newQuantity);
+					}			
 				}
-				
-				if(i == NoOfBatches-1)
+			}
+		}else
+		{
+			for(int i=0; i<NoOfBatches; i++)
+			{
+				for(int j=0; j<SiloID.size(); j++)
 				{
-					max = (int) (1.005*Quantity);
-					min = (int) (0.995*Quantity);
-					range = (max - min) + 1;
-				}else
-				{
-					max = (int) (1.04*Quantity);
-					min = (int) (0.96*Quantity);
-					range = (max - min) + 1;
-				}
-				
-				QuantityActual = (int) ((Math.random() * range) + min);
-				
-				String[] idQuaAcQua= {(i+1)+"" , SiloID.get(j), Quantity+"", QuantityActual+""};
-				Quantitys.add(idQuaAcQua);
-				
-				oldQuantity =(int) (((intSiloQuantity * 1.0)/100)*intBatchQuantity);
-				newQuantity = (Quantity - QuantityActual)+oldQuantity;
-				oldNewQuantity.put(SiloID.get(j), newQuantity);
-			}			
+					intSiloQuantity = Integer.parseInt(SiloQuantity.get(j));
+					intBatchQuantity = Integer.parseInt(order.getBatchQuantity());
+					
+					System.out.println("---------intSiloQuantity----------"+intSiloQuantity);
+					System.out.println("---------intBatchQuantity----------"+intBatchQuantity);					
+					
+					if(i>0)
+					{
+						Quantity = oldNewQuantity.get(SiloID.get(j));
+						System.out.println("---------SiloID.get(j)----------"+SiloID.get(j));
+					}else
+					{
+						Quantity = (int) (((intSiloQuantity * 1.0)/100)*intBatchQuantity);
+					
+					if(i == NoOfBatches-1)
+					{
+						max = (int) (1.005*Quantity);
+						min = (int) (0.995*Quantity);
+						range = (max - min) + 1;
+					}else
+					{
+						max = (int) (1.04*Quantity);
+						min = (int) (0.96*Quantity);
+						range = (max - min) + 1;
+					}
+					
+					QuantityActual = (int) ((Math.random() * range) + min);
+					
+					String[] idQuaAcQua= {(i+1)+"" , SiloID.get(j), Quantity+"", QuantityActual+""};
+					Quantitys.add(idQuaAcQua);
+					
+					oldQuantity =(int) (((intSiloQuantity * 1.0)/100)*intBatchQuantity);
+					newQuantity = (Quantity - QuantityActual)+oldQuantity;
+					oldNewQuantity.put(SiloID.get(j), newQuantity);
+				}			
+			}
+		}
 		}
 		
 		return Quantitys;
