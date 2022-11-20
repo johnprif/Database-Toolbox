@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.nio.charset.StandardCharsets;
@@ -496,6 +497,7 @@ public class DataBaseHandler
 		}
 	}
 	
+	//TODO - DELETE OR SHOW POPUP FROM BATCHINGRIDIENT WHERE ORDERCODE ALREADY EXISTS 
 	private void addEntriesToBatchIngredientsTable2(Order order, HashMap<String, HashMap<String, String>> currentHumidityValues) throws SQLException
 	{
 		int NoOfBatches = Integer.parseInt(order.getNoOfBatches());
@@ -506,18 +508,32 @@ public class DataBaseHandler
 		int Quantity;
 		int ActualQuantity;
 //		System.out.println("EDW EIMAI");
-		for(int i=0; i<Quantitys.size(); i++)
+		
+		PreparedStatement preparedStatement = connection.prepareStatement("SELECT OrderCode FROM BatchIngredients WHERE OrderCode='"+order.getOrderCode()+"'");
+		ResultSet pendingSet2 = preparedStatement.executeQuery();
+		
+		if(pendingSet2.next())
 		{
-			batchNumber = Integer.parseInt(Quantitys.get(i)[0]);
-			siloID = Integer.parseInt(Quantitys.get(i)[1]);
-			Quantity = Integer.parseInt(Quantitys.get(i)[2]);
-			ActualQuantity = Integer.parseInt(Quantitys.get(i)[3]);
-			Statement statement = connection.createStatement();
-			statement.executeUpdate("INSERT INTO BatchIngredients " + "VALUES ( '"+order.getOrderCode()+"' , "+batchNumber+" , "+siloID+" , "+Quantity+" , "+Quantity+" , "+ActualQuantity+" , 0 )");		
-		}
+			batchIngridientsAlert("BatchIngredients", order.getOrderCode());
+			Platform.exit();
+			System.exit(0);
+		}else
+		{
+			for(int i=0; i<Quantitys.size(); i++)
+			{
+				batchNumber = Integer.parseInt(Quantitys.get(i)[0]);
+				siloID = Integer.parseInt(Quantitys.get(i)[1]);
+				Quantity = Integer.parseInt(Quantitys.get(i)[2]);
+				ActualQuantity = Integer.parseInt(Quantitys.get(i)[3]);
+				Statement statement = connection.createStatement();
+				statement.executeUpdate("INSERT INTO BatchIngredients " + "VALUES ( '"+order.getOrderCode()+"' , "+batchNumber+" , "+siloID+" , "+Quantity+" , "+Quantity+" , "+ActualQuantity+" , 0 )");	
+			}
+		}		
+		
 		connection.commit();
 	}
 	
+	//TODO - DELETE OR SHOW POPUP FROM BATCHINGRIDIENT WHERE ORDERCODE ALREADY EXISTS 
 	private void addEntriesToBatchIngredientsTable(Order order) throws SQLException
 	{
 		int NoOfBatches = Integer.parseInt(order.getNoOfBatches());
@@ -528,14 +544,28 @@ public class DataBaseHandler
 		int Quantity;
 		int ActualQuantity;
 //		System.out.println("EDW EIMAI");
-		for(int i=0; i<Quantitys.size(); i++)
+		
+		
+		PreparedStatement preparedStatement = connection.prepareStatement("SELECT OrderCode FROM BatchIngredients WHERE OrderCode='"+order.getOrderCode()+"'");
+		ResultSet pendingSet2 = preparedStatement.executeQuery();
+		
+		if(pendingSet2.next())
 		{
-			batchNumber = Integer.parseInt(Quantitys.get(i)[0]);
-			siloID = Integer.parseInt(Quantitys.get(i)[1]);
-			Quantity = Integer.parseInt(Quantitys.get(i)[2]);
-			ActualQuantity = Integer.parseInt(Quantitys.get(i)[3]);
-			Statement statement = connection.createStatement();
-			statement.executeUpdate("INSERT INTO BatchIngredients " + "VALUES ( '"+order.getOrderCode()+"' , "+batchNumber+" , "+siloID+" , "+Quantity+" , "+Quantity+" , "+ActualQuantity+" , 0 )");		
+			batchIngridientsAlert("BatchIngredients", order.getOrderCode());
+			Platform.exit();
+			System.exit(0);
+			
+		}else
+		{
+			for(int i=0; i<Quantitys.size(); i++)
+			{
+				batchNumber = Integer.parseInt(Quantitys.get(i)[0]);
+				siloID = Integer.parseInt(Quantitys.get(i)[1]);
+				Quantity = Integer.parseInt(Quantitys.get(i)[2]);
+				ActualQuantity = Integer.parseInt(Quantitys.get(i)[3]);
+				Statement statement = connection.createStatement();
+				statement.executeUpdate("INSERT INTO BatchIngredients " + "VALUES ( '"+order.getOrderCode()+"' , "+batchNumber+" , "+siloID+" , "+Quantity+" , "+Quantity+" , "+ActualQuantity+" , 0 )");		
+			}
 		}
 		connection.commit();
 	}
@@ -557,104 +587,119 @@ public class DataBaseHandler
 	//	mixingStartTime = Integer.parseInt(order.getExecutionTime());
 	//	newCoockedTime = mixingStartTime + "";
 		newCoockedTime = order.getExecutionTime();
-		for(int i=0; i<noOfBatches; i++)
+		
+		
+		PreparedStatement preparedStatement = connection.prepareStatement("SELECT OrderCode FROM BatchData WHERE OrderCode='"+order.getOrderCode()+"'");
+		ResultSet pendingSet2 = preparedStatement.executeQuery();
+		
+		if(pendingSet2.next())
 		{
-			Statement statement = connection.createStatement();
-			statement.executeUpdate("INSERT INTO BatchData " + "VALUES ( "+order.getOrderCode()+" , "+(i+1)+" , "+newCoockedTime+" , "+0+" , "+0+" , "+(getWaterAdjustSiloID()*(1-percentageOfWater))+")");
-
-			tempMixingStartTime = newCoockedTime.split("");
-			
-			if(tempMixingStartTime.length == 5) //4 54 18
+			batchIngridientsAlert("BatchData", order.getOrderCode());
+			Platform.exit();
+			System.exit(0);
+		}else
+		{
+			for(int i=0; i<noOfBatches; i++)
 			{
-				max = (int) (5.0 + (Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2]))); //change minutes
-				min = (int) (2.5 + (Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2])));
-				range = (max - min) + 1;
-				
-				int randomMinutes = (int) ((Math.random() * range) + min);
-				
-				if(randomMinutes>59)
-				{
-					newHours = Integer.parseInt(tempMixingStartTime[0])+1;
-//					newMinutes = (int) Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2])-60;
-					newMinutes = randomMinutes-60;
-				}else
-				{
-					newHours = Integer.parseInt(tempMixingStartTime[0]);
-//					newMinutes = (int) Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2]);
-					newMinutes = randomMinutes;
-				}
-				tempMixingStartTime[0] = newHours + ""; //Hours
-				if(newMinutes < 10)
-				{
-					tempMixingStartTime[1] = 0 + ""; //firstMinute
-					tempMixingStartTime[2] = newMinutes + ""; //secondMinute
-				}else
-				{
-					String[] tempNewMinutes = (newMinutes+"").split("");
-//					tempMixingStartTime[1] = (newMinutes / 10) + ""; //firstMinute
-//					tempMixingStartTime[2] = (newMinutes % 10) + ""; //secondMinute
-					tempMixingStartTime[1] = tempNewMinutes[0]; //firstMinute
-					tempMixingStartTime[2] = tempNewMinutes[1]; //secondMinute
-				}
-				tempMixingStartTime[3] = ((int) ((Math.random() * 4) + 1)) + ""; //firstSecond
-				tempMixingStartTime[4] = ((int) ((Math.random() * 8) + 1)) + ""; //secondSecong
-				
-				newCoockedTime = tempMixingStartTime[0]+tempMixingStartTime[1]+tempMixingStartTime[2]+tempMixingStartTime[3]+tempMixingStartTime[4];
-			}else								//12 54 89 == length == 6
-			{
-				max = (int) (5.0 + (Integer.parseInt(tempMixingStartTime[2]+tempMixingStartTime[3]))); //change minutes
-				min = (int) (2.5 + (Integer.parseInt(tempMixingStartTime[2]+tempMixingStartTime[3])));
-				range = (max - min) + 1;
+				Statement statement = connection.createStatement();
+				statement.executeUpdate("INSERT INTO BatchData " + "VALUES ( "+order.getOrderCode()+" , "+(i+1)+" , "+newCoockedTime+" , "+0+" , "+0+" , "+(getWaterAdjustSiloID()*(1-percentageOfWater))+")");
 
-				int randomMinutes = (int) (Math.random() * range) + min;
-				int oldHours = Integer.parseInt(tempMixingStartTime[0]+tempMixingStartTime[1]);
-				if(randomMinutes > 59)
+				tempMixingStartTime = newCoockedTime.split("");
+				
+				if(tempMixingStartTime.length == 5) //4 54 18
 				{
-					if(oldHours == 23)
+					max = (int) (5.0 + (Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2]))); //change minutes
+					min = (int) (2.5 + (Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2])));
+					range = (max - min) + 1;
+					
+					int randomMinutes = (int) ((Math.random() * range) + min);
+					
+					if(randomMinutes>59)
 					{
-						newHours = 0;
+						newHours = Integer.parseInt(tempMixingStartTime[0])+1;
+//						newMinutes = (int) Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2])-60;
+						newMinutes = randomMinutes-60;
 					}else
 					{
-						newHours = Integer.parseInt(tempMixingStartTime[0]+tempMixingStartTime[1])+1;	
+						newHours = Integer.parseInt(tempMixingStartTime[0]);
+//						newMinutes = (int) Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2]);
+						newMinutes = randomMinutes;
 					}
-					newMinutes = randomMinutes-60;
-				}else
-				{
-					newHours = Integer.parseInt(tempMixingStartTime[0]+tempMixingStartTime[1]);
-					newMinutes = randomMinutes;
-				}
-				
-				if(newHours < 10)
-				{
-					tempMixingStartTime[0] = 0 + ""; //firsHours
-					tempMixingStartTime[1] = newHours + ""; //secondHours
-				}else
-				{
-					String[] tempNewHour = (newHours+"").split("");
-//					tempMixingStartTime[0] = (newHours / 10) + ""; //firsHours
-//					tempMixingStartTime[1] = (newHours % 10) + ""; //secondHours
-					tempMixingStartTime[0] = tempNewHour[0];
-					tempMixingStartTime[1] = tempNewHour[1];
-				}
-				if(newMinutes < 10)
-				{
-					tempMixingStartTime[2] = 0 + ""; //firstMinute
-					tempMixingStartTime[3] = newMinutes + ""; //secondMinute
-				}else
-				{
-					String[] tempNewMinutes = (newMinutes+"").split("");
-//					tempMixingStartTime[2] = (int)(newMinutes / 10) + ""; //firstMinute
-//					tempMixingStartTime[3] = (int)(newMinutes % 10) + ""; //secondMinute
-					tempMixingStartTime[2] = tempNewMinutes[0]; //firstMinute
-					tempMixingStartTime[3] = tempNewMinutes[1]; //secondMinute
-				}
-				tempMixingStartTime[4] = ((int) ((Math.random() * 4) + 1)) + ""; //firstSecond
-				tempMixingStartTime[5] = ((int) ((Math.random() * 8) + 1)) + ""; //secondSecong
+					tempMixingStartTime[0] = newHours + ""; //Hours
+					if(newMinutes < 10)
+					{
+						tempMixingStartTime[1] = 0 + ""; //firstMinute
+						tempMixingStartTime[2] = newMinutes + ""; //secondMinute
+					}else
+					{
+						String[] tempNewMinutes = (newMinutes+"").split("");
+//						tempMixingStartTime[1] = (newMinutes / 10) + ""; //firstMinute
+//						tempMixingStartTime[2] = (newMinutes % 10) + ""; //secondMinute
+						tempMixingStartTime[1] = tempNewMinutes[0]; //firstMinute
+						tempMixingStartTime[2] = tempNewMinutes[1]; //secondMinute
+					}
+					tempMixingStartTime[3] = ((int) ((Math.random() * 4) + 1)) + ""; //firstSecond
+					tempMixingStartTime[4] = ((int) ((Math.random() * 8) + 1)) + ""; //secondSecong
 					
-				newCoockedTime = tempMixingStartTime[0]+tempMixingStartTime[1]+tempMixingStartTime[2]+tempMixingStartTime[3]+tempMixingStartTime[4]+tempMixingStartTime[5];
+					newCoockedTime = tempMixingStartTime[0]+tempMixingStartTime[1]+tempMixingStartTime[2]+tempMixingStartTime[3]+tempMixingStartTime[4];
+				}else								//12 54 89 == length == 6
+				{
+					max = (int) (5.0 + (Integer.parseInt(tempMixingStartTime[2]+tempMixingStartTime[3]))); //change minutes
+					min = (int) (2.5 + (Integer.parseInt(tempMixingStartTime[2]+tempMixingStartTime[3])));
+					range = (max - min) + 1;
+
+					int randomMinutes = (int) (Math.random() * range) + min;
+					int oldHours = Integer.parseInt(tempMixingStartTime[0]+tempMixingStartTime[1]);
+					if(randomMinutes > 59)
+					{
+						if(oldHours == 23)
+						{
+							newHours = 0;
+						}else
+						{
+							newHours = Integer.parseInt(tempMixingStartTime[0]+tempMixingStartTime[1])+1;	
+						}
+						newMinutes = randomMinutes-60;
+					}else
+					{
+						newHours = Integer.parseInt(tempMixingStartTime[0]+tempMixingStartTime[1]);
+						newMinutes = randomMinutes;
+					}
+					
+					if(newHours < 10)
+					{
+						tempMixingStartTime[0] = 0 + ""; //firsHours
+						tempMixingStartTime[1] = newHours + ""; //secondHours
+					}else
+					{
+						String[] tempNewHour = (newHours+"").split("");
+//						tempMixingStartTime[0] = (newHours / 10) + ""; //firsHours
+//						tempMixingStartTime[1] = (newHours % 10) + ""; //secondHours
+						tempMixingStartTime[0] = tempNewHour[0];
+						tempMixingStartTime[1] = tempNewHour[1];
+					}
+					if(newMinutes < 10)
+					{
+						tempMixingStartTime[2] = 0 + ""; //firstMinute
+						tempMixingStartTime[3] = newMinutes + ""; //secondMinute
+					}else
+					{
+						String[] tempNewMinutes = (newMinutes+"").split("");
+//						tempMixingStartTime[2] = (int)(newMinutes / 10) + ""; //firstMinute
+//						tempMixingStartTime[3] = (int)(newMinutes % 10) + ""; //secondMinute
+						tempMixingStartTime[2] = tempNewMinutes[0]; //firstMinute
+						tempMixingStartTime[3] = tempNewMinutes[1]; //secondMinute
+					}
+					tempMixingStartTime[4] = ((int) ((Math.random() * 4) + 1)) + ""; //firstSecond
+					tempMixingStartTime[5] = ((int) ((Math.random() * 8) + 1)) + ""; //secondSecong
+						
+					newCoockedTime = tempMixingStartTime[0]+tempMixingStartTime[1]+tempMixingStartTime[2]+tempMixingStartTime[3]+tempMixingStartTime[4]+tempMixingStartTime[5];
+				}
+			//	mixingStartTime = Integer.parseInt(newCoockedTime);
 			}
-		//	mixingStartTime = Integer.parseInt(newCoockedTime);
 		}
+		
+		
 		connection.commit();
 	}
 	
@@ -696,109 +741,123 @@ public class DataBaseHandler
 		String newCoockedTime;
 		String temp;
 		String[] tempMixingStartTime;
-		
+		newCoockedTime = order.getExecutionTime();
 	//	mixingStartTime = Integer.parseInt(order.getExecutionTime());
 	//	newCoockedTime = mixingStartTime + "";
-		newCoockedTime = order.getExecutionTime();
-		for(int i=0; i<noOfBatches; i++)
+		
+		
+		PreparedStatement preparedStatement = connection.prepareStatement("SELECT OrderCode FROM BatchData WHERE OrderCode='"+order.getOrderCode()+"'");
+		ResultSet pendingSet2 = preparedStatement.executeQuery();
+		
+		if(pendingSet2.next())
 		{
-			
-			Statement statement = connection.createStatement();
-			statement.executeUpdate("INSERT INTO BatchData " + "VALUES ( "+order.getOrderCode()+" , "+(i+1)+" , "+newCoockedTime+" , "+0+" , "+0+" , "+getWaterAdjustSiloID()+")");
-
-			tempMixingStartTime = newCoockedTime.split("");
-			
-			if(tempMixingStartTime.length == 5) //4 54 18
+			batchIngridientsAlert("BatchData", order.getOrderCode());
+			Platform.exit();
+			System.exit(0);
+		}else
+		{
+			for(int i=0; i<noOfBatches; i++)
 			{
-				max = (int) (5.0 + (Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2]))); //change minutes
-				min = (int) (2.5 + (Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2])));
-				range = (max - min) + 1;
 				
-				int randomMinutes = (int) ((Math.random() * range) + min);
-				
-				if(randomMinutes>59)
-				{
-					newHours = Integer.parseInt(tempMixingStartTime[0])+1;
-//					newMinutes = (int) Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2])-60;
-					newMinutes = randomMinutes-60;
-				}else
-				{
-					newHours = Integer.parseInt(tempMixingStartTime[0]);
-//					newMinutes = (int) Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2]);
-					newMinutes = randomMinutes;
-				}
-				tempMixingStartTime[0] = newHours + ""; //Hours
-				if(newMinutes < 10)
-				{
-					tempMixingStartTime[1] = 0 + ""; //firstMinute
-					tempMixingStartTime[2] = newMinutes + ""; //secondMinute
-				}else
-				{
-					String[] tempNewMinutes = (newMinutes+"").split("");
-//					tempMixingStartTime[1] = (newMinutes / 10) + ""; //firstMinute
-//					tempMixingStartTime[2] = (newMinutes % 10) + ""; //secondMinute
-					tempMixingStartTime[1] = tempNewMinutes[0]; //firstMinute
-					tempMixingStartTime[2] = tempNewMinutes[1]; //secondMinute
-				}
-				tempMixingStartTime[3] = ((int) ((Math.random() * 4) + 1)) + ""; //firstSecond
-				tempMixingStartTime[4] = ((int) ((Math.random() * 8) + 1)) + ""; //secondSecong
-				
-				newCoockedTime = tempMixingStartTime[0]+tempMixingStartTime[1]+tempMixingStartTime[2]+tempMixingStartTime[3]+tempMixingStartTime[4];
-			}else								//12 54 89 == length == 6
-			{
-				max = (int) (5.0 + (Integer.parseInt(tempMixingStartTime[2]+tempMixingStartTime[3]))); //change minutes
-				min = (int) (2.5 + (Integer.parseInt(tempMixingStartTime[2]+tempMixingStartTime[3])));
-				range = (max - min) + 1;
+				Statement statement = connection.createStatement();
+				statement.executeUpdate("INSERT INTO BatchData " + "VALUES ( "+order.getOrderCode()+" , "+(i+1)+" , "+newCoockedTime+" , "+0+" , "+0+" , "+getWaterAdjustSiloID()+")");
 
-				int randomMinutes = (int) (Math.random() * range) + min;
-				int oldHours = Integer.parseInt(tempMixingStartTime[0]+tempMixingStartTime[1]);
-				if(randomMinutes > 59)
+				tempMixingStartTime = newCoockedTime.split("");
+				
+				if(tempMixingStartTime.length == 5) //4 54 18
 				{
-					if(oldHours == 23)
+					max = (int) (5.0 + (Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2]))); //change minutes
+					min = (int) (2.5 + (Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2])));
+					range = (max - min) + 1;
+					
+					int randomMinutes = (int) ((Math.random() * range) + min);
+					
+					if(randomMinutes>59)
 					{
-						newHours = 0;
+						newHours = Integer.parseInt(tempMixingStartTime[0])+1;
+//						newMinutes = (int) Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2])-60;
+						newMinutes = randomMinutes-60;
 					}else
 					{
-						newHours = Integer.parseInt(tempMixingStartTime[0]+tempMixingStartTime[1])+1;	
+						newHours = Integer.parseInt(tempMixingStartTime[0]);
+//						newMinutes = (int) Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2]);
+						newMinutes = randomMinutes;
 					}
-					newMinutes = randomMinutes-60;
-				}else
-				{
-					newHours = Integer.parseInt(tempMixingStartTime[0]+tempMixingStartTime[1]);
-					newMinutes = randomMinutes;
-				}
-				
-				if(newHours < 10)
-				{
-					tempMixingStartTime[0] = 0 + ""; //firsHours
-					tempMixingStartTime[1] = newHours + ""; //secondHours
-				}else
-				{
-					String[] tempNewHour = (newHours+"").split("");
-//					tempMixingStartTime[0] = (newHours / 10) + ""; //firsHours
-//					tempMixingStartTime[1] = (newHours % 10) + ""; //secondHours
-					tempMixingStartTime[0] = tempNewHour[0];
-					tempMixingStartTime[1] = tempNewHour[1];
-				}
-				if(newMinutes < 10)
-				{
-					tempMixingStartTime[2] = 0 + ""; //firstMinute
-					tempMixingStartTime[3] = newMinutes + ""; //secondMinute
-				}else
-				{
-					String[] tempNewMinutes = (newMinutes+"").split("");
-//					tempMixingStartTime[2] = (int)(newMinutes / 10) + ""; //firstMinute
-//					tempMixingStartTime[3] = (int)(newMinutes % 10) + ""; //secondMinute
-					tempMixingStartTime[2] = tempNewMinutes[0]; //firstMinute
-					tempMixingStartTime[3] = tempNewMinutes[1]; //secondMinute
-				}
-				tempMixingStartTime[4] = ((int) ((Math.random() * 4) + 1)) + ""; //firstSecond
-				tempMixingStartTime[5] = ((int) ((Math.random() * 8) + 1)) + ""; //secondSecong
+					tempMixingStartTime[0] = newHours + ""; //Hours
+					if(newMinutes < 10)
+					{
+						tempMixingStartTime[1] = 0 + ""; //firstMinute
+						tempMixingStartTime[2] = newMinutes + ""; //secondMinute
+					}else
+					{
+						String[] tempNewMinutes = (newMinutes+"").split("");
+//						tempMixingStartTime[1] = (newMinutes / 10) + ""; //firstMinute
+//						tempMixingStartTime[2] = (newMinutes % 10) + ""; //secondMinute
+						tempMixingStartTime[1] = tempNewMinutes[0]; //firstMinute
+						tempMixingStartTime[2] = tempNewMinutes[1]; //secondMinute
+					}
+					tempMixingStartTime[3] = ((int) ((Math.random() * 4) + 1)) + ""; //firstSecond
+					tempMixingStartTime[4] = ((int) ((Math.random() * 8) + 1)) + ""; //secondSecong
 					
-				newCoockedTime = tempMixingStartTime[0]+tempMixingStartTime[1]+tempMixingStartTime[2]+tempMixingStartTime[3]+tempMixingStartTime[4]+tempMixingStartTime[5];
+					newCoockedTime = tempMixingStartTime[0]+tempMixingStartTime[1]+tempMixingStartTime[2]+tempMixingStartTime[3]+tempMixingStartTime[4];
+				}else								//12 54 89 == length == 6
+				{
+					max = (int) (5.0 + (Integer.parseInt(tempMixingStartTime[2]+tempMixingStartTime[3]))); //change minutes
+					min = (int) (2.5 + (Integer.parseInt(tempMixingStartTime[2]+tempMixingStartTime[3])));
+					range = (max - min) + 1;
+
+					int randomMinutes = (int) (Math.random() * range) + min;
+					int oldHours = Integer.parseInt(tempMixingStartTime[0]+tempMixingStartTime[1]);
+					if(randomMinutes > 59)
+					{
+						if(oldHours == 23)
+						{
+							newHours = 0;
+						}else
+						{
+							newHours = Integer.parseInt(tempMixingStartTime[0]+tempMixingStartTime[1])+1;	
+						}
+						newMinutes = randomMinutes-60;
+					}else
+					{
+						newHours = Integer.parseInt(tempMixingStartTime[0]+tempMixingStartTime[1]);
+						newMinutes = randomMinutes;
+					}
+					
+					if(newHours < 10)
+					{
+						tempMixingStartTime[0] = 0 + ""; //firsHours
+						tempMixingStartTime[1] = newHours + ""; //secondHours
+					}else
+					{
+						String[] tempNewHour = (newHours+"").split("");
+//						tempMixingStartTime[0] = (newHours / 10) + ""; //firsHours
+//						tempMixingStartTime[1] = (newHours % 10) + ""; //secondHours
+						tempMixingStartTime[0] = tempNewHour[0];
+						tempMixingStartTime[1] = tempNewHour[1];
+					}
+					if(newMinutes < 10)
+					{
+						tempMixingStartTime[2] = 0 + ""; //firstMinute
+						tempMixingStartTime[3] = newMinutes + ""; //secondMinute
+					}else
+					{
+						String[] tempNewMinutes = (newMinutes+"").split("");
+//						tempMixingStartTime[2] = (int)(newMinutes / 10) + ""; //firstMinute
+//						tempMixingStartTime[3] = (int)(newMinutes % 10) + ""; //secondMinute
+						tempMixingStartTime[2] = tempNewMinutes[0]; //firstMinute
+						tempMixingStartTime[3] = tempNewMinutes[1]; //secondMinute
+					}
+					tempMixingStartTime[4] = ((int) ((Math.random() * 4) + 1)) + ""; //firstSecond
+					tempMixingStartTime[5] = ((int) ((Math.random() * 8) + 1)) + ""; //secondSecong
+						
+					newCoockedTime = tempMixingStartTime[0]+tempMixingStartTime[1]+tempMixingStartTime[2]+tempMixingStartTime[3]+tempMixingStartTime[4]+tempMixingStartTime[5];
+				}
+			//	mixingStartTime = Integer.parseInt(newCoockedTime);
 			}
-		//	mixingStartTime = Integer.parseInt(newCoockedTime);
 		}
+		
+		
 		connection.commit();
 	}
 	
@@ -1056,6 +1115,15 @@ public class DataBaseHandler
     	alert.setTitle("Error in connection");
     	alert.setHeaderText("Πρόβλημα με την βάση δεδομένων!");
     	alert.setContentText("Πιθανόν να έχει διαγραφή ή να έχει μετακινηθεί σε άλλο κατάλογο");
+    	alert.showAndWait();
+	}
+	
+	private void batchIngridientsAlert(String table, String OrderCode)
+	{
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+    	alert.setTitle(table);
+    	alert.setHeaderText("Πρόβλημα με την βάση δεδομένων!");
+    	alert.setContentText("Στον πίνακα= '"+table+"' εντοπίστηκε παραβίαση του κλειδιού '"+OrderCode+"'\nΘα πρέπει να σβήσετε τις καταχωρήσεις στον BatchIngridient με OrderCode='"+OrderCode+"' πρωτού συνεχίσετε");
     	alert.showAndWait();
 	}
 }
