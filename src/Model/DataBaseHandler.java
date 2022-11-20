@@ -909,7 +909,7 @@ public class DataBaseHandler
 						try {
 							if(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))!=null)
 							{
-								System.out.println("------------DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue()------------"+DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue());
+								System.out.println("------------DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue()------------"+DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue()/1000);
 								Quantity = (int) (oldNewQuantity.get(SiloID.get(j))*((1+DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue())/1000));
 							}else
 							{
