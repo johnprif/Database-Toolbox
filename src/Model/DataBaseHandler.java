@@ -679,7 +679,8 @@ public class DataBaseHandler
 				}
 			}
 		}	
-		return percentageOfWater/10;
+		System.out.println("----------percentageOfWater ============== "+percentageOfWater);
+		return percentageOfWater/1000;
 	}
 	
 	private void addEntriesToBatchData(Order order) throws SQLException
