@@ -75,17 +75,16 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		order = table.getSelectionModel().getSelectedItem();	
 		innerHashMap = new HashMap<String, String>();
 		
-		prepareCurrentHumidityValues();
-		
-		if(order.getHumidity().equals("ΟΧΙ"))
-		{
-			noHumidityWindow();
-		}else if(flag == false)
+		if(flag == false)
 		{
 			warningWindowForFlag();
 			stage.close();
+		}else if(order.getHumidity().equals("ΟΧΙ"))
+		{
+			noHumidityWindow();
 		}else
 		{
+			prepareCurrentHumidityValues();
 			siloIDsPerOrder = new ArrayList<String>(myDB.getHumiditySilosPerOrder(order.getOrderCode()));
 //			System.out.println("THE SIZE OF siloIDs = "+siloIDs.size());
 			makeComboSilos();
@@ -241,7 +240,10 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 //				System.out.println(myDB.getHumiditySilosPerOrder(order.getOrderCode()).get(i));
 			}
 			currentHumidityValues.put(order.getOrderCode(), innerHashMap);
-		}		
+		}else
+		{
+			warningWindowForFlag();
+		}
 	}
 	
 	private void makeComboSilos()
