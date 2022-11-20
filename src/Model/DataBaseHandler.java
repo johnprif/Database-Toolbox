@@ -553,18 +553,12 @@ public class DataBaseHandler
 		String newCoockedTime;
 		String temp;
 		String[] tempMixingStartTime;
-		System.out.println("====================currentHumidityValues =================================="+currentHumidityValues.get(order.getOrderCode()).size());
 		double percentageOfWater = computeWaterAdjustement(order, currentHumidityValues);
-		System.out.println("====================currentHumidityValues =================================="+currentHumidityValues.get(order.getOrderCode()).size());
-		System.out.println("====================The water is =================================="+percentageOfWater);
 	//	mixingStartTime = Integer.parseInt(order.getExecutionTime());
 	//	newCoockedTime = mixingStartTime + "";
 		newCoockedTime = order.getExecutionTime();
 		for(int i=0; i<noOfBatches; i++)
 		{
-			
-			System.out.println("====================The water is =================================="+(getWaterAdjustSiloID()*(1-percentageOfWater/100)));
-			
 			Statement statement = connection.createStatement();
 			statement.executeUpdate("INSERT INTO BatchData " + "VALUES ( "+order.getOrderCode()+" , "+(i+1)+" , "+newCoockedTime+" , "+0+" , "+0+" , "+(getWaterAdjustSiloID()*(1-percentageOfWater))+")");
 
@@ -608,7 +602,6 @@ public class DataBaseHandler
 				newCoockedTime = tempMixingStartTime[0]+tempMixingStartTime[1]+tempMixingStartTime[2]+tempMixingStartTime[3]+tempMixingStartTime[4];
 			}else								//12 54 89 == length == 6
 			{
-				System.out.println("tempMixingStartTime == "+ tempMixingStartTime.length);
 				max = (int) (5.0 + (Integer.parseInt(tempMixingStartTime[2]+tempMixingStartTime[3]))); //change minutes
 				min = (int) (2.5 + (Integer.parseInt(tempMixingStartTime[2]+tempMixingStartTime[3])));
 				range = (max - min) + 1;
@@ -668,16 +661,25 @@ public class DataBaseHandler
 	private double computeWaterAdjustement(Order order, HashMap<String, HashMap<String, String>> currentHumidityValues)
 	{
 		double percentageOfWater = 0.0;
-		for(int i=0; i<siloIDsArrayList.size(); i++)
+		
+		if(currentHumidityValues.get(order.getOrderCode())==null)
 		{
-			try {
-				percentageOfWater += DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(siloIDsArrayList.get(i))).doubleValue();
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			percentageOfWater = 0.0;
+		}else
+		{
+			for(int i=0; i<siloIDsArrayList.size(); i++)
+			{
+				try {
+
+						percentageOfWater += DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(siloIDsArrayList.get(i))).doubleValue();
+				
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-		}
-		return percentageOfWater;
+		}	
+		return percentageOfWater/10;
 	}
 	
 	private void addEntriesToBatchData(Order order) throws SQLException
@@ -743,7 +745,6 @@ public class DataBaseHandler
 				newCoockedTime = tempMixingStartTime[0]+tempMixingStartTime[1]+tempMixingStartTime[2]+tempMixingStartTime[3]+tempMixingStartTime[4];
 			}else								//12 54 89 == length == 6
 			{
-				System.out.println("tempMixingStartTime == "+ tempMixingStartTime.length);
 				max = (int) (5.0 + (Integer.parseInt(tempMixingStartTime[2]+tempMixingStartTime[3]))); //change minutes
 				min = (int) (2.5 + (Integer.parseInt(tempMixingStartTime[2]+tempMixingStartTime[3])));
 				range = (max - min) + 1;
@@ -835,7 +836,6 @@ public class DataBaseHandler
 		{
 			for(int j=0; j<SiloID.size(); j++)
 			{
-				System.out.println("SILO ID == "+SiloID.get(j));
 				intSiloQuantity = Integer.parseInt(SiloQuantity.get(j));
 				intBatchQuantity = Integer.parseInt(order.getBatchQuantity());
 				

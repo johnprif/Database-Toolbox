@@ -9,6 +9,7 @@ import java.util.List;
 
 import Model.DataBaseHandler;
 import Model.Order;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -24,6 +25,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 {
@@ -51,6 +53,8 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
     
     private ComboBox comboTest;
     private String tempString;
+    private int selectClicks;
+    
 	
 	public ChangeHumidityHandler(Stage stage)
 	{
@@ -64,9 +68,10 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	@Override
 	public void handle(ActionEvent arg0) 
 	{
+		selectClicks=0;
+		
 		textField.setText("0,0");
 		
-		System.out.println("ChangeHumidityHandler");
 		order = table.getSelectionModel().getSelectedItem();	
 		innerHashMap = new HashMap<String, String>();
 		
@@ -111,13 +116,13 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 			String currentHumidityString;
 			comboTest.setOnAction(new EventHandler<ActionEvent>() {
 			       @Override public void handle(ActionEvent e) {		
-			        checkInlabel.setText(checkInlabelText+myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()));
-//			        checkInlabel.setText(checkInlabelText+currentHumidityValues.get(order.getOrderCode()).get(tempString));
-//			        currentHumidityString = 
-//			        System.out.println(currentHumidityValues.get(order.getOrderCode()).get(comboTest.getSelectionModel().getSelectedItem()));
-			        textField.setText(currentHumidityValues.get(order.getOrderCode()).get(comboTest.getSelectionModel().getSelectedItem()));
-//			           textField.setPromptText(myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()));
-//			           textField.setPromptText(currentHumidityValues.get(order.getOrderCode()).get(innerHashMap.get(myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()))));
+			       checkInlabel.setText(checkInlabelText+myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()));
+//			       checkInlabel.setText(checkInlabelText+currentHumidityValues.get(order.getOrderCode()).get(tempString));
+//			       currentHumidityString = 
+//			       System.out.println(currentHumidityValues.get(order.getOrderCode()).get(comboTest.getSelectionModel().getSelectedItem()));
+			       textField.setText(currentHumidityValues.get(order.getOrderCode()).get(comboTest.getSelectionModel().getSelectedItem()));
+//			       textField.setPromptText(myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()));
+//			       textField.setPromptText(currentHumidityValues.get(order.getOrderCode()).get(innerHashMap.get(myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()))));
 			       }
 			   });
 				
@@ -144,10 +149,28 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 
 		    cancel.setOnAction(new EventHandler<ActionEvent>() {
 			       @Override public void handle(ActionEvent e) {
+			    	   if(selectClicks==0)
+			    	   {
+			    		   currentHumidityValues.remove(order.getOrderCode());
+			    	   }
 			           stage.close();
 			       }
 			   });
 
+		    stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		        @Override
+		        public void handle(WindowEvent e) {
+		        	System.out.println("BYE BYE");
+		        	if(selectClicks==0)
+			    	   {
+			    		   currentHumidityValues.remove(order.getOrderCode());
+			    	   }
+//		        	Platform.exit();
+//		        	System.exit(0);
+		        	stage.close();
+		        }
+		      });
+		    
 		    select.setOnAction(new EventHandler<ActionEvent>() {
 			       @Override public void handle(ActionEvent e) {
 			          String text = textField.getText();
@@ -161,7 +184,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 				            {
 				            	warningWindowForFlag(text);
 				            }else
-				            {
+				            {				            	
 				            	double humidity=0.0;
 				            	try {
 				            		humidity = DecimalFormat.getNumberInstance().parse(text).doubleValue();
@@ -172,6 +195,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 				            	if(humidity<=10)
 				            	{
 //				            		innerHashMap = new HashMap<String, String>();
+				            		selectClicks++;
 				            		try {		
 				            			tempString = (String) comboTest.getSelectionModel().getSelectedItem();
 				            			innerHashMap.put(tempString, humidity+"");
@@ -209,10 +233,8 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	
 	private void prepareCurrentHumidityValues()
 	{
-		System.out.println("order.getOrderCode()================="+order.getOrderCode());
 		if(currentHumidityValues.get(order.getOrderCode())==null)
 		{
-			System.out.println(currentHumidityValues.get(order.getOrderCode())==null);
 			for(int i=0; i<myDB.getHumiditySilosPerOrder(order.getOrderCode()).size(); i++)
 			{
 				innerHashMap.put(myDB.getHumiditySilosPerOrder(order.getOrderCode()).get(i), "0,0");
@@ -220,7 +242,6 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 			}
 			currentHumidityValues.put(order.getOrderCode(), innerHashMap);
 		}		
-		System.out.println("-------------------------------------------------------"+currentHumidityValues.get(order.getOrderCode()).size());
 	}
 	
 	private void makeComboSilos()
