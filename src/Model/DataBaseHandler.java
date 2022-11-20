@@ -855,8 +855,10 @@ public class DataBaseHandler
 					range = (max - min) + 1;
 				}else
 				{
-					max = (int) (1.04*Quantity);
-					min = (int) (0.96*Quantity);
+//					max = (int) (1.04*Quantity);
+//					min = (int) (0.96*Quantity);
+					max = (int) (1.043*Quantity);
+					min = (int) (0.957*Quantity);
 					range = (max - min) + 1;
 				}
 				
@@ -905,7 +907,14 @@ public class DataBaseHandler
 					if(i>0)
 					{
 						try {
-							Quantity = (int) (oldNewQuantity.get(SiloID.get(j))*(1+DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue()));
+							if(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))!=null)
+							{
+								System.out.println("------------DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue()------------"+DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue());
+								Quantity = (int) (oldNewQuantity.get(SiloID.get(j))*((1+DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue())/1000));
+							}else
+							{
+								Quantity = oldNewQuantity.get(SiloID.get(j));
+							}
 						} catch (ParseException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -914,7 +923,14 @@ public class DataBaseHandler
 					}else
 					{
 						try {
-							Quantity = (int) ((((intSiloQuantity * 1.0)/100)*intBatchQuantity)*(1+DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue()));
+							System.out.println("--------------SiloID.get(j)------------------"+SiloID.get(j));
+							if(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))!=null)
+							{
+								Quantity = (int) ((((intSiloQuantity * 1.0)/100)*intBatchQuantity)*((1+DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue())/1000));
+							}else
+							{
+								Quantity = (int) (((intSiloQuantity * 1.0)/100)*intBatchQuantity);
+							}
 						} catch (ParseException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -929,8 +945,8 @@ public class DataBaseHandler
 						range = (max - min) + 1;
 					}else
 					{
-						max = (int) (1.04*Quantity);
-						min = (int) (0.96*Quantity);
+						max = (int) (1.043*Quantity);
+						min = (int) (0.957*Quantity);
 						range = (max - min) + 1;
 					}
 					
