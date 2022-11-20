@@ -909,8 +909,9 @@ public class DataBaseHandler
 						try {
 							if(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))!=null)
 							{
-								System.out.println("------------DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue()------------"+DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue()/1000);
-								Quantity = (int) (oldNewQuantity.get(SiloID.get(j))*((1+DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue())/1000));
+								double temp = DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue();
+								System.out.println("------------DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue()------------"+temp/1000);
+								Quantity = (int) (oldNewQuantity.get(SiloID.get(j))*((1+temp)/1000));
 							}else
 							{
 								Quantity = oldNewQuantity.get(SiloID.get(j));
@@ -926,7 +927,8 @@ public class DataBaseHandler
 							System.out.println("--------------SiloID.get(j)------------------"+SiloID.get(j));
 							if(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))!=null)
 							{
-								Quantity = (int) ((((intSiloQuantity * 1.0)/100)*intBatchQuantity)*((1+DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue())/1000));
+								double temp = DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue();
+								Quantity = (int) ((((intSiloQuantity * 1.0)/100)*intBatchQuantity)*((1+temp)/1000));
 							}else
 							{
 								Quantity = (int) (((intSiloQuantity * 1.0)/100)*intBatchQuantity);
