@@ -14,6 +14,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 
 public class ExecuteHandler  implements EventHandler<ActionEvent>
 {
@@ -22,18 +25,26 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	private ArrayList<Order> changes2;
 	private HashMap<String, Order> changes3;
 	private HashMap<String, HashMap<String, String>> currentHumidityValues;
+//	private HashMap<String, HashMap<String, String>> currentHumidityValues = new HashMap<String, HashMap<String, String>>();
 	private TableView<Order> table;
 	private Order order;
+	
+	private ArrayList<Spinner<Double>> spinners;
+	private ArrayList<SpinnerValueFactory<Double>> spinnersValueFactories;
+	private ArrayList<Label> spinnersLabels;
 	
 	public ExecuteHandler()
 	{
 		this.myDB = DataBaseHandler.getInstance();
+		currentHumidityValues = new HashMap<String, HashMap<String, String>>();
 	}
 	
 	@Override
 	public void handle(ActionEvent arg0)
 	{	
 		order = table.getSelectionModel().getSelectedItem();
+		
+		setCurrentHumidityValues(order.getOrderCode());
 		
 		if(order == null)
 		{
@@ -82,19 +93,39 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 		}
 	}
 	
+	public void setSpinners(ArrayList<Spinner<Double>> spinners)
+	{
+		this.spinners = spinners;
+	}
+	
 	public void setChanges3(HashMap<String, Order> changes3)
 	{
 		this.changes3 = changes3;
 	}
 	
-	public void setCurrentHumidityValues(HashMap<String, HashMap<String, String>> currentHumidityValues)
-	{
-		this.currentHumidityValues = currentHumidityValues;
-	}
+//	public void setCurrentHumidityValues(HashMap<String, HashMap<String, String>> currentHumidityValues)
+//	{
+//		this.currentHumidityValues = currentHumidityValues;
+//	}
 	
 	public void setTable(TableView<Order> table)
 	{
 		this.table = table;
+	}
+	
+	private void setCurrentHumidityValues(String orderCode)
+	{
+		HashMap <String, String> humiditySilos = new HashMap<String, String>(myDB.getHumiditySilos());
+		ArrayList <String> humidityIDs = new ArrayList<String>(myDB.getHumidityIDs());
+		
+		HashMap<String, String> inner = new HashMap<String, String>();
+		
+		for(int i=0; i<spinners.size(); i++)
+		{
+			inner.put(humidityIDs.get(i), spinners.get(i).getValue()+"");
+			System.out.println("The value of the Spinner is ===== "+spinners.get(i).getValue());
+			currentHumidityValues.put(orderCode, inner);
+		}
 	}
 	
 	private void completeWindow()

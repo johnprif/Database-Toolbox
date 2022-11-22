@@ -104,7 +104,7 @@ public class PendingOrdersGUI
     private ArrayList<String[]> changes;
     private ArrayList<Order> changes2;
     private HashMap<String, Order> changes3;
-    private HashMap<String, HashMap<String, String>> currentHumidityValues = new HashMap<String, HashMap<String, String>>();
+//    private HashMap<String, HashMap<String, String>> currentHumidityValues = new HashMap<String, HashMap<String, String>>();
     private boolean flag = false; 
     private Stage dateStage;
     private Stage shippingStage;
@@ -154,9 +154,10 @@ public class PendingOrdersGUI
 		changeTimeCreationHandler.setChanges3(changes3);
 		changeTimeExecutionHandler.setChanges3(changes3);
 		changeHumidityHandler.setChanges3(changes3);
-		changeHumidityHandler.setCurrentHumidityValues(currentHumidityValues);
+//		changeHumidityHandler.setCurrentHumidityValues(currentHumidityValues);
 		executeHandler.setChanges3(changes3);
-		executeHandler.setCurrentHumidityValues(currentHumidityValues);
+//		executeHandler.setCurrentHumidityValues(currentHumidityValues);
+//		executeHandler.setSpinners(spinners);
 		backHandler.setChanges3(changes3);
 		
 		BorderPane border = new BorderPane();
@@ -186,6 +187,7 @@ public class PendingOrdersGUI
         changeTimeExecutionHandler.setTable(table);
         changeHumidityHandler.setTable(table);
         executeHandler.setTable(table);
+        executeHandler.setSpinners(spinners);
         refreshHandler.setTable(table);
         
         scene = new Scene(border);
@@ -472,6 +474,20 @@ public class PendingOrdersGUI
 	    		});
 	}
 	
+//	
+//	private void getCurrentHumidityValues(String orderCode)
+//	{
+//		HashMap <String, String> humiditySilos = new HashMap<String, String>(changeHumidityHandler.getHumiditySilos());
+//		ArrayList <String> humidityIDs = new ArrayList<String>(changeHumidityHandler.getHumidityIDs());
+//		
+//		HashMap<String, String> inner = new HashMap<String, String>();
+//		
+//		for(int i=0; i<spinners.size(); i++)
+//		{
+//			inner.put(humidityIDs.get(i), spinners.get(i).getValue()+"");
+//			currentHumidityValues.put(orderCode, inner);
+//		}
+//	}
 	
 	private void alertWindow()
 	{
