@@ -90,9 +90,12 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		{
 			order.setHumidity("ΟΧΙ");
 			table.getItems().set(table.getSelectionModel().getSelectedIndex(), order);
-		}
-		
-		
+		}		
+	}
+	
+	public HashMap<String, String> getHumiditySilos()
+	{
+		return myDB.getHumiditySilos();
 	}
 	
 	public void setCurrentHumidityValues(HashMap<String, HashMap<String, String>> currentHumidityValues)
@@ -115,16 +118,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 			warningWindowForFlag();
 		}
 	}
-	
-	private void makeComboSilos()
-	{
-		comboTest = new ComboBox();
-		for(int i=0; i<siloIDsPerOrder.size(); i++)
-		{
-			comboTest.getItems().add(siloIDsPerOrder.get(i));
-		}	
-	}
-	
+
 	public void setChanges3(HashMap<String, Order> changes3)
 	{
 		this.changes3 = changes3;
@@ -135,53 +129,9 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		this.table = table;
 	}
 	
-	private void createButtons()
-	{
-		select = new Button("Επιλογή");
-		back = new Button("Επιστροφή");
-		cancel = new Button("Έξοδος");
-		
-		select.setMaxWidth(Double.MAX_VALUE);
-		back.setMaxWidth(Double.MAX_VALUE);
-	    cancel.setMaxWidth(Double.MAX_VALUE);
-	    
-	    select.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    back.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    cancel.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	}
-	
-	private void createBoxes()
-	{
-//		hbox = new HBox(5, select, cancel);
-//		hbox = new HBox(5, back, cancel);
-		hbox = new HBox(5, cancel);
-		hbox.setAlignment(Pos.BASELINE_CENTER);
-		
-		vbox = new VBox(20);
-        vbox.setStyle("-fx-padding: 10;");
-	}
-	
 	public void setFlag(boolean flag)
 	{
 		this.flag = flag;
-	}
-	
-	private void warningWindowForFlag(String text)
-	{
-		Alert alert = new Alert(Alert.AlertType.ERROR);
-    	alert.setTitle("Error");
-    	alert.setHeaderText("Η τιμή '"+text+"' δεν αποτελεί έγκυρη υγρασία!");
-    	alert.setContentText("Παρακαλώ εισάγετε μια έγκυρη τιμή πρωτού συνεχίσετε\nΕπιτρέπονται μόνο αριθμοί μέχρι 7 ψηφίων οι οποίοι είναι μετεξύ 0 και 10");
-    	alert.showAndWait();
-	}
-	
-	private void rigthWindow(String text)
-	{
-		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    	alert.setTitle("Υγρασία");
-    	alert.setHeaderText("Επιτυχής Ενημέρωση!");
-    	alert.setContentText("Η τιμή της υγρασίας '" + text +"' ενημερώθηκε επιτυχώς!");
-    	alert.showAndWait();
 	}
 	
 	private void warningWindowForFlag()

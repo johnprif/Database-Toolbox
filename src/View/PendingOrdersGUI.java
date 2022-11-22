@@ -113,14 +113,10 @@ public class PendingOrdersGUI
     private Label kati1;
     private Label kati2;
     
+    private ArrayList<Spinner<Double>> spinners;
+    private ArrayList<SpinnerValueFactory<Double>> spinnerValueFactories;
+    
 //    Spinner spinner = new Spinner(0, 10, 0, 1); //min, max, start, step
-    
-    Spinner<Double> spinner = new Spinner<Double>();
-    Spinner<Double> spinner2 = new Spinner<Double>();
-    
-    
-    // Value factory.
-    SpinnerValueFactory<Double> valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 10.0, 0.0, 0.1);
 
     
     //https://o7planning.org/11185/javafx-spinner
@@ -137,37 +133,13 @@ public class PendingOrdersGUI
 		dateStage = new Stage();
 		shippingStage = new Stage();
 		this.stage = stage;
-		
-		//===================================================================================
-		
-		spinner.setValueFactory(valueFactory);
-//		spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_VERTICAL);	
-		spinner.editorProperty().get().setAlignment(Pos.CENTER);
-		
-		spinner2.setValueFactory(valueFactory);
-//		spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_VERTICAL);	
-		spinner2.editorProperty().get().setAlignment(Pos.CENTER);
-		
-		kati1 = new Label("Άμμος και Χαλίκι=");
-		kati1.setStyle("-fx-font-weight: bold; -fx-text-fill: lightgreen; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-		kati1.setAlignment(Pos.CENTER);
-		
-		kati2 = new Label("Άμμος=");
-		kati2.setStyle("-fx-font-weight: bold; -fx-text-fill: lightgreen; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-		kati2.setAlignment(Pos.CENTER);
-		
-		vbox4 = new VBox(15, kati1, spinner, kati2, spinner2);
-		vbox4.setMaxWidth(Double.MAX_VALUE);
-		vbox4.setAlignment(Pos.CENTER);
-//		vbox4.setStyle("-fx-border-style: lightblue;");
-		vbox4.setStyle("-fx-border-color: yellow");
-		//===================================================================================
 	}
 	
 	public void initialize()
 	{		
 		createStage();
 		createButtons();
+		createHumidityCells();
 		
 		refreshHandler = new RefreshHandler(stage);
 		changeTimeCreationHandler = new ChangeTimeHandler(changeTimeCreationButton, dateStage);
@@ -277,6 +249,39 @@ public class PendingOrdersGUI
 	    executeButton.setStyle("-fx-font-weight: bold; -fx-text-fill: green; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 	    backButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");	    
 	    emptyBaseButton.setStyle("-fx-font-weight: bold; -fx-text-fill: red; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	}
+	
+	private void createHumidityCells()
+	{
+		Spinner<Double> spinner1 = new Spinner<Double>();
+	    Spinner<Double> spinner2 = new Spinner<Double>();  
+	    
+	    SpinnerValueFactory<Double> valueFactory1 = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 10.0, 0.0, 0.1);
+	    SpinnerValueFactory<Double> valueFactory2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 10.0, 0.0, 0.1);
+	    
+	    spinner1.setValueFactory(valueFactory1);
+//		spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_VERTICAL);	
+		spinner1.editorProperty().get().setAlignment(Pos.CENTER);
+		
+		spinner2.setValueFactory(valueFactory2);
+//		spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_VERTICAL);	
+		spinner2.editorProperty().get().setAlignment(Pos.CENTER);
+		
+		kati1 = new Label("Άμμος και Χαλίκι=");
+		kati1.setStyle("-fx-font-weight: bold; -fx-text-fill: lightgreen; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+		kati1.setAlignment(Pos.CENTER);
+		
+		kati2 = new Label("Άμμος=");
+		kati2.setStyle("-fx-font-weight: bold; -fx-text-fill: lightgreen; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+		kati2.setAlignment(Pos.CENTER);
+		
+		vbox4 = new VBox(15, kati1, spinner1, kati2, spinner2);
+		vbox4.setMaxWidth(Double.MAX_VALUE);
+		vbox4.setAlignment(Pos.CENTER);
+//		vbox4.setStyle("-fx-border-style: lightblue;");
+		vbox4.setStyle("-fx-border-color: orange; -fx-border-radius:4;");
+		
+		changeHumidityHandler();
 	}
 	
 	private void createStage()
