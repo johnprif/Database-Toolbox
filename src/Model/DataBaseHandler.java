@@ -914,10 +914,8 @@ public class DataBaseHandler
 					range = (max - min) + 1;
 				}else
 				{
-//					max = (int) (1.04*Quantity);
-//					min = (int) (0.96*Quantity);
-					max = (int) (1.043*Quantity);
-					min = (int) (0.957*Quantity);
+					max = (int) (1.04*Quantity);
+					min = (int) (0.96*Quantity);
 					range = (max - min) + 1;
 				}
 				
@@ -1006,8 +1004,8 @@ public class DataBaseHandler
 						range = (max - min) + 1;
 					}else
 					{
-						max = (int) (1.043*Quantity);
-						min = (int) (0.957*Quantity);
+						max = (int) (1.04*Quantity);
+						min = (int) (0.96*Quantity);
 						range = (max - min) + 1;
 					}
 					
