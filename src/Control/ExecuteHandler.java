@@ -60,7 +60,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 						try {
 //							myDB.updateDataBase(changes3.get(selectedItem.getOrderCode()));
 //							myDB.updateDataBase(selectedItem);
-							if(currentHumidityValues.get(order.getOrderCode()) == null)
+							if(currentHumidityValues.get(order.getOrderCode()) == null || order.getHumidity().equals("ΟΧΙ"))
 							{
 								myDB.updateDataBase(order);
 							}else if(order.getHumidity().equals("ΝΑΙ"))
@@ -78,8 +78,13 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 					}else
 					{
 						try {
-//							emptyDate(order);
-							emptyDate2(order, currentHumidityValues);	
+							if(currentHumidityValues.get(order.getOrderCode()) == null || order.getHumidity().equals("ΟΧΙ"))
+							{
+								emptyDate(order);
+							}else if(order.getHumidity().equals("ΝΑΙ"))
+							{
+								emptyDate2(order, currentHumidityValues);	
+							}							
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -167,8 +172,15 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 			if(checkDate(tempDate, order, 1, tempTime[0], tempTime[1]))
 			{
 				order.setExecutionDate(tempDate[0]+tempDate[1]+tempDate[2]);
-				order.setExecutionTime(tempTime[0]+tempTime[1]+tempTime[2]);
-				myDB.updateDataBase(order);
+				order.setExecutionTime(tempTime[0]+tempTime[1]+tempTime[2]);				
+				if(currentHumidityValues.get(order.getOrderCode()) == null || order.getHumidity().equals("ΟΧΙ"))
+				{
+					myDB.updateDataBase(order);
+				}else if(order.getHumidity().equals("ΝΑΙ"))
+				{
+					myDB.updateDataBase2(order, currentHumidityValues);
+				}
+//				myDB.updateDataBase(order);
 //				table.getItems().remove(order);  
 				table.getItems().set(table.getSelectionModel().getSelectedIndex(), order);
 				changes3.put(order.getOrderCode(), order);
@@ -205,7 +217,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 			{
 				order.setExecutionDate(tempDate[0]+tempDate[1]+tempDate[2]);
 				order.setExecutionTime(tempTime[0]+tempTime[1]+tempTime[2]);
-				if(currentHumidityValues.get(order.getOrderCode()) == null)
+				if(currentHumidityValues.get(order.getOrderCode()) == null || order.getHumidity().equals("ΟΧΙ"))
 				{
 					myDB.updateDataBase(order);
 				}else if(order.getHumidity().equals("ΝΑΙ"))

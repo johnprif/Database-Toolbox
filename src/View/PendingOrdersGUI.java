@@ -264,8 +264,11 @@ public class PendingOrdersGUI
 //		vbox4.setStyle("-fx-border-style: lightblue;");
 		vbox4.setStyle("-fx-border-color: orange; -fx-border-radius:4;");
 		
-		HashMap <String, String> humiditySilos = new HashMap<String, String>(changeHumidityHandler.getHumiditySilos());
-		ArrayList <String> humidityIDs = new ArrayList<String>(changeHumidityHandler.getHumidityIDs());
+//		HashMap <String, String> humiditySilos = new HashMap<String, String>(changeHumidityHandler.getHumiditySilos());
+//		ArrayList <String> humidityIDs = new ArrayList<String>(changeHumidityHandler.getHumidityIDs());
+//		
+		HashMap <String, String> humiditySilos = new HashMap<String, String>(myDB.getHumiditySilos());
+		ArrayList <String> humidityIDs = new ArrayList<String>(myDB.getHumidityIDs());
 		
 		spinners = new ArrayList<Spinner<Double>>();
 		spinnersValueFactories = new ArrayList<SpinnerValueFactory<Double>>();
