@@ -232,7 +232,7 @@ public class PendingOrdersGUI
 		changeTimeCreationButton = new Button("Αλλαγή Χρόνου Δημιουργίας");
 		changeTimeExecutionButton = new Button("Αλλαγή Χρόνου Εκτέλεσης");
 		changeShippingNumberButton = new Button("Αλλαγή Αριθμού Αποστολής");	
-		changeHumidityButton = new Button("Υγρασίες");
+		changeHumidityButton = new Button("Συμπερίληψη Υγρασιών");
 		executeButton = new Button("Εκτέλεση");
 		backButton = new Button("Πίσω");
 		emptyBaseButton = new Button("Άδειασμα Βάσης");
