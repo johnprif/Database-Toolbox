@@ -63,7 +63,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 							if(currentHumidityValues.get(order.getOrderCode()) == null)
 							{
 								myDB.updateDataBase(order);
-							}else
+							}else if(order.getHumidity().equals("ΝΑΙ"))
 							{
 								myDB.updateDataBase2(order, currentHumidityValues);
 							}
@@ -208,7 +208,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 				if(currentHumidityValues.get(order.getOrderCode()) == null)
 				{
 					myDB.updateDataBase(order);
-				}else
+				}else if(order.getHumidity().equals("ΝΑΙ"))
 				{
 					myDB.updateDataBase2(order, currentHumidityValues);
 				}
