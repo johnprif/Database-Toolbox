@@ -89,6 +89,7 @@ public class PendingOrdersGUI
     private String order;
     private VBox vbox2;
     private VBox vbox3;
+    private VBox vbox4;
     
     private RefreshHandler refreshHandler;
     private ChangeTimeHandler changeTimeCreationHandler;
@@ -109,15 +110,19 @@ public class PendingOrdersGUI
     private Stage shippingStage;
     private Label tempLabel_1 = new Label("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     private Label temp;
+    private Label kati1;
+    private Label kati2;
     
 //    Spinner spinner = new Spinner(0, 10, 0, 1); //min, max, start, step
     
     Spinner<Double> spinner = new Spinner<Double>();
-
+    Spinner<Double> spinner2 = new Spinner<Double>();
+    
+    
     // Value factory.
-    SpinnerValueFactory<Double> valueFactory = //
-            new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 10.0, 0.0, 0.1);
+    SpinnerValueFactory<Double> valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 10.0, 0.0, 0.1);
 
+    
     //https://o7planning.org/11185/javafx-spinner
     
     private ArrayList<Label> labelsArrayList;
@@ -139,6 +144,23 @@ public class PendingOrdersGUI
 //		spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_VERTICAL);	
 		spinner.editorProperty().get().setAlignment(Pos.CENTER);
 		
+		spinner2.setValueFactory(valueFactory);
+//		spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_VERTICAL);	
+		spinner2.editorProperty().get().setAlignment(Pos.CENTER);
+		
+		kati1 = new Label("Άμμος και Χαλίκι=");
+		kati1.setStyle("-fx-font-weight: bold; -fx-text-fill: lightgreen; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+		kati1.setAlignment(Pos.CENTER);
+		
+		kati2 = new Label("Άμμος=");
+		kati2.setStyle("-fx-font-weight: bold; -fx-text-fill: lightgreen; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+		kati2.setAlignment(Pos.CENTER);
+		
+		vbox4 = new VBox(15, kati1, spinner, kati2, spinner2);
+		vbox4.setMaxWidth(Double.MAX_VALUE);
+		vbox4.setAlignment(Pos.CENTER);
+//		vbox4.setStyle("-fx-border-style: lightblue;");
+		vbox4.setStyle("-fx-border-color: yellow");
 		//===================================================================================
 	}
 	
@@ -198,8 +220,9 @@ public class PendingOrdersGUI
         
 //        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, changeTimeExecutionButton, changeShippingNumberButton, changeHumidityButton, executeButton, backButton, tempLabel_1,  emptyBaseButton);
         
-        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, changeTimeExecutionButton, changeShippingNumberButton, changeHumidityButton, executeButton, backButton, spinner, tempLabel_1, emptyBaseButton);
+        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, changeTimeExecutionButton, changeShippingNumberButton, changeHumidityButton, executeButton, backButton, vbox4, tempLabel_1, emptyBaseButton);
 
+        
         
         border.setStyle("-fx-background-color: dodgerblue;");
 		border.setPadding(new Insets(5));
