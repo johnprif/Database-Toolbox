@@ -60,7 +60,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 						try {
 //							myDB.updateDataBase(changes3.get(selectedItem.getOrderCode()));
 //							myDB.updateDataBase(selectedItem);
-							if(currentHumidityValues.size()==0)
+							if(currentHumidityValues.get(order.getOrderCode()) == null)
 							{
 								myDB.updateDataBase(order);
 							}else
@@ -205,7 +205,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 			{
 				order.setExecutionDate(tempDate[0]+tempDate[1]+tempDate[2]);
 				order.setExecutionTime(tempTime[0]+tempTime[1]+tempTime[2]);
-				if(currentHumidityValues.size()==0)
+				if(currentHumidityValues.get(order.getOrderCode()) == null)
 				{
 					myDB.updateDataBase(order);
 				}else
