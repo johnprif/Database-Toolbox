@@ -110,13 +110,13 @@ public class PendingOrdersGUI
     private Label tempLabel_1 = new Label("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     private Label temp;
     
-//    Spinner spinner = new Spinner(0, 10, 0); //min, max, start
+//    Spinner spinner = new Spinner(0, 10, 0, 1); //min, max, start, step
     
     Spinner<Double> spinner = new Spinner<Double>();
 
     // Value factory.
     SpinnerValueFactory<Double> valueFactory = //
-            new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 10, 0);
+            new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 10.0, 0.0, 0.1);
 
     //https://o7planning.org/11185/javafx-spinner
     
@@ -133,8 +133,13 @@ public class PendingOrdersGUI
 		shippingStage = new Stage();
 		this.stage = stage;
 		
+		//===================================================================================
+		
 		spinner.setValueFactory(valueFactory);
-//		spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_VERTICAL);
+//		spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_VERTICAL);	
+		spinner.editorProperty().get().setAlignment(Pos.CENTER);
+		
+		//===================================================================================
 	}
 	
 	public void initialize()
@@ -384,7 +389,7 @@ public class PendingOrdersGUI
     	ExecutionTime.setCellValueFactory(new PropertyValueFactory<Order, String>("ExecutionTime"));
     	ExecutionTime.setEditable(false);
     	
-    	Humidity = new TableColumn<Order, String>("ΥΓΡΑΣΙΕΣ");
+    	Humidity = new TableColumn<Order, String>("ΣΥΜΠΕΡΙΛΗΨΗ\n     ΥΓΡΑΣΙΩΝ");
     	Humidity.setCellFactory(TextFieldTableCell.forTableColumn());
     	Humidity.setCellValueFactory(new PropertyValueFactory<Order, String>("Humidity"));
     	Humidity.setEditable(false);
