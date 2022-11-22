@@ -114,7 +114,8 @@ public class PendingOrdersGUI
     private Label kati2;
     
     private ArrayList<Spinner<Double>> spinners;
-    private ArrayList<SpinnerValueFactory<Double>> spinnerValueFactories;
+    private ArrayList<SpinnerValueFactory<Double>> spinnersValueFactories;
+    private ArrayList<Label> spinnersLabels;
     
 //    Spinner spinner = new Spinner(0, 10, 0, 1); //min, max, start, step
 
@@ -139,7 +140,7 @@ public class PendingOrdersGUI
 	{		
 		createStage();
 		createButtons();
-		createHumidityCells();
+		
 		
 		refreshHandler = new RefreshHandler(stage);
 		changeTimeCreationHandler = new ChangeTimeHandler(changeTimeCreationButton, dateStage);
@@ -175,6 +176,8 @@ public class PendingOrdersGUI
 		
 		myDB.findAndParse();
 		data = myDB.getData();		
+		
+		createHumidityCells();
 		
 		createTable();
         createAndFillCells();
@@ -253,35 +256,46 @@ public class PendingOrdersGUI
 	
 	private void createHumidityCells()
 	{
-		Spinner<Double> spinner1 = new Spinner<Double>();
-	    Spinner<Double> spinner2 = new Spinner<Double>();  
-	    
-	    SpinnerValueFactory<Double> valueFactory1 = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 10.0, 0.0, 0.1);
-	    SpinnerValueFactory<Double> valueFactory2 = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 10.0, 0.0, 0.1);
-	    
-	    spinner1.setValueFactory(valueFactory1);
-//		spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_VERTICAL);	
-		spinner1.editorProperty().get().setAlignment(Pos.CENTER);
-		
-		spinner2.setValueFactory(valueFactory2);
-//		spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_VERTICAL);	
-		spinner2.editorProperty().get().setAlignment(Pos.CENTER);
-		
-		kati1 = new Label("Άμμος και Χαλίκι=");
-		kati1.setStyle("-fx-font-weight: bold; -fx-text-fill: lightgreen; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-		kati1.setAlignment(Pos.CENTER);
-		
-		kati2 = new Label("Άμμος=");
-		kati2.setStyle("-fx-font-weight: bold; -fx-text-fill: lightgreen; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-		kati2.setAlignment(Pos.CENTER);
-		
-		vbox4 = new VBox(15, kati1, spinner1, kati2, spinner2);
+		vbox4 = new VBox(15);
 		vbox4.setMaxWidth(Double.MAX_VALUE);
 		vbox4.setAlignment(Pos.CENTER);
 //		vbox4.setStyle("-fx-border-style: lightblue;");
 		vbox4.setStyle("-fx-border-color: orange; -fx-border-radius:4;");
 		
-		changeHumidityHandler();
+		HashMap <String, String> humiditySilos = new HashMap<String, String>(changeHumidityHandler.getHumiditySilos());
+		ArrayList <String> humidityIDs = new ArrayList<String>(changeHumidityHandler.getHumidityIDs());
+		
+		spinners = new ArrayList<Spinner<Double>>();
+		spinnersValueFactories = new ArrayList<SpinnerValueFactory<Double>>();
+		spinnersLabels = new ArrayList<Label>();
+		
+		
+		if(humidityIDs.size()==0)
+		{
+			Label label = new Label("Δεν μπορεί να τροποποιηθείη\nυγρασία σε καμία παραγγελία\nδιότι δεν υπάρχουν αισθητήρες\nούτε μπορεί να ρυθμιστεί\nχειροκίνητα");
+			label.setStyle("-fx-font-weight: bold; -fx-text-fill: lightgreen; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+			label.setAlignment(Pos.CENTER);
+		}else
+		{
+			for(int i=0; i<humidityIDs.size(); i++)
+			{
+				Label label1 = new Label(humiditySilos.get(humidityIDs.get(i)));
+				label1.setStyle("-fx-font-weight: bold; -fx-text-fill: lightgreen; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+				label1.setAlignment(Pos.CENTER);
+				
+				Spinner<Double> spinner1 = new Spinner();
+				SpinnerValueFactory<Double> valueFactory1 = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 10.0, 0.0, 0.1);;
+				spinner1.setValueFactory(valueFactory1);
+				spinner1.editorProperty().get().setAlignment(Pos.CENTER);
+				
+				spinners.add(spinner1);
+				spinnersValueFactories.add(valueFactory1);
+				spinnersLabels.add(label1);
+				
+				vbox4.getChildren().add(label1);
+				vbox4.getChildren().add(spinner1);
+			}
+		}				
 	}
 	
 	private void createStage()

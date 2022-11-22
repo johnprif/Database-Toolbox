@@ -98,6 +98,11 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		return myDB.getHumiditySilos();
 	}
 	
+	public ArrayList<String> getHumidityIDs()
+	{
+		return myDB.getHumidityIDs();
+	}
+	
 	public void setCurrentHumidityValues(HashMap<String, HashMap<String, String>> currentHumidityValues)
 	{
 		this.currentHumidityValues = currentHumidityValues;

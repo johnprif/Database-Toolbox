@@ -367,6 +367,11 @@ public class DataBaseHandler
 		return siloIDs;
 	}
 	
+	public ArrayList<String> getHumidityIDs()
+	{
+		return siloIDsArrayList;
+	}
+	
 	public String checkIfSilosContainHumidityPerOrder(String OrderCode) throws SQLException
 	{
 		PreparedStatement preparedStatement = connection.prepareStatement("SELECT SiloID FROM OrderIngredients WHERE OrderCode='"+OrderCode+"'");
@@ -474,7 +479,6 @@ public class DataBaseHandler
 		parseOrderIngredients(order.getOrderCode());
 		//System.out.println("EDW EIMAI");
 		addEntriesToBatchIngredientsTable2(order, currentHumidityValues);
-		System.out.println("====================The water is ==================================HELLLLLLLLLLLLLLLLLLLLLLLLLLLO");
 		addEntriesToBatchData2(order, currentHumidityValues);
 		clearOldBatches();
 	}
