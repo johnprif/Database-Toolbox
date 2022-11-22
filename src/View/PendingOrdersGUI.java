@@ -287,7 +287,7 @@ public class PendingOrdersGUI
 	private void createAndFillCells()
 	{
 
-        OrderCode = new TableColumn<Order, String>("ΚΩΔΙΚΟΣ ΠΑΡΑΓΓΕΛΙΑΣ");
+        OrderCode = new TableColumn<Order, String>("    ΚΩΔΙΚΟΣ\nΠΑΡΑΓΓΕΛΙΑΣ");
         OrderCode.setCellFactory(TextFieldTableCell.forTableColumn());
         OrderCode.setCellValueFactory(new PropertyValueFactory<Order, String>("OrderCode"));
         OrderCode.setEditable(false);
@@ -305,31 +305,31 @@ public class PendingOrdersGUI
         Quantity.setEditable(false);
         
         
-        ProjectCode = new TableColumn<Order, String>("ΚΩΔΙΚΟΣ ΕΡΓΟΥ");
+        ProjectCode = new TableColumn<Order, String>("ΚΩΔΙΚΟΣ\n  ΕΡΓΟΥ");
         ProjectCode.setCellFactory(TextFieldTableCell.forTableColumn());
         ProjectCode.setCellValueFactory(new PropertyValueFactory<Order, String>("ProjectCode"));
         ProjectCode.setEditable(false);
         
         
-        CustomerCode = new TableColumn<Order, String>("ΚΩΔΙΚΟΣ ΠΕΛΑΤΗ");
+        CustomerCode = new TableColumn<Order, String>("ΚΩΔΙΚΟΣ\n ΠΕΛΑΤΗ");
         CustomerCode.setCellFactory(TextFieldTableCell.forTableColumn());
         CustomerCode.setCellValueFactory(new PropertyValueFactory<Order, String>("CustomerCode"));
         CustomerCode.setEditable(false);
         
         
-        VehicleCode = new TableColumn<Order, String>("ΚΩΔΙΚΟΣ ΟΧΗΜΑΤΟΣ");
+        VehicleCode = new TableColumn<Order, String>("  ΚΩΔΙΚΟΣ\nΟΧΗΜΑΤΟΣ");
         VehicleCode.setCellFactory(TextFieldTableCell.forTableColumn());
         VehicleCode.setCellValueFactory(new PropertyValueFactory<Order, String>("VehicleCode"));
         VehicleCode.setEditable(false);
         
         
-        DriverCode = new TableColumn<Order, String>("ΚΩΔΙΚΟΣ ΟΔΗΓΟΥ");
+        DriverCode = new TableColumn<Order, String>("ΚΩΔΙΚΟΣ\nΟΔΗΓΟΥ");
         DriverCode.setCellFactory(TextFieldTableCell.forTableColumn());
         DriverCode.setCellValueFactory(new PropertyValueFactory<Order, String>("DriverCode"));
         DriverCode.setEditable(false);
         
         
-        DateCreation = new TableColumn<Order, String>("ΗΜΕΡΟΜΗΝΙΑ ΔΗΜΙΟΥΡΓΙΑΣ");
+        DateCreation = new TableColumn<Order, String>("ΗΜΕΡΟΜΗΝΙΑ\nΔΗΜΙΟΥΡΓΙΑΣ");
         DateCreation.setCellFactory(TextFieldTableCell.forTableColumn());
         DateCreation.setCellValueFactory(new PropertyValueFactory<Order, String>("DateCreation"));
         DateCreation.setEditable(false);
@@ -351,12 +351,12 @@ public class PendingOrdersGUI
 //            }
 //        );
         
-        TimeCreation = new TableColumn<Order, String>("ΩΡΑ ΔΗΜΙΟΥΡΓΙΑΣ");
+        TimeCreation = new TableColumn<Order, String>("        ΩΡΑ\nΔΗΜΙΟΥΡΓΙΑΣ");
         TimeCreation.setCellFactory(TextFieldTableCell.forTableColumn());
         TimeCreation.setCellValueFactory(new PropertyValueFactory<Order, String>("TimeCreation"));
         TimeCreation.setEditable(false);
         
-        ExecutionDate = new TableColumn<Order, String>("ΗΜΕΡΟΜΗΝΙΑ ΕΚΤΕΛΕΣΗΣ");
+        ExecutionDate = new TableColumn<Order, String>("ΗΜΕΡΟΜΗΝΙΑ\n   ΕΚΤΕΛΕΣΗΣ");
         ExecutionDate.setCellFactory(TextFieldTableCell.forTableColumn());
     	ExecutionDate.setCellValueFactory(new PropertyValueFactory<Order, String>("ExecutionDate"));
     	ExecutionDate.setEditable(false);
@@ -379,7 +379,7 @@ public class PendingOrdersGUI
 //        );
 //        ExecutionDate.setCellValueFactory(new PropertyValueFactory<Order, String>("DateCreation"));      
     	
-    	ExecutionTime = new TableColumn<Order, String>("ΩΡΑ ΕΚΤΕΛΕΣΗΣ");
+    	ExecutionTime = new TableColumn<Order, String>("      ΩΡΑ\nΕΚΤΕΛΕΣΗΣ");
     	ExecutionTime.setCellFactory(TextFieldTableCell.forTableColumn());
     	ExecutionTime.setCellValueFactory(new PropertyValueFactory<Order, String>("ExecutionTime"));
     	ExecutionTime.setEditable(false);
