@@ -42,7 +42,7 @@ public class DataBaseHandler
 	private String TimeCreation;
 	private String DateLastEdit;
 	private String ExecutionTime;
-	private String Humidity;
+//	private String Humidity;
 	double doubleQuantity=0;
 	private String path;	
 	private ArrayList<String> SiloID = new ArrayList<String>();
@@ -199,10 +199,10 @@ public class DataBaseHandler
 	    DateLastEdit = pendingSet.getString("DateLastEdit");
 	    ExecutionDate = pendingSet.getString("ExecutionDate");
 	    ExecutionTime = pendingSet.getString("ExecutionTime");
-	    Humidity = checkIfSilosContainHumidityPerOrder(OrderCode);
+//	    Humidity = checkIfSilosContainHumidityPerOrder(OrderCode);
 	    
 	    
-	    Order order = new Order(OrderCode, RecipeCode, Quantity, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, ExecutionDate, TimeCreation, ExecutionTime, MixerCapacity, BatchQuantity, NoOfBatches, DateLastEdit, Humidity);
+	    Order order = new Order(OrderCode, RecipeCode, Quantity, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, ExecutionDate, TimeCreation, ExecutionTime, MixerCapacity, BatchQuantity, NoOfBatches, DateLastEdit, "ΟΧΙ");
 	    data.add(order);
 //	    System.out.println("Order: ", OrderCode, RecipeCode, Quantity, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, ExecutionDate, TimeCreation, ExecutionTime, MixerCapacity, BatchQuantity, NoOfBatches, DateLastEdit);
 	}

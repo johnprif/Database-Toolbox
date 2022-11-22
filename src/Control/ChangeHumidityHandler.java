@@ -79,148 +79,17 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		if(flag == false)
 		{
 			warningWindowForFlag();
-			stage.close();
 		}else if(order.getHumidity().equals("ΟΧΙ"))
 		{
-			noHumidityWindow();
-		}else
+			if(true)//check if order includes sensor for humidity
+			{
+				order.setHumidity("ΝΑΙ");
+				table.getItems().set(table.getSelectionModel().getSelectedIndex(), order);
+			}
+		}else if(order.getHumidity().equals("ΝΑΙ"))
 		{
-			prepareCurrentHumidityValues();
-			siloIDsPerOrder = new ArrayList<String>(myDB.getHumiditySilosPerOrder(order.getOrderCode()));
-//			System.out.println("THE SIZE OF siloIDs = "+siloIDs.size());
-			makeComboSilos();
-			
-			createButtons();
-			
-			createBoxes();
-			
-			Scene scene = new Scene(vbox, 400, 400);
-		    stage.setScene(scene);
-		    stage.setTitle("Αλλαγή Υγρασίας -> "+order.getOrderCode());
-		       
-		    vbox.setAlignment(Pos.BASELINE_CENTER);
-		    vbox.setStyle("-fx-background-color: dodgerblue;");
-		        
-		    GridPane gridPane = new GridPane();
-		    gridPane.setHgap(10);
-		    gridPane.setVgap(10);
-		    
-		    Label checkInlabel;
-		    Label currentHumidity;
-				
-		    String checkInlabelText = "Εισάγετε την επιθυμητή υγρασία για το σιλό: ";
-			checkInlabel = new Label(checkInlabelText);
-				
-//			makeComboSilos();
-				
-			String currentHumidityString;
-			comboTest.setOnAction(new EventHandler<ActionEvent>() {
-			       @Override public void handle(ActionEvent e) {		
-			       checkInlabel.setText(checkInlabelText+myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()));
-//			       checkInlabel.setText(checkInlabelText+currentHumidityValues.get(order.getOrderCode()).get(tempString));
-//			       currentHumidityString = 
-//			       System.out.println(currentHumidityValues.get(order.getOrderCode()).get(comboTest.getSelectionModel().getSelectedItem()));
-			       textField.setText(currentHumidityValues.get(order.getOrderCode()).get(comboTest.getSelectionModel().getSelectedItem()));
-//			       textField.setPromptText(myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()));
-//			       textField.setPromptText(currentHumidityValues.get(order.getOrderCode()).get(innerHashMap.get(myDB.getHumiditySilos().get(comboTest.getSelectionModel().getSelectedItem()))));
-			       }
-			   });
-				
-				
-				
-			checkInlabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
-		    gridPane.add(checkInlabel, 0, 0);
-		    GridPane.setHalignment(checkInlabel, HPos.CENTER);
-		        
-		    Label textField1 = new Label("Hello");
-		    HBox hbox1 = new HBox(5, comboTest, textField, select);			
-			gridPane.add(hbox1, 0, 2);
-//=============================================================================================				 
-//		    gridPane.add(textField, 0, 2);
-		    gridPane.add(hbox, 0, 3);
-		    gridPane.setAlignment(Pos.CENTER); 
-		    vbox.getChildren().add(gridPane);
-		        
-		    stage.setHeight(370);
-		    stage.setWidth(350);
-		    stage.setResizable(false);
-		    stage.show();
-		        
-
-		    cancel.setOnAction(new EventHandler<ActionEvent>() {
-			       @Override public void handle(ActionEvent e) {
-			    	   if(selectClicks==0)
-			    	   {
-			    		   currentHumidityValues.remove(order.getOrderCode());
-			    	   }
-			           stage.close();
-			       }
-			   });
-
-		    stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-		        @Override
-		        public void handle(WindowEvent e) {
-		        	System.out.println("BYE BYE");
-		        	if(selectClicks==0)
-			    	   {
-			    		   currentHumidityValues.remove(order.getOrderCode());
-			    	   }
-//		        	Platform.exit();
-//		        	System.exit(0);
-		        	stage.close();
-		        }
-		      });
-		    
-		    select.setOnAction(new EventHandler<ActionEvent>() {
-			       @Override public void handle(ActionEvent e) {
-			          String text = textField.getText();
-			            
-			           if(comboTest.getSelectionModel().isEmpty())
-			           {
-			        	   warningWindowForComboBox();
-			           }else
-			           {
-			        	   if(text == null || text.trim().isEmpty())
-				            {
-				            	warningWindowForFlag(text);
-				            }else
-				            {				            	
-				            	double humidity=0.0;
-				            	try {
-				            		humidity = DecimalFormat.getNumberInstance().parse(text).doubleValue();
-								} catch (ParseException e2) {
-									// TODO Auto-generated catch block
-									e2.printStackTrace();
-								}
-				            	if(humidity<=10)
-				            	{
-//				            		innerHashMap = new HashMap<String, String>();
-				            		selectClicks++;
-				            		try {		
-				            			tempString = (String) comboTest.getSelectionModel().getSelectedItem();
-				            			innerHashMap.put(tempString, humidity+"");
-				            			currentHumidityValues.put(order.getOrderCode(), innerHashMap);
-//				            			System.out.println(currentHumidityValues.get(order.getOrderCode()).get(tempString));
-										//order.setHumidity(""+humidity+"");									
-										table.getItems().set(table.getSelectionModel().getSelectedIndex(), order);
-										changes3.put(order.getOrderCode(), order);
-										
-										rigthWindow(text);
-										//stage.close();
-									} catch (NumberFormatException e1) {
-										e1.printStackTrace();
-									}
-				            	}else
-				            	{
-				            		warningWindowForFlag(text);
-				            	}
-				            //	stage.close();
-				            }
-			            }
-			            
-			            
-			        }
-			    });
+			order.setHumidity("ΟΧΙ");
+			table.getItems().set(table.getSelectionModel().getSelectedIndex(), order);
 		}
 		
 		
@@ -324,11 +193,11 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
     	alert.showAndWait();
 	}
 
-	private void noHumidityWindow()
+	private void noHumidityWindow(String orderCode)
 	{
 		Alert alert = new Alert(Alert.AlertType.WARNING);
     	alert.setTitle("Υγρασία");
-    	alert.setHeaderText("Αδύνατη αλλαγή υγρασίας!");
+    	alert.setHeaderText("Αδύνατη αλλαγή υγρασίας! -> "+orderCode);
     	alert.setContentText("Δεν γίνεται να αλλάξετε την υγρασία διότι δεν υπάρχει κάποιο σιλό που περιέχει αισθητήρα ούτε επιτρέπεται η χειροκίνητη ρύθμιση");
     	alert.showAndWait();
 	}
