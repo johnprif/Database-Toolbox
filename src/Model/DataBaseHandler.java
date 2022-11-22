@@ -236,25 +236,15 @@ public class DataBaseHandler
 
 	public void updateDataBase2(Order order, HashMap<String, HashMap<String, String>> currentHumidityValues) throws SQLException
 	{
-		System.out.println("====================The water is ==================================HELLLLLLLLLLLLLLLLLLLLLLLLLLLO");
 		cooking2(order, currentHumidityValues);
-//		System.out.println("EDW EIMAI");
 		Statement update = connection.createStatement();
 		String sql1 = "UPDATE Orders SET DateCreation="+order.getDateCreation()+" , TimeCreation="+order.getTimeCreation()+" , DateLastEdit="+order.getExecutionDate()+" , ExecutionDate="+order.getExecutionDate()+" , ExecutionTime="+order.getExecutionTime()+" , ExecutionDuration="+computeDurationTime(Integer.parseInt(order.getNoOfBatches()))+" , ExecutionState=2 , BatchesProduced="+order.getNoOfBatches()+" , ShippingInvoiceNumber="+setShippingInvoiceNumber()+" where OrderCode="+"\""+order.getOrderCode()+"\"";
 		byte[] bytes = sql1.getBytes(StandardCharsets.UTF_8);
 		String utf8EncodedString = new String(bytes, StandardCharsets.UTF_8);
-		
-		//update.executeUpdate(utf8EncodedString);
-//		System.out.println("EDW EIMAI");
-		update.executeUpdate(sql1);
-		
-		
-		
-		connection.commit();
-		
+		update.executeUpdate(sql1);		
+		connection.commit();		
 		printOrder(order);
-		
-//		cooking(order);
+
 	}
 	
 	private void printOrder(Order order)
@@ -690,7 +680,6 @@ public class DataBaseHandler
 				}
 			}
 		}	
-		System.out.println("----------percentageOfWater ============== "+percentageOfWater);
 		return percentageOfWater/1000;
 	}
 	
@@ -921,8 +910,8 @@ public class DataBaseHandler
 						try {
 							if(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))!=null)
 							{
-								double temp = DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue();
-								Quantity = (int) (oldNewQuantity.get(SiloID.get(j))*((1+temp)/1000));
+								double humidity = 100*DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue();
+								Quantity = (int) (oldNewQuantity.get(SiloID.get(j))*((1+humidity)/1000))/100;
 							}else
 							{
 								Quantity = oldNewQuantity.get(SiloID.get(j));
@@ -936,8 +925,8 @@ public class DataBaseHandler
 						try {
 							if(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))!=null)
 							{
-								double temp = DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue();
-								Quantity = (int) ((((intSiloQuantity * 1.0)/100)*intBatchQuantity)*((1+temp)/1000));
+								double humidity = 100*DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue();
+								Quantity = (int) ((((intSiloQuantity * 1.0)/100)*intBatchQuantity)*((1+humidity)/1000))/100;
 							}else
 							{
 								Quantity = (int) (((intSiloQuantity * 1.0)/100)*intBatchQuantity);
