@@ -15,6 +15,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TablePosition;
@@ -109,7 +110,15 @@ public class PendingOrdersGUI
     private Label tempLabel_1 = new Label("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     private Label temp;
     
-    Spinner spinner = new Spinner(0, 10, 0); //min, max, start
+//    Spinner spinner = new Spinner(0, 10, 0); //min, max, start
+    
+    Spinner<Double> spinner = new Spinner<Double>();
+
+    // Value factory.
+    SpinnerValueFactory<Double> valueFactory = //
+            new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 10, 0);
+
+    //https://o7planning.org/11185/javafx-spinner
     
     private ArrayList<Label> labelsArrayList;
 
@@ -123,6 +132,9 @@ public class PendingOrdersGUI
 		dateStage = new Stage();
 		shippingStage = new Stage();
 		this.stage = stage;
+		
+		spinner.setValueFactory(valueFactory);
+//		spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_VERTICAL);
 	}
 	
 	public void initialize()
