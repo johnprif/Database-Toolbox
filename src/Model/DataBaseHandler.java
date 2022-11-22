@@ -855,17 +855,23 @@ public class DataBaseHandler
 					Quantity = (int) (((intSiloQuantity * 1.0)/100)*intBatchQuantity);
 				}
 				
-				if(i == NoOfBatches-1)
-				{
-					max = (int) (1.005*Quantity);
-					min = (int) (0.995*Quantity);
-					range = (max - min) + 1;
-				}else
-				{
-					max = (int) (1.04*Quantity);
-					min = (int) (0.96*Quantity);
-					range = (max - min) + 1;
-				}
+//				if(i == NoOfBatches-1)
+//				{
+////					max = (int) (1.005*Quantity);
+////					min = (int) (0.995*Quantity);
+//					max = (int) (1.04*Quantity);
+//					min = (int) (0.96*Quantity);
+//					range = (max - min) + 1;
+//				}else
+//				{
+//					max = (int) (1.04*Quantity);
+//					min = (int) (0.96*Quantity);
+//					range = (max - min) + 1;
+//				}
+				
+				max = (int) (1.04*Quantity);
+				min = (int) (0.96*Quantity);
+				range = (max - min) + 1;
 				
 				QuantityActual = (int) ((Math.random() * range) + min);
 				
@@ -906,16 +912,12 @@ public class DataBaseHandler
 					intSiloQuantity = Integer.parseInt(SiloQuantity.get(j));
 					intBatchQuantity = Integer.parseInt(order.getBatchQuantity());
 					
-					System.out.println("---------intSiloQuantity----------"+intSiloQuantity);
-					System.out.println("---------intBatchQuantity----------"+intBatchQuantity);					
-					
 					if(i>0)
 					{
 						try {
 							if(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))!=null)
 							{
 								double temp = DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue();
-								System.out.println("------------DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue()------------"+temp/1000);
 								Quantity = (int) (oldNewQuantity.get(SiloID.get(j))*((1+temp)/1000));
 							}else
 							{
@@ -925,11 +927,9 @@ public class DataBaseHandler
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						System.out.println("---------SiloID.get(j)----------"+SiloID.get(j));
 					}else
 					{
 						try {
-							System.out.println("--------------SiloID.get(j)------------------"+SiloID.get(j));
 							if(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))!=null)
 							{
 								double temp = DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue();
@@ -941,21 +941,25 @@ public class DataBaseHandler
 						} catch (ParseException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						
-						System.out.println("---------intBatchQuantity----------"+intBatchQuantity);
 					}
 					
-					if(i == NoOfBatches-1)
-					{
-						max = (int) (1.005*Quantity);
-						min = (int) (0.995*Quantity);
-						range = (max - min) + 1;
-					}else
-					{
-						max = (int) (1.04*Quantity);
-						min = (int) (0.96*Quantity);
-						range = (max - min) + 1;
-					}
+//					if(i == NoOfBatches-1)
+//					{
+////						max = (int) (1.005*Quantity);
+////						min = (int) (0.995*Quantity);
+//						max = (int) (1.04*Quantity);
+//						min = (int) (0.96*Quantity);
+//						range = (max - min) + 1;
+//					}else
+//					{
+//						max = (int) (1.04*Quantity);
+//						min = (int) (0.96*Quantity);
+//						range = (max - min) + 1;
+//					}
+						
+					max = (int) (1.04*Quantity);
+					min = (int) (0.96*Quantity);
+					range = (max - min) + 1;
 					
 					QuantityActual = (int) ((Math.random() * range) + min);
 					
@@ -975,15 +979,11 @@ public class DataBaseHandler
 				for(int j=0; j<SiloID.size(); j++)
 				{
 					intSiloQuantity = Integer.parseInt(SiloQuantity.get(j));
-					intBatchQuantity = Integer.parseInt(order.getBatchQuantity());
-					
-					System.out.println("---------intSiloQuantity----------"+intSiloQuantity);
-					System.out.println("---------intBatchQuantity----------"+intBatchQuantity);					
+					intBatchQuantity = Integer.parseInt(order.getBatchQuantity());				
 					
 					if(i>0)
 					{
 						Quantity = oldNewQuantity.get(SiloID.get(j));
-						System.out.println("---------SiloID.get(j)----------"+SiloID.get(j));
 					}else
 					{
 						Quantity = (int) (((intSiloQuantity * 1.0)/100)*intBatchQuantity);
