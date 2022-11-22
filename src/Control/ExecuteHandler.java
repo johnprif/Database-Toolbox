@@ -23,7 +23,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	private HashMap<String, Order> changes3;
 	private HashMap<String, HashMap<String, String>> currentHumidityValues;
 	private TableView<Order> table;
-	Order selectedItem;
+	private Order order;
 	
 	public ExecuteHandler()
 	{
@@ -33,46 +33,52 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	@Override
 	public void handle(ActionEvent arg0)
 	{	
-		selectedItem = table.getSelectionModel().getSelectedItem();
+		order = table.getSelectionModel().getSelectedItem();
 		
-		if(selectedItem == null)
+		if(order == null)
 		{
 			uncompleteWindow();
 		}else //not null
 		{
-//			if(selectedItem.getDateCreation() != null && selectedItem.getExecutionDate() != null && selectedItem.getTimeCreation() != null && selectedItem.getExecutionTime() != null)
-			if(selectedItem.getExecutionDate() != null && selectedItem.getExecutionTime() != null)
-			{
-				try {
-//					myDB.updateDataBase(changes3.get(selectedItem.getOrderCode()));
-//					myDB.updateDataBase(selectedItem);
-					System.out.println("====================The water is ==================================HELLLLLLLLLLLLLLLLLLLLLLLLLLLO");
-					if(currentHumidityValues.size()==0)
+			try {
+				if(!myDB.checkOrderIfExists(order.getOrderCode()))
+				{
+//					if(selectedItem.getDateCreation() != null && selectedItem.getExecutionDate() != null && selectedItem.getTimeCreation() != null && selectedItem.getExecutionTime() != null)
+					if(order.getExecutionDate() != null && order.getExecutionTime() != null)
 					{
-						myDB.updateDataBase(selectedItem);
+						try {
+//							myDB.updateDataBase(changes3.get(selectedItem.getOrderCode()));
+//							myDB.updateDataBase(selectedItem);
+							if(currentHumidityValues.size()==0)
+							{
+								myDB.updateDataBase(order);
+							}else
+							{
+								myDB.updateDataBase2(order, currentHumidityValues);
+							}
+//							table.getItems().remove(selectedItem);   
+							completeWindow();
+							table.getItems().remove(order); 
+							changes3.clear();					
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}else
 					{
-						myDB.updateDataBase2(selectedItem, currentHumidityValues);
-					}
-					
-//					table.getItems().remove(selectedItem);   
-					completeWindow();
-					table.getItems().remove(selectedItem); 
-					changes3.clear();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+						try {
+//							emptyDate(order);
+							emptyDate2(order, currentHumidityValues);	
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} 
 				}
-			}else
-			{
-				try {
-//					emptyDate(selectedItem);
-					emptyDate2(selectedItem, currentHumidityValues);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} 
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 	
@@ -114,7 +120,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	private void emptyDate(Order order) throws SQLException
 	{
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Παραγγελία προς εκτέλεση -> " +selectedItem.getOrderCode());
+		alert.setTitle("Παραγγελία προς εκτέλεση -> " +order.getOrderCode());
 		alert.setHeaderText("Κενή Ημερομηνία!");
 		alert.setContentText("Η 'Ημερομηνία Εκτέλεσης' είναι κενή!\nΠατήστε το 'ΟΚ' για να συμπληρωθούς αυτόματα με την τωρινή ημερομηνία\nΠατήστε το 'Cancel' για ακύρωση");
 
@@ -137,7 +143,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 				changes3.put(order.getOrderCode(), order);
 				completeWindow();
 				table.getItems().remove(order); 
-				changes3.clear();
+				changes3.clear();			
 			}else
 			{
 				
@@ -151,7 +157,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	private void emptyDate2(Order order, HashMap<String, HashMap<String, String>> currentHumidityValues) throws SQLException
 	{
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Παραγγελία προς εκτέλεση -> " +selectedItem.getOrderCode());
+		alert.setTitle("Παραγγελία προς εκτέλεση -> " +order.getOrderCode());
 		alert.setHeaderText("Κενή Ημερομηνία!");
 		alert.setContentText("Η 'Ημερομηνία Εκτέλεσης' είναι κενή!\nΠατήστε το 'ΟΚ' για να συμπληρωθούς αυτόματα με την τωρινή ημερομηνία\nΠατήστε το 'Cancel' για ακύρωση");
 
@@ -175,13 +181,12 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 				{
 					myDB.updateDataBase2(order, currentHumidityValues);
 				}
-				
 //				table.getItems().remove(order);  
 				table.getItems().set(table.getSelectionModel().getSelectedIndex(), order);
 				changes3.put(order.getOrderCode(), order);
 				completeWindow();
 				table.getItems().remove(order); 
-				changes3.clear();
+				changes3.clear();	
 			}else
 			{
 				

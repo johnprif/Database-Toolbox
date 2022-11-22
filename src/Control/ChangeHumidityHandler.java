@@ -45,7 +45,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	private TableView<Order> table;
 	
 	private ArrayList<String> siloIDsPerOrder;
-	private boolean flag = false;
+	private boolean flag;
 	
 	private HashMap<String, Order> changes3;
 	private HashMap<String, HashMap<String, String>> currentHumidityValues;
@@ -60,6 +60,7 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	{
 		this.stage = stage;
 		this.myDB = DataBaseHandler.getInstance();
+		flag = false;
 //		innerHashMap = new HashMap<String, String>();
 //		currentHumidityValues = new HashMap<String, HashMap<String, String>>();
 		

@@ -26,14 +26,14 @@ public class EmptyBaseHandler implements EventHandler<ActionEvent>
 	public void handle(ActionEvent arg0)
 	{
 		try {
-			confirmationWindow();
+			emptyDBconfirmationWindow();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	private void confirmationWindow() throws SQLException
+	private void emptyDBconfirmationWindow() throws SQLException
 	{
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation Dialog");
