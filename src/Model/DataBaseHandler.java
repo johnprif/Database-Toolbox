@@ -992,18 +992,20 @@ public class DataBaseHandler
 			}
 				
 									
-				tempAdWater = (int)(Double.parseDouble(Quantitys.get(waterSiloIndexAtQuantitys+i)[2])-waterPerCycleTemp);
-					
-				tempMax = (int) (1.04*tempAdWater);
-				tempMin = (int) (0.96*tempAdWater);
-				tempRange = (tempMax - tempMin) + 1;
-										
-				tempAcWater = (int) ((Math.random() * tempRange) + tempMin);
+//			tempAdWater = (int)(Double.parseDouble(Quantitys.get((SiloID.size()*i)+waterSiloIndexAtQuantitys)[2])-waterPerCycleTemp);
+			tempAdWater = (int)(Double.parseDouble(SiloQuantity.get(waterSiloIndexAtQuantitys))-waterPerCycleTemp);	
+			System.out.println("Water == "+Quantitys.get((SiloID.size()*i)+waterSiloIndexAtQuantitys)[2]);	
 				
-//				String[] tempIdQuanAcQua = {(waterSiloIndexAtQuantitys+i+1)+"" , WaterAdjustSiloID+"", tempAdWater+"", tempAcWater+""};
-				String[] tempIdQuanAcQua = {(i+1)+"" , WaterAdjustSiloID, tempAdWater+"", tempAcWater+""};
-//				Quantitys.set(6*(1+i), tempIdQuanAcQua);
-				Quantitys.set((SiloID.size()*i)+waterSiloIndexAtQuantitys, tempIdQuanAcQua);
+			tempMax = (int) (1.04*tempAdWater);
+			tempMin = (int) (0.96*tempAdWater);
+			tempRange = (tempMax - tempMin) + 1;
+										
+			tempAcWater = (int) ((Math.random() * tempRange) + tempMin);
+				
+//			String[] tempIdQuanAcQua = {(waterSiloIndexAtQuantitys+i+1)+"" , WaterAdjustSiloID+"", tempAdWater+"", tempAcWater+""};
+			String[] tempIdQuanAcQua = {(i+1)+"" , WaterAdjustSiloID, tempAdWater+"", tempAcWater+""};
+//			Quantitys.set(6*(1+i), tempIdQuanAcQua);
+			Quantitys.set((SiloID.size()*i)+waterSiloIndexAtQuantitys, tempIdQuanAcQua);
 			
 			
 			
