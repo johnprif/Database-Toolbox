@@ -45,6 +45,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 		order = table.getSelectionModel().getSelectedItem();
 		
 		setCurrentHumidityValues(order.getOrderCode());
+		myDB.setCurrentHumidityValuesToDB(currentHumidityValues);
 		
 		if(order == null)
 		{
@@ -65,7 +66,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 								myDB.updateDataBase(order);
 							}else if(order.getHumidity().equals("ΝΑΙ"))
 							{
-								myDB.updateDataBase2(order, currentHumidityValues);
+								myDB.updateDataBase2(order);
 							}
 //							table.getItems().remove(selectedItem);   
 							completeWindow();
@@ -128,7 +129,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 		for(int i=0; i<spinners.size(); i++)
 		{
 			inner.put(humidityIDs.get(i), spinners.get(i).getValue()+"");
-			System.out.println("The value of the Spinner is ===== "+spinners.get(i).getValue());
+//			System.out.println("The value of the Spinner is ===== "+spinners.get(i).getValue());
 			currentHumidityValues.put(orderCode, inner);
 		}
 	}
@@ -178,7 +179,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 					myDB.updateDataBase(order);
 				}else if(order.getHumidity().equals("ΝΑΙ"))
 				{
-					myDB.updateDataBase2(order, currentHumidityValues);
+					myDB.updateDataBase2(order);
 				}
 //				myDB.updateDataBase(order);
 //				table.getItems().remove(order);  
@@ -222,7 +223,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 					myDB.updateDataBase(order);
 				}else if(order.getHumidity().equals("ΝΑΙ"))
 				{
-					myDB.updateDataBase2(order, currentHumidityValues);
+					myDB.updateDataBase2(order);
 				}
 //				table.getItems().remove(order);  
 				table.getItems().set(table.getSelectionModel().getSelectedIndex(), order);

@@ -52,6 +52,7 @@ public class DataBaseHandler
 	private ArrayList<String> siloIDsArrayList;
 	private HashMap<String, ArrayList<String>> siloIDsForAllOrders;
 	private HashMap<String, ArrayList<String>> humiditySilosPerOrder;
+	private HashMap<String, HashMap<String, String>> currentHumidityValues;
 	
 	//create an object of SingleObject
 	private static DataBaseHandler instance = new DataBaseHandler();
@@ -233,10 +234,16 @@ public class DataBaseHandler
 		
 //		cooking(order);
 	}
-
-	public void updateDataBase2(Order order, HashMap<String, HashMap<String, String>> currentHumidityValues) throws SQLException
+	
+	public void setCurrentHumidityValuesToDB(HashMap<String, HashMap<String, String>> currentHumidityValues)
 	{
-		cooking2(order, currentHumidityValues);
+		this.currentHumidityValues = currentHumidityValues;
+		System.out.println("I AM setCurrentHumidityValuesToDB AND SIZE OF currentHumidityValues == "+currentHumidityValues.size());
+	}
+
+	public void updateDataBase2(Order order) throws SQLException
+	{
+		cooking2(order);
 		Statement update = connection.createStatement();
 		String sql1 = "UPDATE Orders SET DateCreation="+order.getDateCreation()+" , TimeCreation="+order.getTimeCreation()+" , DateLastEdit="+order.getExecutionDate()+" , ExecutionDate="+order.getExecutionDate()+" , ExecutionTime="+order.getExecutionTime()+" , ExecutionDuration="+computeDurationTime(Integer.parseInt(order.getNoOfBatches()))+" , ExecutionState=2 , BatchesProduced="+order.getNoOfBatches()+" , ShippingInvoiceNumber="+setShippingInvoiceNumber()+" where OrderCode="+"\""+order.getOrderCode()+"\"";
 		byte[] bytes = sql1.getBytes(StandardCharsets.UTF_8);
@@ -464,12 +471,12 @@ public class DataBaseHandler
 		clearOldBatches();
 	}
 	
-	private void cooking2(Order order, HashMap<String, HashMap<String, String>> currentHumidityValues) throws SQLException
+	private void cooking2(Order order) throws SQLException
 	{	
 		parseOrderIngredients(order.getOrderCode());
 		//System.out.println("EDW EIMAI");
-		addEntriesToBatchIngredientsTable2(order, currentHumidityValues);
-		addEntriesToBatchData2(order, currentHumidityValues);
+		addEntriesToBatchIngredientsTable2(order);
+		addEntriesToBatchData2(order);
 		clearOldBatches();
 	}
 
@@ -493,15 +500,18 @@ public class DataBaseHandler
 	}
 	
 	//TODO - DELETE OR SHOW POPUP FROM BATCHINGRIDIENT WHERE ORDERCODE ALREADY EXISTS 
-	private void addEntriesToBatchIngredientsTable2(Order order, HashMap<String, HashMap<String, String>> currentHumidityValues) throws SQLException
+	private void addEntriesToBatchIngredientsTable2(Order order) throws SQLException
 	{
 		int NoOfBatches = Integer.parseInt(order.getNoOfBatches());
-		ArrayList<String[]> Quantitys = computeQuantitys2(order, NoOfBatches, currentHumidityValues);
+		ArrayList<String[]> Quantitys = computeQuantitys2(order, NoOfBatches);
+		
+		String UsedHumidityTemp;
 		
 		int batchNumber;
 		int siloID;
 		int Quantity;
 		int ActualQuantity;
+		double UsedHumidity;
 //		System.out.println("EDW EIMAI");
 
 		for(int i=0; i<Quantitys.size(); i++)
@@ -510,8 +520,19 @@ public class DataBaseHandler
 			siloID = Integer.parseInt(Quantitys.get(i)[1]);
 			Quantity = Integer.parseInt(Quantitys.get(i)[2]);
 			ActualQuantity = Integer.parseInt(Quantitys.get(i)[3]);
+			
+			
+			UsedHumidityTemp = this.currentHumidityValues.get(order.getOrderCode()).get(siloID+"");
+			if(UsedHumidityTemp==null)
+			{
+				UsedHumidity=0;
+			}else
+			{
+				UsedHumidity = 10*Double.parseDouble(UsedHumidityTemp);
+			}
+			System.out.println("UsedHumidity =========================== "+UsedHumidity);
 			Statement statement = connection.createStatement();
-			statement.executeUpdate("INSERT INTO BatchIngredients " + "VALUES ( '"+order.getOrderCode()+"' , "+batchNumber+" , "+siloID+" , "+Quantity+" , "+Quantity+" , "+ActualQuantity+" , 0 )");	
+			statement.executeUpdate("INSERT INTO BatchIngredients " + "VALUES ( '"+order.getOrderCode()+"' , "+batchNumber+" , "+siloID+" , "+Quantity+" , "+Quantity+" , "+ActualQuantity+" , "+UsedHumidity+" )");	
 		}	
 		
 		connection.commit();
@@ -541,7 +562,7 @@ public class DataBaseHandler
 		connection.commit();
 	}
 	
-	private void addEntriesToBatchData2(Order order, HashMap<String, HashMap<String, String>> currentHumidityValues) throws SQLException
+	private void addEntriesToBatchData2(Order order) throws SQLException
 	{
 		int noOfBatches = Integer.parseInt(order.getNoOfBatches());
 		int mixingStartTime;
@@ -562,7 +583,9 @@ public class DataBaseHandler
 		for(int i=0; i<noOfBatches; i++)
 		{
 			Statement statement = connection.createStatement();
-			statement.executeUpdate("INSERT INTO BatchData " + "VALUES ( "+order.getOrderCode()+" , "+(i+1)+" , "+newCoockedTime+" , "+0+" , "+0+" , "+(getWaterAdjustSiloID()*(1-percentageOfWater))+")");
+//			statement.executeUpdate("INSERT INTO BatchData " + "VALUES ( "+order.getOrderCode()+" , "+(i+1)+" , "+newCoockedTime+" , "+0+" , "+0+" , "+(getWaterAdjustSiloID()*(1-percentageOfWater))+")");
+			statement.executeUpdate("INSERT INTO BatchData " + "VALUES ( "+order.getOrderCode()+" , "+(i+1)+" , "+newCoockedTime+" , "+0+" , "+0+" , "+(getWaterAdjustSiloID())+")");
+
 			tempMixingStartTime = newCoockedTime.split("");
 				
 			if(tempMixingStartTime.length == 5) //4 54 18
@@ -663,7 +686,7 @@ public class DataBaseHandler
 	{
 		double percentageOfWater = 0.0;
 		
-		if(currentHumidityValues.get(order.getOrderCode())==null)
+		if(this.currentHumidityValues.get(order.getOrderCode())==null)
 		{
 			percentageOfWater = 0.0;
 		}else
@@ -672,7 +695,7 @@ public class DataBaseHandler
 			{
 				try {
 
-						percentageOfWater += DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(siloIDsArrayList.get(i))).doubleValue();
+						percentageOfWater += DecimalFormat.getNumberInstance().parse(this.currentHumidityValues.get(order.getOrderCode()).get(siloIDsArrayList.get(i))).doubleValue();
 				
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
@@ -879,7 +902,7 @@ public class DataBaseHandler
 		return Quantitys;
 	}
 	
-	private ArrayList<String[]> computeQuantitys2(Order order, int NoOfBatches, HashMap<String, HashMap<String, String>> currentHumidityValues)
+	private ArrayList<String[]> computeQuantitys2(Order order, int NoOfBatches)
 	{
 		ArrayList<String[]> Quantitys = new ArrayList<String[]>();
 		HashMap<String, Integer> oldNewQuantity = new HashMap<String, Integer>();
@@ -895,7 +918,7 @@ public class DataBaseHandler
 		int min;
 		int range;
 		
-		if(currentHumidityValues.get(order.getOrderCode())!=null)
+		if(this.currentHumidityValues.get(order.getOrderCode())!=null)
 		{
 			for(int i=0; i<NoOfBatches; i++)
 			{
@@ -907,10 +930,10 @@ public class DataBaseHandler
 					if(i>0)
 					{
 						try {
-							if(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))!=null)
+							if(this.currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))!=null)
 							{
-								System.out.println("currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j)) ====="+currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j)));
-								double humidity = DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue();
+								System.out.println("currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j)) ====="+this.currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j)));
+								double humidity = DecimalFormat.getNumberInstance().parse(this.currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue();
 								Quantity = (int) (oldNewQuantity.get(SiloID.get(j))*((1+humidity)));
 							}else
 							{
@@ -923,10 +946,10 @@ public class DataBaseHandler
 					}else
 					{
 						try {
-							if(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))!=null)
+							if(this.currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))!=null)
 							{
-								System.out.println("currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j)) ====="+currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j)));
-								double humidity = DecimalFormat.getNumberInstance().parse(currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue();
+								System.out.println("this.currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j)) ====="+this.currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j)));
+								double humidity = DecimalFormat.getNumberInstance().parse(this.currentHumidityValues.get(order.getOrderCode()).get(SiloID.get(j))).doubleValue();
 								Quantity = (int) ((((intSiloQuantity * 1.0)/100)*intBatchQuantity)*((1+humidity)));
 							}else
 							{
