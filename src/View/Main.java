@@ -149,7 +149,7 @@ public class Main extends Application
 	    //Setting the back ground color 
 //	    gridPane.setStyle("-fx-background-color: orangered;");
 	    //gridPane.setStyle("-fx-background-color: navy;");
-	    gridPane.setStyle("-fx-background-color: dodgerblue;");
+	    gridPane.setStyle("-fx-background-color: grey;");
 	}
 	
 	private void checkIfAlreadyOpen(String path)

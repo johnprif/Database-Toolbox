@@ -201,7 +201,7 @@ public class PendingOrdersGUI
 
         
         
-        border.setStyle("-fx-background-color: dodgerblue;");
+        border.setStyle("-fx-background-color: grey;");
 		border.setPadding(new Insets(5));
         border.setCenter(table);
         border.setRight(vbox2); //gridPane
