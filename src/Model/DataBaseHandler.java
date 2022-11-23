@@ -55,6 +55,7 @@ public class DataBaseHandler
 	private ArrayList<Double> waterPerCycle;
 	//create an object of SingleObject
 	private static DataBaseHandler instance = new DataBaseHandler();
+	private String WaterAdjustSiloID;
 	
 	//make the constructor private so that this class cannot be
 	//instantiated
@@ -463,6 +464,8 @@ public class DataBaseHandler
 	
 	private void cooking(Order order) throws SQLException
 	{	
+		WaterAdjustSiloID=getWaterAdjustSiloID();
+		
 		parseOrderIngredients(order.getOrderCode());
 		//System.out.println("EDW EIMAI");
 		addEntriesToBatchIngredientsTable(order);
@@ -472,6 +475,9 @@ public class DataBaseHandler
 	
 	private void cooking2(Order order) throws SQLException
 	{	
+		WaterAdjustSiloID=getWaterAdjustSiloID();
+		
+		
 		parseOrderIngredients(order.getOrderCode());
 		//System.out.println("EDW EIMAI");
 		addEntriesToBatchIngredientsTable2(order);
@@ -529,7 +535,6 @@ public class DataBaseHandler
 			{
 				UsedHumidity = 10*Double.parseDouble(UsedHumidityTemp);
 			}
-			System.out.println("UsedHumidity =========================== "+UsedHumidity);
 			Statement statement = connection.createStatement();
 			statement.executeUpdate("INSERT INTO BatchIngredients " + "VALUES ( '"+order.getOrderCode()+"' , "+batchNumber+" , "+siloID+" , "+Quantity+" , "+Quantity+" , "+ActualQuantity+" , "+UsedHumidity+" )");	
 		}	
@@ -563,6 +568,8 @@ public class DataBaseHandler
 	
 	private void addEntriesToBatchData2(Order order) throws SQLException
 	{
+//		WaterAdjustSiloID=getWaterAdjustSiloID();
+		
 		int noOfBatches = Integer.parseInt(order.getNoOfBatches());
 		int mixingStartTime;
 		int max;
@@ -583,7 +590,7 @@ public class DataBaseHandler
 		{
 			Statement statement = connection.createStatement();
 //			statement.executeUpdate("INSERT INTO BatchData " + "VALUES ( "+order.getOrderCode()+" , "+(i+1)+" , "+newCoockedTime+" , "+0+" , "+0+" , "+(getWaterAdjustSiloID()*(1-percentageOfWater))+")");
-			statement.executeUpdate("INSERT INTO BatchData " + "VALUES ( "+order.getOrderCode()+" , "+(i+1)+" , "+newCoockedTime+" , "+0+" , -"+waterPerCycle.get(i)+" , "+(getWaterAdjustSiloID())+")");
+			statement.executeUpdate("INSERT INTO BatchData " + "VALUES ( "+order.getOrderCode()+" , "+(i+1)+" , "+newCoockedTime+" , "+0+" , -"+waterPerCycle.get(i)+" , "+WaterAdjustSiloID+")");
 
 			tempMixingStartTime = newCoockedTime.split("");
 				
@@ -701,6 +708,8 @@ public class DataBaseHandler
 	
 	private void addEntriesToBatchData(Order order) throws SQLException
 	{
+//		WaterAdjustSiloID=getWaterAdjustSiloID();
+		
 		int noOfBatches = Integer.parseInt(order.getNoOfBatches());
 		int mixingStartTime;
 		int max;
@@ -719,7 +728,7 @@ public class DataBaseHandler
 		for(int i=0; i<noOfBatches; i++)
 		{
 			Statement statement = connection.createStatement();
-			statement.executeUpdate("INSERT INTO BatchData " + "VALUES ( "+order.getOrderCode()+" , "+(i+1)+" , "+newCoockedTime+" , "+0+" , "+0+" , "+getWaterAdjustSiloID()+")");
+			statement.executeUpdate("INSERT INTO BatchData " + "VALUES ( "+order.getOrderCode()+" , "+(i+1)+" , "+newCoockedTime+" , "+0+" , "+0+" , "+WaterAdjustSiloID+")");
 
 			tempMixingStartTime = newCoockedTime.split("");
 			
@@ -817,16 +826,14 @@ public class DataBaseHandler
 		connection.commit();
 	}
 	
-	private int getWaterAdjustSiloID() throws SQLException
-	{
-		int WaterAdjustSiloID;
-		
+	private String getWaterAdjustSiloID() throws SQLException
+	{	
 		PreparedStatement preparedStatement = connection.prepareStatement("SELECT SiloID FROM Silos WHERE SiloScaleID=203");
 		ResultSet pendingSet2 = preparedStatement.executeQuery();
 		
 		pendingSet2.next();
 		
-	    WaterAdjustSiloID = Integer.parseInt(pendingSet2.getString("SiloID"));  
+	    WaterAdjustSiloID = pendingSet2.getString("SiloID");  
 		
 		
 		return WaterAdjustSiloID;
@@ -901,6 +908,14 @@ public class DataBaseHandler
 		HashMap<String, Integer> oldNewQuantity = new HashMap<String, Integer>();
 		waterPerCycle = new ArrayList<Double>();
 		
+		
+		int tempAdWater;
+		int tempAcWater;
+		int tempMin;
+		int tempMax;	
+		int tempRange;
+		
+		
 		int intSiloQuantity;
 		int intBatchQuantity;
 		int Quantity=0;
@@ -918,23 +933,28 @@ public class DataBaseHandler
 		double humidity;
 		double waterPerCycleTemp = 0.0;
 		
+		int waterSiloIndexAtQuantitys = 0;
+		
 		for(int i=0; i<NoOfBatches; i++)
 		{
-			waterPerCycleTemp = 0.0;
 			for(int j=0; j<SiloID.size(); j++)
 			{
 				intSiloQuantity = Integer.parseInt(SiloQuantity.get(j));
 				intBatchQuantity = Integer.parseInt(order.getBatchQuantity());
 				
 				humidityTemp = currentHumidityValues.get(orderCode).get(SiloID.get(j));
+		
+				if(SiloID.get(j).equals(WaterAdjustSiloID))
+				{
+					waterSiloIndexAtQuantitys=j;
+				}
 				
 				if(i>0)
 				{
 					if(humidityTemp!=null)
 					{
 						humidity = Double.parseDouble(humidityTemp)/100;
-						Quantity = (int) (oldNewQuantity.get(SiloID.get(j))*((1+humidity)));
-						
+						Quantity = (int) (oldNewQuantity.get(SiloID.get(j))*((1+humidity)));						
 					}else
 					{
 						Quantity = oldNewQuantity.get(SiloID.get(j));
@@ -968,9 +988,28 @@ public class DataBaseHandler
 				{
 					humidity = Double.parseDouble(humidityTemp)/100;
 					waterPerCycleTemp+=Double.parseDouble(idQuaAcQua[2])*humidity;
-				}
+				}					
 			}
-			waterPerCycle.add(waterPerCycleTemp);
+				
+									
+				tempAdWater = (int)(Double.parseDouble(Quantitys.get(waterSiloIndexAtQuantitys+i)[2])-waterPerCycleTemp);
+					
+				tempMax = (int) (1.04*tempAdWater);
+				tempMin = (int) (0.96*tempAdWater);
+				tempRange = (tempMax - tempMin) + 1;
+										
+				tempAcWater = (int) ((Math.random() * tempRange) + tempMin);
+				
+//				String[] tempIdQuanAcQua = {(waterSiloIndexAtQuantitys+i+1)+"" , WaterAdjustSiloID+"", tempAdWater+"", tempAcWater+""};
+				String[] tempIdQuanAcQua = {(i+1)+"" , WaterAdjustSiloID, tempAdWater+"", tempAcWater+""};
+//				Quantitys.set(6*(1+i), tempIdQuanAcQua);
+				Quantitys.set((SiloID.size()*i)+waterSiloIndexAtQuantitys, tempIdQuanAcQua);
+			
+			
+			
+			waterSiloIndexAtQuantitys = 0;
+			waterPerCycle.add(waterPerCycleTemp);	
+			waterPerCycleTemp = 0.0;
 		}		
 		return Quantitys;
 	}
