@@ -2,6 +2,8 @@ package View;
 	
 import javafx.stage.WindowEvent;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
 import Control.PathHandler;
@@ -16,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.event.ActionEvent;
 
@@ -24,7 +27,7 @@ public class Main extends Application
 	private DataBaseHandler myDB;
 	private String path;
 	private PathHandler pathHandler;
-	private String version = " -> v3.0.8";
+	private String version = " -> v3.0.9";
 	private String programTitle = "SAITEC"+version;
 	
 	private Button openOrdersButton;
@@ -33,6 +36,11 @@ public class Main extends Application
 	
 	private GridPane gridPane;
 	private Stage pendingStage;
+	
+	Image image = null;
+	//Passing FileInputStream object as a parameter 
+	FileInputStream inputstream = null;
+	ImageView imageView = null;
 	
 	@Override
 	public void start(Stage primaryStage) 
@@ -132,15 +140,19 @@ public class Main extends Application
 	
 	private void createGridPane()
 	{
+		
+		createLogo();
+
 		gridPane = new GridPane();
 
 	    //Setting the Grid alignment 
 	    gridPane.setAlignment(Pos.CENTER); 
-
+	    gridPane.add(imageView, 0, 0);
+	    
 	    //Arranging all the nodes in the grid 
-	    gridPane.add(openOrdersButton, 0, 0);
-	    gridPane.add(loadDBButton, 0, 1);
-	    gridPane.add(exitButton, 0, 2);
+	    gridPane.add(openOrdersButton, 0, 1);
+	    gridPane.add(loadDBButton, 0, 2);
+	    gridPane.add(exitButton, 0, 3);
 
 	    //Spaces between the buttons 
 	    gridPane.setHgap(10);
@@ -150,6 +162,21 @@ public class Main extends Application
 //	    gridPane.setStyle("-fx-background-color: orangered;");
 	    //gridPane.setStyle("-fx-background-color: navy;");
 	    gridPane.setStyle("-fx-background-color: grey;");
+	}
+	
+	private void createLogo()
+	{
+		try {
+			inputstream = new FileInputStream("SaitecLogo.png");
+			image = new Image(inputstream); 
+			imageView = new ImageView(image);
+			//setting the fit height and width of the image view 
+		    imageView.setFitHeight(50); 
+		    imageView.setFitWidth(172);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 	}
 	
 	private void checkIfAlreadyOpen(String path)
