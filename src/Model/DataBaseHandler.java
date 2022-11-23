@@ -934,7 +934,6 @@ public class DataBaseHandler
 					{
 						humidity = Double.parseDouble(humidityTemp)/100;
 						Quantity = (int) (oldNewQuantity.get(SiloID.get(j))*((1+humidity)));
-						waterPerCycleTemp+=Double.parseDouble(Quantitys.get(i)[3])*humidity;
 						
 					}else
 					{
@@ -946,7 +945,6 @@ public class DataBaseHandler
 					{
 						humidity = Double.parseDouble(humidityTemp)/100;
 						Quantity = (int) ((((intSiloQuantity * 1.0)/100)*intBatchQuantity)*((1+humidity)));
-						waterPerCycleTemp+=Double.parseDouble(Quantitys.get(i)[3])*humidity;
 					}else
 					{
 						Quantity = (int) (((intSiloQuantity * 1.0)/100)*intBatchQuantity);
@@ -965,6 +963,12 @@ public class DataBaseHandler
 				oldQuantity =(int) (((intSiloQuantity * 1.0)/100)*intBatchQuantity);
 				newQuantity = (Quantity - QuantityActual)+oldQuantity;
 				oldNewQuantity.put(SiloID.get(j), newQuantity);
+				
+				if(humidityTemp != null)
+				{
+					humidity = Double.parseDouble(humidityTemp)/100;
+					waterPerCycleTemp+=Double.parseDouble(idQuaAcQua[2])*humidity;
+				}
 			}
 			waterPerCycle.add(waterPerCycleTemp);
 		}		
