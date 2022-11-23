@@ -95,7 +95,7 @@ public class DataBaseHandler
 		{
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");//Loading Driver
             connection = DriverManager.getConnection("jdbc:ucanaccess://"+path);//Establishing Connection
-            checkHashes();
+//          checkHashes();
         }catch(Exception e)
 		{
         	alertWindow();
@@ -702,7 +702,6 @@ public class DataBaseHandler
 
 		for(int i=0; i<noOfBatches; i++)
 		{
-			
 			Statement statement = connection.createStatement();
 			statement.executeUpdate("INSERT INTO BatchData " + "VALUES ( "+order.getOrderCode()+" , "+(i+1)+" , "+newCoockedTime+" , "+0+" , "+0+" , "+getWaterAdjustSiloID()+")");
 
