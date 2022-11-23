@@ -112,16 +112,16 @@ public class DataBaseHandler
 		int i=0;
 		try {
 			Statement statement1 = connection.createStatement();
-			statement1.executeQuery("SELECT OrderCode FROM BatchData WHERE OrderCode LIKE'#%'");
+			statement1.executeQuery("SELECT OrderCode FROM BatchData WHERE OrderCode LIKE'##%'");
 			i++;
 			Statement statement2 = connection.createStatement();
-			statement2.executeQuery("SELECT OrderCode FROM BatchIngredients WHERE OrderCode LIKE '#%'");
+			statement2.executeQuery("SELECT OrderCode FROM BatchIngredients WHERE OrderCode LIKE '##%'");
 			i++;
 			Statement statement3 = connection.createStatement();
-			statement3.executeQuery("SELECT OrderCode FROM OrderIngredients WHERE OrderCode LIKE '#%'");
+			statement3.executeQuery("SELECT OrderCode FROM OrderIngredients WHERE OrderCode LIKE '##%'");
 			i++;
 			Statement statement4 = connection.createStatement();
-			statement4.executeQuery("SELECT OrderCode FROM Orders WHERE OrderCode LIKE '#%'");
+			statement4.executeQuery("SELECT OrderCode FROM Orders WHERE OrderCode LIKE '##%'");
 
 			connection.commit();
 			System.out.println("It has not hashes - ok");
