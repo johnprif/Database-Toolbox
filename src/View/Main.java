@@ -24,7 +24,7 @@ public class Main extends Application
 	private DataBaseHandler myDB;
 	private String path;
 	private PathHandler pathHandler;
-	private String version = " -> v3.0.7.4";
+	private String version = " -> v3.0.8";
 	private String programTitle = "SAITEC"+version;
 	
 	private Button openOrdersButton;
