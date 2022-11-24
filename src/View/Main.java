@@ -53,86 +53,87 @@ public class Main extends Application
 		pathHandler = PathHandler.getInstance();
 		pathHandler.checkPathFile();
 		checkIfAlreadyOpen(pathHandler.getPath());
-//		path = takeThePath.getPath();
-//		myDB.setPath(path);
-//		myDB.initialize();
+		createLogoForMain();
+		createLogoForStage();
+
 		pendingStage = new Stage();
-		try {		
-			//Creating Buttons     
-			createButtons();	    		    
-		    
-		    loadDBButton.setOnAction(pathHandler);
-		    
-		    PendingOrdersFactory pendingOrdersFactory = new PendingOrdersFactory();
-		    pendingOrdersFactory.setDB();
-		    pendingOrdersFactory.setStage(pendingStage);
-		    
-		    openOrdersButton.setOnAction(pendingOrdersFactory);
-		    
-		    
-		    pendingStage.initOwner(primaryStage);
-		    pendingStage.initModality(Modality.WINDOW_MODAL);
-		    
-		    
-		    createLogoForMain();
-			//Creating a Grid Pane 
-		    createGridPane();
-		    
-		    //Creating a scene object 
-			Scene scene = new Scene(gridPane,300,300);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		if(imageStage != null)
+		{
+			pendingStage.getIcons().add(imageStage);
+		}
 			
-			createLogoForStage();
-			
-			
-			if(imageStage != null)
-			{
-				primaryStage.getIcons().add(imageStage);
-			}
-			
-			//Setting title to the Stage 
-			primaryStage.setTitle(programTitle);
-			
-			//Adding scene to the stage 
-			primaryStage.setScene(scene);
-			primaryStage.setResizable(false);
-			//Displaying the contents of the stage
-			primaryStage.show();
-			
-			exitButton.setOnAction(new EventHandler<ActionEvent>() {
-			    @Override public void handle(ActionEvent e) {
-			    	primaryStage.close();
-			    	try {
-			    		if(!myDB.isClosed())
+		//Creating Buttons     
+		createButtons();	    		    
+		    
+		loadDBButton.setOnAction(pathHandler);
+		    
+		PendingOrdersFactory pendingOrdersFactory = new PendingOrdersFactory();
+	    pendingOrdersFactory.setDB();
+	    pendingOrdersFactory.setStage(pendingStage);
+	    
+	    openOrdersButton.setOnAction(pendingOrdersFactory);
+	    
+	    
+	    pendingStage.initOwner(primaryStage);
+	    pendingStage.initModality(Modality.WINDOW_MODAL);
+	    
+	    
+//		    createLogoForMain();
+		//Creating a Grid Pane 
+	    createGridPane();
+	    
+	    //Creating a scene object 
+		Scene scene = new Scene(gridPane,300,300);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		
+//			createLogoForStage();
+		
+		
+		if(imageStage != null)
+		{
+			primaryStage.getIcons().add(imageStage);
+		}
+		
+		//Setting title to the Stage 
+		primaryStage.setTitle(programTitle);
+		
+		//Adding scene to the stage 
+		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
+		//Displaying the contents of the stage
+		primaryStage.show();
+		
+		exitButton.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	primaryStage.close();
+		    	try {
+		    		if(!myDB.isClosed())
+		    		{
+		    			myDB.closeDB();			    			
+		    		}
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+		    	 System.exit(0);
+		    }
+		});
+		
+		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+	          public void handle(WindowEvent we) 
+	          {
+	              primaryStage.close();
+	              try {
+	            	  if(!myDB.isClosed())
 			    		{
 			    			myDB.closeDB();			    			
 			    		}
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-			    	 System.exit(0);
-			    }
-			});
-			
-			primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-		          public void handle(WindowEvent we) 
-		          {
-		              primaryStage.close();
-		              try {
-		            	  if(!myDB.isClosed())
-				    		{
-				    			myDB.closeDB();			    			
-				    		}
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
-		              System.exit(0);
-		          }
-		      });        
-		} catch(Exception e) 
-		{
-			e.printStackTrace();
-		}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+	              System.exit(0);
+	          }
+	      });        
+		
 	}
 	
 	private void createButtons()
@@ -222,8 +223,6 @@ public class Main extends Application
 			imageStage = new Image(inputstreamStage); 
 			imageViewStage = new ImageView(imageStage);
 			//setting the fit height and width of the image view 
-		    imageViewStage.setFitHeight(50); 
-		    imageViewStage.setFitWidth(172);
 		}else
 		{
 			imageStage=null;
