@@ -38,13 +38,25 @@ public class Main extends Application
 	private GridPane gridPane;
 	private Stage pendingStage;
 	
-	private FileInputStream inputstreamMain = null;
-	private Image imageMain = null;
-	private ImageView imageViewMain = null;
+	private FileInputStream inputstreamMain;
+	private Image imageMain;
+	private ImageView imageViewMain;
 	
-	private FileInputStream inputstreamStage = null;
-	private Image imageStage = null;
-	private ImageView imageViewStage = null;
+	private FileInputStream inputstreamStage;
+	private Image imageStage;
+	private ImageView imageViewStage;
+	
+	private FileInputStream inputstreamOpenOrdesButton;
+	private Image imageOpenOrdersButton;
+    private ImageView viewOpenOrdersButton;
+    
+    private FileInputStream inputstreamLoadDBButton;
+	private Image imageLoadDBButton;
+    private ImageView viewLoadDBButton;
+    
+    private FileInputStream inputstreamExitButton;
+	private Image imageExitButton;
+    private ImageView viewExitButton;
 	
 	@Override
 	public void start(Stage primaryStage) 
@@ -53,9 +65,9 @@ public class Main extends Application
 		pathHandler = PathHandler.getInstance();
 		pathHandler.checkPathFile();
 		checkIfAlreadyOpen(pathHandler.getPath());
-		createLogoForMain();
-		createLogoForStage();
-
+		
+		createIcons();
+		
 		pendingStage = new Stage();
 		if(imageStage != null)
 		{
@@ -150,6 +162,21 @@ public class Main extends Application
 	    loadDBButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 	    exitButton.setStyle("-fx-font-weight: bold; -fx-text-fill: red; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 	    
+	    if(viewOpenOrdersButton!=null)
+	    {
+	    	openOrdersButton.setGraphic(viewOpenOrdersButton);
+	    }
+	    
+	    if(viewLoadDBButton!=null)
+	    {
+	    	loadDBButton.setGraphic(viewLoadDBButton);
+	    }
+	    
+	    if(viewExitButton!=null)
+	    {
+	    	exitButton.setGraphic(viewExitButton);
+	    }
+	    
 	}
 	
 	private void createGridPane()
@@ -175,6 +202,15 @@ public class Main extends Application
 	    gridPane.add(exitButton, 0, 3);
 
 	    
+	}
+	
+	private void createIcons()
+	{
+		createLogoForMain();
+		createLogoForStage();
+		createOpenOrdersButtonIcon();
+		createLoadDBButtonIcon();
+		createExitButtonIcon();
 	}
 	
 	private void createLogoForMain()
@@ -225,10 +261,85 @@ public class Main extends Application
 			//setting the fit height and width of the image view 
 		}else
 		{
-			imageStage=null;
+			imageStage = null;
 			imageViewStage = null;
 		}
 		
+	}
+	
+	
+	
+	private void createOpenOrdersButtonIcon()
+	{
+		String openImage = pathToImportant+"/Icons/OpenButton.png";
+		File f = new File(openImage);
+		
+		if(f.exists() && !f.isDirectory())
+		{
+			try {
+				inputstreamOpenOrdesButton = new FileInputStream(openImage);						
+			}catch (FileNotFoundException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			imageOpenOrdersButton = new Image(inputstreamOpenOrdesButton); 
+			viewOpenOrdersButton = new ImageView(imageOpenOrdersButton);
+			viewOpenOrdersButton.setFitHeight(20); 
+			viewOpenOrdersButton.setFitWidth(18);
+		}else
+		{
+			imageOpenOrdersButton = null;
+			viewOpenOrdersButton = null;
+		}		
+	}
+	
+	private void createLoadDBButtonIcon()
+	{
+		String loadImage = pathToImportant+"/Icons/LoadButton.png";
+		File f = new File(loadImage);
+		if(f.exists() && !f.isDirectory())
+		{
+			try {
+				inputstreamLoadDBButton = new FileInputStream(loadImage);						
+			}catch (FileNotFoundException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			imageLoadDBButton = new Image(inputstreamLoadDBButton); 
+			viewLoadDBButton = new ImageView(imageLoadDBButton);
+			viewLoadDBButton.setFitHeight(20); 
+			viewLoadDBButton.setFitWidth(18);
+		}else
+		{
+			imageLoadDBButton = null;
+			viewLoadDBButton = null;
+		}	
+	}
+	
+	private void createExitButtonIcon()
+	{
+		String exitImage = pathToImportant+"/Icons/ExitButton.png";
+		File f = new File(exitImage);
+		if(f.exists() && !f.isDirectory())
+		{
+			try {
+				inputstreamExitButton = new FileInputStream(exitImage);						
+			}catch (FileNotFoundException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			imageExitButton = new Image(inputstreamExitButton); 
+			viewExitButton = new ImageView(imageExitButton);
+			viewExitButton.setFitHeight(20); 
+			viewExitButton.setFitWidth(20);
+		}else
+		{
+			imageLoadDBButton = null;
+			viewLoadDBButton = null;
+		}
 	}
 	
 	private void checkIfAlreadyOpen(String path)
