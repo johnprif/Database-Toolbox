@@ -112,6 +112,7 @@ public class PendingOrdersGUI
     private Stage dateStage;
     private Stage shippingStage;
     private Label tempLabel_1 = new Label("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    private Label humidityLabel;
     private Label temp;
     private Label kati1;
     private Label kati2;
@@ -181,7 +182,7 @@ public class PendingOrdersGUI
 		createStage();
 		createIcons();
 		createButtons();
-		
+		createHumidityLabel();
 		
 		refreshHandler = new RefreshHandler(stage);
 		changeTimeCreationHandler = new ChangeTimeHandler(changeTimeCreationButton, dateStage);
@@ -238,7 +239,7 @@ public class PendingOrdersGUI
         
 //        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, changeTimeExecutionButton, changeShippingNumberButton, changeHumidityButton, executeButton, backButton, tempLabel_1,  emptyBaseButton);
         
-        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, changeTimeExecutionButton, changeShippingNumberButton, changeHumidityButton, executeButton, backButton, vbox4, tempLabel_1, emptyBaseButton);
+        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, changeTimeExecutionButton, changeShippingNumberButton, changeHumidityButton, executeButton, backButton, humidityLabel, vbox4, tempLabel_1, emptyBaseButton);
 
         
         
@@ -546,7 +547,15 @@ public class PendingOrdersGUI
 	    if(viewEmptyBaseButton!=null)
 	    {
 	    	emptyBaseButton.setGraphic(viewEmptyBaseButton);
-	    }
+	    }	    
+	}
+	
+	private void createHumidityLabel()
+	{
+		humidityLabel = new Label("ΥΓΡΑΣΙΕΣ");
+		humidityLabel.setMaxWidth(Double.MAX_VALUE);
+	    humidityLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: white; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    humidityLabel.setAlignment(Pos.CENTER);
 	}
 	
 	private void createHumidityCells()

@@ -167,7 +167,7 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
 	{
 		Alert alert = new Alert(Alert.AlertType.ERROR);
     	alert.setTitle("Error");
-    	alert.setHeaderText("Ο"+text+"' δεν αποτελεί έγκυρο Αριθμό Αποστολής!");
+    	alert.setHeaderText("Ο '"+text+"' δεν αποτελεί έγκυρο Αριθμό Αποστολής!");
     	alert.setContentText("Παρακαλώ εισάγετε έναν έγυρο Αριθμό Αποστολής πρωτού συνεχίσετε\nΕπιτρέπονται μόνο αριθμοί μέχρι 7 ψηφίων οι οποίοι είναι μετεξύ 0 και 9999999");
     	alert.showAndWait();
 	}
