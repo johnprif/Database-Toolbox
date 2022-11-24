@@ -259,16 +259,41 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 			int intMinutes;
 			int intSeconds;
 			
-			if(stringTimeCreation.length == 5)//1..9
+			if(stringTimeCreation.length == 5)//07 15 54
 			{
 				intHours = Integer.parseInt(stringTimeCreation[0]);
 				intMinutes = Integer.parseInt(stringTimeCreation[1]+stringTimeCreation[2]);
 				intSeconds = Integer.parseInt(stringTimeCreation[3]+stringTimeCreation[4]);
-			}else
+			}else if(stringTimeCreation.length == 6)//15 45 21
 			{
 				intHours = Integer.parseInt(stringTimeCreation[0]+stringTimeCreation[1]);
 				intMinutes = Integer.parseInt(stringTimeCreation[2]+stringTimeCreation[3]);
 				intSeconds = Integer.parseInt(stringTimeCreation[4]+stringTimeCreation[5]);
+			}else if(stringTimeCreation.length == 4)//00 52 06
+			{
+				intHours = 0;
+				intMinutes = Integer.parseInt(stringTimeCreation[0]+stringTimeCreation[1]);
+				intSeconds = Integer.parseInt(stringTimeCreation[2]+stringTimeCreation[3]);
+			}else if(stringTimeCreation.length == 3)//00 04 34
+			{
+				intHours = 0;
+				intMinutes = Integer.parseInt(stringTimeCreation[0]);
+				intSeconds = Integer.parseInt(stringTimeCreation[1]+stringTimeCreation[2]);
+			}else if(stringTimeCreation.length == 2)//00 00 34
+			{
+				intHours = 0;
+				intMinutes = 0;
+				intSeconds = Integer.parseInt(stringTimeCreation[0]+stringTimeCreation[1]);
+			}else if(stringTimeCreation.length == 1)//00 00 04
+			{
+				intHours = 0;
+				intMinutes = 0;
+				intSeconds = Integer.parseInt(stringTimeCreation[0]);
+			}else//00 00 34
+			{
+				intHours = 0;
+				intMinutes = 0;
+				intSeconds = 0;
 			}
 			
 			for(int i=0; i<medianDate.length; i++)

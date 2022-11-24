@@ -327,16 +327,41 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 			int intMinutes;
 			int intSeconds;
 			
-			if(stringExecutionTime.length == 5)//1..9
+			if(stringExecutionTime.length == 5)//07 15 54
 			{
 				intHours = Integer.parseInt(stringExecutionTime[0]);
 				intMinutes = Integer.parseInt(stringExecutionTime[1]+stringExecutionTime[2]);
 				intSeconds = Integer.parseInt(stringExecutionTime[3]+stringExecutionTime[4]);
-			}else
+			}else if(stringExecutionTime.length == 5)//15 45 21
 			{
 				intHours = Integer.parseInt(stringExecutionTime[0]+stringExecutionTime[1]);
 				intMinutes = Integer.parseInt(stringExecutionTime[2]+stringExecutionTime[3]);
 				intSeconds = Integer.parseInt(stringExecutionTime[4]+stringExecutionTime[5]);
+			}else if(stringExecutionTime.length == 4)//00 52 06
+			{
+				intHours = 0;
+				intMinutes = Integer.parseInt(stringExecutionTime[0]+stringExecutionTime[1]);
+				intSeconds = Integer.parseInt(stringExecutionTime[2]+stringExecutionTime[3]);
+			}else if(stringExecutionTime.length == 3)//00 04 34
+			{
+				intHours = 0;
+				intMinutes = Integer.parseInt(stringExecutionTime[0]);
+				intSeconds = Integer.parseInt(stringExecutionTime[1]+stringExecutionTime[2]);
+			}else if(stringExecutionTime.length == 2)//00 00 34
+			{
+				intHours = 0;
+				intMinutes = 0;
+				intSeconds = Integer.parseInt(stringExecutionTime[0]+stringExecutionTime[1]);
+			}else if(stringExecutionTime.length == 1)//00 00 04
+			{
+				intHours = 0;
+				intMinutes = 0;
+				intSeconds = Integer.parseInt(stringExecutionTime[0]);
+			}else//00 00 34
+			{
+				intHours = 0;
+				intMinutes = 0;
+				intSeconds = 0;
 			}
 			
 			
