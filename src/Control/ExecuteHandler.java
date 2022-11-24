@@ -29,6 +29,8 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	private TableView<Order> table;
 	private Order order;
 	
+	private boolean flag = false;
+	
 	private ArrayList<Spinner<Double>> spinners;
 	private ArrayList<SpinnerValueFactory<Double>> spinnersValueFactories;
 	private ArrayList<Label> spinnersLabels;
@@ -41,17 +43,16 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	
 	@Override
 	public void handle(ActionEvent arg0)
-	{	
-		order = table.getSelectionModel().getSelectedItem();
-		
-		setCurrentHumidityValues(order.getOrderCode());
-		myDB.setCurrentHumidityValuesToDB(currentHumidityValues);
-		
-		if(order == null)
+	{			
+		if(flag == false)
 		{
 			uncompleteWindow();
-		}else //not null
+		}else //true
 		{
+			order = table.getSelectionModel().getSelectedItem();
+			
+			setCurrentHumidityValues(order.getOrderCode());
+			myDB.setCurrentHumidityValuesToDB(currentHumidityValues);
 			try {
 				if(!myDB.checkOrderIfExists(order.getOrderCode()))
 				{
@@ -365,6 +366,11 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 		return false;
 	}
 	
+		public void setFlag(boolean flag)
+		{
+			this.flag = flag;
+		}
+		
 		
 		
 	private void dateWindow(int mode)

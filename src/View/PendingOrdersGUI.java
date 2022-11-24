@@ -175,6 +175,7 @@ public class PendingOrdersGUI
 	
 	public void initialize()
 	{		
+		
 		flag = false;
 		
 		createStage();
@@ -747,13 +748,14 @@ public class PendingOrdersGUI
 	}
 		
 	private void setLastThingsOnTable()
-	{
+	{		
 		table.setItems(data);
         table.getColumns().addAll(OrderCode, RecipeCode, Quantity, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, TimeCreation, ExecutionDate, ExecutionTime, Humidity);
                 
         table.getSelectionModel().setCellSelectionEnabled(false);
         
-        ObservableList<Order> orderList = table.getSelectionModel().getSelectedItems();	    	    
+        ObservableList<Order> orderList = table.getSelectionModel().getSelectedItems();	  
+        
 	    orderList.addListener(new ListChangeListener()
 	    		{
 	    			@Override
@@ -763,6 +765,7 @@ public class PendingOrdersGUI
 	    				changeTimeCreationHandler.setFlag(flag);
 	    				changeTimeExecutionHandler.setFlag(flag);
 	    				changeHumidityHandler.setFlag(flag);
+	    				executeHandler.setFlag(flag);
 	    			}	
 	    		});
 	}
