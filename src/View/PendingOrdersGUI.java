@@ -36,6 +36,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -117,6 +120,12 @@ public class PendingOrdersGUI
     private ArrayList<SpinnerValueFactory<Double>> spinnersValueFactories;
     private ArrayList<Label> spinnersLabels;
     
+    private String pathToImportant = "ImportantFiles";
+    
+    private FileInputStream inputstreamEmptyBaseButton;
+	private Image imageEmptyBaseButton;
+    private ImageView viewEmptyBaseButton;
+    
 //    Spinner spinner = new Spinner(0, 10, 0, 1); //min, max, start, step
 
     
@@ -139,6 +148,7 @@ public class PendingOrdersGUI
 	public void initialize()
 	{		
 		createStage();
+		createIcons();
 		createButtons();
 		
 		
@@ -226,6 +236,36 @@ public class PendingOrdersGUI
 	      });	
 	}
 	
+	private void createIcons()
+	{
+		EmptyBaseButtonIcon();
+	}
+	
+	private void EmptyBaseButtonIcon()
+	{   
+	    String deleteImage = pathToImportant+"/Icons/DeleteButton.png";
+		File f = new File(deleteImage);
+		
+		if(f.exists() && !f.isDirectory())
+		{
+			try {
+				inputstreamEmptyBaseButton = new FileInputStream(deleteImage);						
+			}catch (FileNotFoundException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			imageEmptyBaseButton = new Image(inputstreamEmptyBaseButton); 
+			viewEmptyBaseButton = new ImageView(imageEmptyBaseButton);
+			viewEmptyBaseButton.setFitHeight(20); 
+			viewEmptyBaseButton.setFitWidth(20);
+		}else
+		{
+			imageEmptyBaseButton = null;
+			viewEmptyBaseButton = null;
+		}
+	}
+	
 	private void createButtons()
 	{		
 		refreshButton = new Button("Ανανέωση");
@@ -254,6 +294,11 @@ public class PendingOrdersGUI
 	    executeButton.setStyle("-fx-font-weight: bold; -fx-text-fill: green; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 	    backButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");	    
 	    emptyBaseButton.setStyle("-fx-font-weight: bold; -fx-text-fill: red; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    
+	    if(viewEmptyBaseButton!=null)
+	    {
+	    	emptyBaseButton.setGraphic(viewEmptyBaseButton);
+	    }
 	}
 	
 	private void createHumidityCells()
