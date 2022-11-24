@@ -38,10 +38,13 @@ public class Main extends Application
 	private GridPane gridPane;
 	private Stage pendingStage;
 	
-	Image image = null;
-	//Passing FileInputStream object as a parameter 
-	FileInputStream inputstream = null;
-	ImageView imageView = null;
+	private FileInputStream inputstreamMain = null;
+	private Image imageMain = null;
+	private ImageView imageViewMain = null;
+	
+	private FileInputStream inputstreamStage = null;
+	private Image imageStage = null;
+	private ImageView imageViewStage = null;
 	
 	@Override
 	public void start(Stage primaryStage) 
@@ -71,14 +74,21 @@ public class Main extends Application
 		    pendingStage.initModality(Modality.WINDOW_MODAL);
 		    
 		    
-		    createLogo();
+		    createLogoForMain();
 			//Creating a Grid Pane 
 		    createGridPane();
-		    
 		    
 		    //Creating a scene object 
 			Scene scene = new Scene(gridPane,300,300);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			
+			createLogoForStage();
+			
+			
+			if(imageStage != null)
+			{
+				primaryStage.getIcons().add(imageStage);
+			}
 			
 			//Setting title to the Stage 
 			primaryStage.setTitle(programTitle);
@@ -153,9 +163,9 @@ public class Main extends Application
 	    //Setting the back ground color 
 	    gridPane.setStyle("-fx-background-color: grey;");
 
-	    if(imageView !=null)
+	    if(imageViewMain !=null)
 	    {
-	    	gridPane.add(imageView, 0, 0);	
+	    	gridPane.add(imageViewMain, 0, 0);	
 	    }
 	    	    
 //	    gridPane.add(imageView, 0, 0);	    
@@ -166,7 +176,7 @@ public class Main extends Application
 	    
 	}
 	
-	private void createLogo()
+	private void createLogoForMain()
 	{
 		String saitecLogo = pathToImportant+"/Icons/SaitecLogo.png";
 		
@@ -175,20 +185,49 @@ public class Main extends Application
 		if(f.exists() && !f.isDirectory())
 		{
 			try {
-				inputstream = new FileInputStream(saitecLogo);
+				inputstreamMain = new FileInputStream(saitecLogo);
 			} catch (FileNotFoundException e) 
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			image = new Image(inputstream); 
-			imageView = new ImageView(image);
+			imageMain = new Image(inputstreamMain); 
+			imageViewMain = new ImageView(imageMain);
 			//setting the fit height and width of the image view 
-		    imageView.setFitHeight(50); 
-		    imageView.setFitWidth(172);
+		    imageViewMain.setFitHeight(50); 
+		    imageViewMain.setFitWidth(172);
 		}else
 		{
-			imageView = null;
+			imageMain=null;
+			imageViewMain = null;
+		}
+		
+	}
+	
+	private void createLogoForStage()
+	{
+		String stageLogo = pathToImportant+"/Icons/StageLogo.png";
+		
+		File f = new File(stageLogo);
+		
+		if(f.exists() && !f.isDirectory())
+		{
+			try {
+				inputstreamStage = new FileInputStream(stageLogo);
+			} catch (FileNotFoundException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			imageStage = new Image(inputstreamStage); 
+			imageViewStage = new ImageView(imageStage);
+			//setting the fit height and width of the image view 
+		    imageViewStage.setFitHeight(50); 
+		    imageViewStage.setFitWidth(172);
+		}else
+		{
+			imageStage=null;
+			imageViewStage = null;
 		}
 		
 	}
