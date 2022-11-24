@@ -27,8 +27,9 @@ public class Main extends Application
 	private DataBaseHandler myDB;
 	private String path;
 	private PathHandler pathHandler;
-	private String version = " -> v3.0.9";
+	private String version = " -> v3.1";
 	private String programTitle = "SAITEC"+version;
+	private String pathToImportant = "ImportantFiles";
 	
 	private Button openOrdersButton;
 	private Button loadDBButton;
@@ -151,8 +152,13 @@ public class Main extends Application
 	    gridPane.setVgap(10);	    
 	    //Setting the back ground color 
 	    gridPane.setStyle("-fx-background-color: grey;");
-	    
-	    gridPane.add(imageView, 0, 0);	    
+
+	    if(imageView !=null)
+	    {
+	    	gridPane.add(imageView, 0, 0);	
+	    }
+	    	    
+//	    gridPane.add(imageView, 0, 0);	    
 	    gridPane.add(openOrdersButton, 0, 1);
 	    gridPane.add(loadDBButton, 0, 2);
 	    gridPane.add(exitButton, 0, 3);
@@ -162,17 +168,29 @@ public class Main extends Application
 	
 	private void createLogo()
 	{
-		try {
-			inputstream = new FileInputStream("SaitecLogo.png");
+		String saitecLogo = pathToImportant+"/Icons/SaitecLogo.png";
+		
+		File f = new File(saitecLogo);
+		
+		if(f.exists() && !f.isDirectory())
+		{
+			try {
+				inputstream = new FileInputStream(saitecLogo);
+			} catch (FileNotFoundException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			image = new Image(inputstream); 
 			imageView = new ImageView(image);
 			//setting the fit height and width of the image view 
 		    imageView.setFitHeight(50); 
 		    imageView.setFitWidth(172);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
+		}else
+		{
+			imageView = null;
+		}
+		
 	}
 	
 	private void checkIfAlreadyOpen(String path)
