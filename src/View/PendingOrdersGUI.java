@@ -175,6 +175,8 @@ public class PendingOrdersGUI
 	
 	public void initialize()
 	{		
+		flag = false;
+		
 		createStage();
 		createIcons();
 		createButtons();
