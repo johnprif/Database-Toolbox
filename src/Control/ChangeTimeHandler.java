@@ -332,7 +332,7 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 				intHours = Integer.parseInt(stringExecutionTime[0]);
 				intMinutes = Integer.parseInt(stringExecutionTime[1]+stringExecutionTime[2]);
 				intSeconds = Integer.parseInt(stringExecutionTime[3]+stringExecutionTime[4]);
-			}else if(stringExecutionTime.length == 5)//15 45 21
+			}else if(stringExecutionTime.length == 6)//15 45 21
 			{
 				intHours = Integer.parseInt(stringExecutionTime[0]+stringExecutionTime[1]);
 				intMinutes = Integer.parseInt(stringExecutionTime[2]+stringExecutionTime[3]);

@@ -732,7 +732,7 @@ public class DataBaseHandler
 
 			tempMixingStartTime = newCoockedTime.split("");
 			
-			if(tempMixingStartTime.length == 5) //4 54 18
+			if(tempMixingStartTime.length == 5) //04 54 18
 			{
 				max = (int) (5.0 + (Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2]))); //change minutes
 				min = (int) (2.5 + (Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2])));
@@ -768,7 +768,7 @@ public class DataBaseHandler
 				tempMixingStartTime[4] = ((int) ((Math.random() * 8) + 1)) + ""; //secondSecong
 				
 				newCoockedTime = tempMixingStartTime[0]+tempMixingStartTime[1]+tempMixingStartTime[2]+tempMixingStartTime[3]+tempMixingStartTime[4];
-			}else								//12 54 89 == length == 6
+			}else if(tempMixingStartTime.length == 6)//15 45 21								//12 54 89 == length == 6
 			{
 				max = (int) (5.0 + (Integer.parseInt(tempMixingStartTime[2]+tempMixingStartTime[3]))); //change minutes
 				min = (int) (2.5 + (Integer.parseInt(tempMixingStartTime[2]+tempMixingStartTime[3])));
@@ -820,9 +820,103 @@ public class DataBaseHandler
 				tempMixingStartTime[5] = ((int) ((Math.random() * 8) + 1)) + ""; //secondSecong
 					
 				newCoockedTime = tempMixingStartTime[0]+tempMixingStartTime[1]+tempMixingStartTime[2]+tempMixingStartTime[3]+tempMixingStartTime[4]+tempMixingStartTime[5];
+			}else if(tempMixingStartTime.length == 4)//00 52 06
+			{
+				max = (int) (5.0 + (Integer.parseInt(tempMixingStartTime[0]+tempMixingStartTime[1]))); //change minutes
+				min = (int) (2.5 + (Integer.parseInt(tempMixingStartTime[0]+tempMixingStartTime[1])));
+				range = (max - min) + 1;
+
+				int randomMinutes = (int) (Math.random() * range) + min;
+//				int oldHours = Integer.parseInt(tempMixingStartTime[0]+tempMixingStartTime[1]);
+				int oldHours = 0;
+				if(randomMinutes > 59)
+				{				
+					newHours = 1;	
+					newMinutes = randomMinutes-60;
+				}else
+				{
+					newHours = 0;
+					newMinutes = randomMinutes;
+				}
+				if(newMinutes < 10)
+				{
+					tempMixingStartTime[0] = 0 + ""; //firstMinute
+					tempMixingStartTime[1] = newMinutes + ""; //secondMinute
+				}else
+				{
+					String[] tempNewMinutes = (newMinutes+"").split("");
+					tempMixingStartTime[0] = tempNewMinutes[0]; //firstMinute
+					tempMixingStartTime[1] = tempNewMinutes[1]; //secondMinute
+				}
+				tempMixingStartTime[2] = ((int) ((Math.random() * 4) + 1)) + ""; //firstSecond
+				tempMixingStartTime[3] = ((int) ((Math.random() * 8) + 1)) + ""; //secondSecong
+				
+				newCoockedTime = tempMixingStartTime[0]+tempMixingStartTime[1]+tempMixingStartTime[2]+tempMixingStartTime[3];	
+			}else if(tempMixingStartTime.length == 3)//00 02 06
+			{
+				max = (int) (5.0 + (Integer.parseInt(tempMixingStartTime[0]))); //change minutes
+				min = (int) (2.5 + (Integer.parseInt(tempMixingStartTime[0])));
+				range = (max - min) + 1;
+
+				int randomMinutes = (int) (Math.random() * range) + min;
+
+				tempMixingStartTime[0] = randomMinutes + ""; //firstMinute + secondMinute
+
+				tempMixingStartTime[1] = ((int) ((Math.random() * 4) + 1)) + ""; //firstSecond
+				tempMixingStartTime[2] = ((int) ((Math.random() * 8) + 1)) + ""; //secondSecong
+				
+				newCoockedTime = tempMixingStartTime[0]+tempMixingStartTime[1]+tempMixingStartTime[2];	
+			}else if(tempMixingStartTime.length == 2)//00 00 16
+			{
+				max = (int) (5.0 + 0); //change minutes
+				min = (int) (2.5 + 0);
+				range = (max - min) + 1;
+
+				int randomMinutes = (int) (Math.random() * range) + min; //firstMinute and secondMinute
+				
+				tempMixingStartTime[0] = ((int) ((Math.random() * 4) + 1)) + ""; //firstSecond
+				tempMixingStartTime[1] = ((int) ((Math.random() * 8) + 1)) + ""; //secondSecong
+				
+				newCoockedTime = randomMinutes+tempMixingStartTime[0]+tempMixingStartTime[1];	
+			}else if(tempMixingStartTime.length == 1)//00 00 06
+			{
+				max = (int) (5.0 + 0); //change minutes
+				min = (int) (2.5 + 0);
+				range = (max - min) + 1;
+				
+				int randomMinutes = (int) (Math.random() * range) + min; //firstMinute and secondMinute
+								
+				int maxSec = (int) (5.0 + (Integer.parseInt(tempMixingStartTime[0]))); //change minutes
+				int minSec = (int) (2.5 + (Integer.parseInt(tempMixingStartTime[0])));
+				int rangeSec = (maxSec - minSec) + 1;
+				
+				int randomSeconds = (int) (Math.random() * rangeSec) + minSec;
+
+				tempMixingStartTime[0] = randomSeconds + ""; //firstSecond
+				
+				newCoockedTime = randomMinutes+tempMixingStartTime[0]+tempMixingStartTime[1];	
+			}else//00 00 00
+			{
+				max = (int) (5.0 + 0); //change minutes
+				min = (int) (2.5 + 0);
+				range = (max - min) + 1;
+				
+				int randomMinutes = (int) (Math.random() * range) + min; //firstMinute and secondMinute
+				
+				int maxSec = (int) (5.0 + 0); //change minutes
+				int minSec = (int) (2.5 + 0);
+				int rangeSec = (maxSec - minSec) + 1;
+				
+				int randomSeconds = (int) (Math.random() * rangeSec) + minSec;
+
+				tempMixingStartTime[0] = randomSeconds + ""; //firstSecond
+				
+				newCoockedTime = randomMinutes+tempMixingStartTime[0];	
 			}
+		}
+
 		//	mixingStartTime = Integer.parseInt(newCoockedTime);
-		}		
+				
 		connection.commit();
 	}
 	
