@@ -69,6 +69,8 @@ public class Main extends Application
 		    pendingStage.initOwner(primaryStage);
 		    pendingStage.initModality(Modality.WINDOW_MODAL);
 		    
+		    
+		    createLogo();
 			//Creating a Grid Pane 
 		    createGridPane();
 		    
@@ -140,28 +142,22 @@ public class Main extends Application
 	
 	private void createGridPane()
 	{
-		
-		createLogo();
-
 		gridPane = new GridPane();
 
 	    //Setting the Grid alignment 
 	    gridPane.setAlignment(Pos.CENTER); 
-	    gridPane.add(imageView, 0, 0);
+	  //Spaces between the buttons 
+	    gridPane.setHgap(10);
+	    gridPane.setVgap(10);	    
+	    //Setting the back ground color 
+	    gridPane.setStyle("-fx-background-color: grey;");
 	    
-	    //Arranging all the nodes in the grid 
+	    gridPane.add(imageView, 0, 0);	    
 	    gridPane.add(openOrdersButton, 0, 1);
 	    gridPane.add(loadDBButton, 0, 2);
 	    gridPane.add(exitButton, 0, 3);
 
-	    //Spaces between the buttons 
-	    gridPane.setHgap(10);
-	    gridPane.setVgap(10);
 	    
-	    //Setting the back ground color 
-//	    gridPane.setStyle("-fx-background-color: orangered;");
-	    //gridPane.setStyle("-fx-background-color: navy;");
-	    gridPane.setStyle("-fx-background-color: grey;");
 	}
 	
 	private void createLogo()
