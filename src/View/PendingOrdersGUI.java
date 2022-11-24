@@ -121,10 +121,26 @@ public class PendingOrdersGUI
     private ArrayList<Label> spinnersLabels;
     
     private String pathToImportant = "ImportantFiles";
+       
+    private FileInputStream inputstreamRefreshButton;
+  	private Image imageRefreshButton;
+    private ImageView viewRefreshButton; 
+    
+    private FileInputStream inputstreamChangeHumidityButton;
+  	private Image imageChangeHumidityButton;
+    private ImageView viewChangeHumidityButton;
+      
+    private FileInputStream inputstreamExecuteButton;
+	private Image imageExecuteButton;
+    private ImageView viewExecuteButton;
     
     private FileInputStream inputstreamEmptyBaseButton;
 	private Image imageEmptyBaseButton;
     private ImageView viewEmptyBaseButton;
+    
+    private FileInputStream inputstreamBackButton;
+	private Image imageBackButton;
+    private ImageView viewBackButton;
     
 //    Spinner spinner = new Spinner(0, 10, 0, 1); //min, max, start, step
 
@@ -238,10 +254,115 @@ public class PendingOrdersGUI
 	
 	private void createIcons()
 	{
-		EmptyBaseButtonIcon();
+		refreshButtonIcon();
+		
+		changeHumidityButtonIcon();
+		executeButtonIcon();
+		backButtonIcon();
+		emptyBaseButtonIcon();
 	}
 	
-	private void EmptyBaseButtonIcon()
+	private void refreshButtonIcon()
+	{
+		String resreshImage = pathToImportant+"/Icons/RefreshButton.png";
+		File f = new File(resreshImage);
+		
+		if(f.exists() && !f.isDirectory())
+		{
+			try {
+				inputstreamRefreshButton = new FileInputStream(resreshImage);						
+			}catch (FileNotFoundException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			imageRefreshButton = new Image(inputstreamRefreshButton); 
+			viewRefreshButton = new ImageView(imageRefreshButton);
+			viewRefreshButton.setFitHeight(20); 
+			viewRefreshButton.setFitWidth(20);
+		}else
+		{
+			imageRefreshButton = null;
+			viewRefreshButton = null;
+		}
+	}
+	
+	private void changeHumidityButtonIcon()
+	{
+	    String humidityImage = pathToImportant+"/Icons/HumidityButton.png";
+		File f = new File(humidityImage);
+		
+		if(f.exists() && !f.isDirectory())
+		{
+			try {
+				inputstreamChangeHumidityButton = new FileInputStream(humidityImage);						
+			}catch (FileNotFoundException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			imageChangeHumidityButton = new Image(inputstreamChangeHumidityButton); 
+			viewChangeHumidityButton = new ImageView(imageChangeHumidityButton);
+			viewChangeHumidityButton.setFitHeight(20); 
+			viewChangeHumidityButton.setFitWidth(20);
+		}else
+		{
+			imageChangeHumidityButton = null;
+			viewChangeHumidityButton = null;
+		}
+	}
+	
+	private void executeButtonIcon() 
+	{    
+	    String executeImage = pathToImportant+"/Icons/ExecuteButton.png";
+		File f = new File(executeImage);
+		
+		if(f.exists() && !f.isDirectory())
+		{
+			try {
+				inputstreamExecuteButton = new FileInputStream(executeImage);						
+			}catch (FileNotFoundException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			imageExecuteButton = new Image(inputstreamExecuteButton); 
+			viewExecuteButton = new ImageView(imageExecuteButton);
+			viewExecuteButton.setFitHeight(20); 
+			viewExecuteButton.setFitWidth(20);
+		}else
+		{
+			imageExecuteButton = null;
+			viewExecuteButton = null;
+		}
+	}
+	
+	private void backButtonIcon()
+	{
+	    String backImage = pathToImportant+"/Icons/BackButton.png";
+		File f = new File(backImage);
+		
+		if(f.exists() && !f.isDirectory())
+		{
+			try {
+				inputstreamBackButton = new FileInputStream(backImage);						
+			}catch (FileNotFoundException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			imageBackButton = new Image(inputstreamBackButton); 
+			viewBackButton = new ImageView(imageBackButton);
+			viewBackButton.setFitHeight(20); 
+			viewBackButton.setFitWidth(20);
+		}else
+		{
+			imageBackButton = null;
+			viewBackButton = null;
+		}
+	}
+	
+	private void emptyBaseButtonIcon()
 	{   
 	    String deleteImage = pathToImportant+"/Icons/DeleteButton.png";
 		File f = new File(deleteImage);
@@ -294,6 +415,26 @@ public class PendingOrdersGUI
 	    executeButton.setStyle("-fx-font-weight: bold; -fx-text-fill: green; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 	    backButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");	    
 	    emptyBaseButton.setStyle("-fx-font-weight: bold; -fx-text-fill: red; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+	    
+	    if(viewRefreshButton!=null)
+	    {
+	    	refreshButton.setGraphic(viewRefreshButton);
+	    }
+	    
+	    if(viewChangeHumidityButton!=null)
+	    {
+	    	changeHumidityButton.setGraphic(viewChangeHumidityButton);
+	    }
+	    
+	    if(viewExecuteButton!=null)
+	    {
+	    	executeButton.setGraphic(viewExecuteButton);
+	    }
+	    
+	    if(viewBackButton!=null)
+	    {
+	    	backButton.setGraphic(viewBackButton);
+	    }
 	    
 	    if(viewEmptyBaseButton!=null)
 	    {
