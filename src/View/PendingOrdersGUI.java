@@ -126,6 +126,18 @@ public class PendingOrdersGUI
   	private Image imageRefreshButton;
     private ImageView viewRefreshButton; 
     
+    private FileInputStream inputstreamChangeTimeCreationButton;
+  	private Image imageChangeTimeCreationButton;
+    private ImageView viewChangeTimeCreationButton;
+    
+    private FileInputStream inputstreamChangeTimeExecutionButton;
+  	private Image imageChangeTimeExecutionButton;
+    private ImageView viewChangeTimeExecutionButton;
+    
+    private FileInputStream inputstreamChangeShippingNumberButton;
+  	private Image imageChangeShippingNumberButton;
+    private ImageView viewChangeShippingNumberButton;
+    
     private FileInputStream inputstreamChangeHumidityButton;
   	private Image imageChangeHumidityButton;
     private ImageView viewChangeHumidityButton;
@@ -255,7 +267,9 @@ public class PendingOrdersGUI
 	private void createIcons()
 	{
 		refreshButtonIcon();
-		
+		changeTimeCreationButtonIcon();
+		changeTimeExecutionButtonIcon();
+		changeShippingNumberButtonIcon();	
 		changeHumidityButtonIcon();
 		executeButtonIcon();
 		backButtonIcon();
@@ -284,6 +298,81 @@ public class PendingOrdersGUI
 		{
 			imageRefreshButton = null;
 			viewRefreshButton = null;
+		}
+	}
+	
+	private void changeTimeCreationButtonIcon()
+	{
+		String createImage = pathToImportant+"/Icons/CreateTimeButton.png";
+		File f = new File(createImage);
+		
+		if(f.exists() && !f.isDirectory())
+		{
+			try {
+				inputstreamChangeTimeCreationButton = new FileInputStream(createImage);						
+			}catch (FileNotFoundException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			imageChangeTimeCreationButton = new Image(inputstreamChangeTimeCreationButton); 
+			viewChangeTimeCreationButton = new ImageView(imageChangeTimeCreationButton);
+			viewChangeTimeCreationButton.setFitHeight(20); 
+			viewChangeTimeCreationButton.setFitWidth(20);
+		}else
+		{
+			imageChangeTimeCreationButton = null;
+			viewChangeTimeCreationButton = null;
+		}
+	}
+	
+	private void changeTimeExecutionButtonIcon()
+	{
+		String executionImage = pathToImportant+"/Icons/ExecuteTimeButton.png";
+		File f = new File(executionImage);
+		
+		if(f.exists() && !f.isDirectory())
+		{
+			try {
+				inputstreamChangeTimeExecutionButton = new FileInputStream(executionImage);						
+			}catch (FileNotFoundException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}						
+			imageChangeTimeExecutionButton = new Image(inputstreamChangeTimeExecutionButton); 
+			viewChangeTimeExecutionButton = new ImageView(imageChangeTimeExecutionButton);
+			viewChangeTimeExecutionButton.setFitHeight(20); 
+			viewChangeTimeExecutionButton.setFitWidth(20);
+		}else
+		{
+			imageChangeTimeExecutionButton = null;
+			viewChangeTimeExecutionButton = null;
+		}
+	}
+	
+	private void changeShippingNumberButtonIcon()
+	{
+		String shippingImage = pathToImportant+"/Icons/ShippingButton.png";
+		File f = new File(shippingImage);
+		
+		if(f.exists() && !f.isDirectory())
+		{
+			try {
+				inputstreamChangeShippingNumberButton = new FileInputStream(shippingImage);						
+			}catch (FileNotFoundException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}						
+			imageChangeShippingNumberButton = new Image(inputstreamChangeShippingNumberButton); 
+			viewChangeShippingNumberButton = new ImageView(imageChangeShippingNumberButton);
+			viewChangeShippingNumberButton.setFitHeight(20); 
+			viewChangeShippingNumberButton.setFitWidth(20);
+		}else
+		{
+			imageChangeShippingNumberButton = null;
+			viewChangeShippingNumberButton = null;
 		}
 	}
 	
@@ -419,6 +508,21 @@ public class PendingOrdersGUI
 	    if(viewRefreshButton!=null)
 	    {
 	    	refreshButton.setGraphic(viewRefreshButton);
+	    }
+	    	    
+	    if(viewChangeTimeCreationButton!=null)
+	    {
+	    	changeTimeCreationButton.setGraphic(viewChangeTimeCreationButton);
+	    }
+	    
+	    if(viewChangeTimeExecutionButton!=null)
+	    {
+	    	changeTimeExecutionButton.setGraphic(viewChangeTimeExecutionButton);
+	    }
+	    
+	    if(viewChangeShippingNumberButton!=null)
+	    {
+	    	changeShippingNumberButton.setGraphic(viewChangeShippingNumberButton);
 	    }
 	    
 	    if(viewChangeHumidityButton!=null)
