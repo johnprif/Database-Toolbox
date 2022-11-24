@@ -77,7 +77,7 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 	        stage.setScene(scene);
 	        stage.setTitle("Αλλαγή Ημερμηνίας -> "+order.getOrderCode());
 	        vbox.setAlignment(Pos.BASELINE_CENTER);
-	        vbox.setStyle("-fx-background-color: dodgerblue;");
+	        vbox.setStyle("-fx-background-color: grey;");
 	        checkInDatePicker = new DatePicker();
 	        checkInDatePicker.setEditable(false);
 	        GridPane gridPane = new GridPane();
@@ -92,7 +92,7 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 	        	checkInlabel = new Label("Αλλαγή Χρόνου Εκτέλεσης");
 	        }
 	        
-	        checkInlabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
+	        checkInlabel.setStyle("-fx-font-weight: bold; -fx-text-fill: white;");
 	        gridPane.add(checkInlabel, 0, 0);
 
 	        

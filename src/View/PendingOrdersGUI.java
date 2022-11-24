@@ -262,7 +262,7 @@ public class PendingOrdersGUI
 		vbox4.setMaxWidth(Double.MAX_VALUE);
 		vbox4.setAlignment(Pos.CENTER);
 //		vbox4.setStyle("-fx-border-style: lightblue;");
-		vbox4.setStyle("-fx-border-color: orange; -fx-border-radius:4;");
+		vbox4.setStyle("-fx-border-color: white; -fx-border-radius:4; -fx-background-color: #3399ff");
 		
 		HashMap <String, String> humiditySilos = new HashMap<String, String>(changeHumidityHandler.getHumiditySilos());
 		ArrayList <String> humidityIDs = new ArrayList<String>(changeHumidityHandler.getHumidityIDs());
@@ -276,19 +276,19 @@ public class PendingOrdersGUI
 		if(humidityIDs.size()==0)
 		{
 			Label label2 = new Label("Δεν μπορεί να τροποποιηθεί η");
-			label2.setStyle("-fx-font-weight: bold; -fx-text-fill: lightgreen; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+			label2.setStyle("-fx-text-fill: black ; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 			label2.setAlignment(Pos.CENTER);
 			
 			Label label3 = new Label("υγρασία σε καμία παραγγελία\nδιότι δεν υπάρχουν αισθητήρες");
-			label3.setStyle("-fx-font-weight: bold; -fx-text-fill: lightgreen; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+			label3.setStyle("-fx-text-fill: black ; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 			label3.setAlignment(Pos.CENTER);
 			
 			Label label4 = new Label("διότι δεν υπάρχουν αισθητήρες ούτε");
-			label4.setStyle("-fx-font-weight: bold; -fx-text-fill: lightgreen; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+			label4.setStyle("-fx-text-fill: black ; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 			label4.setAlignment(Pos.CENTER);
 			
 			Label label5 = new Label("μπορεί να ρυθμιστεί χειροκίνητα");
-			label5.setStyle("-fx-font-weight: bold; -fx-text-fill: lightgreen; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+			label5.setStyle("-fx-text-fill: black ; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 			label5.setAlignment(Pos.CENTER);
 			
 			vbox4.getChildren().addAll(label2, label3, label4, label5);
@@ -297,7 +297,7 @@ public class PendingOrdersGUI
 			for(int i=0; i<humidityIDs.size(); i++)
 			{
 				Label label1 = new Label(humiditySilos.get(humidityIDs.get(i)));
-				label1.setStyle("-fx-font-weight: bold; -fx-text-fill: lightgreen; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+				label1.setStyle("-fx-text-fill: black ; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 				label1.setAlignment(Pos.CENTER);
 				
 				Spinner<Double> spinner1 = new Spinner();

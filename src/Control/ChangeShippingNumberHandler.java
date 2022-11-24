@@ -47,7 +47,7 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
         stage.setTitle("Αλλαγή Αριθμού Αποστολής");
         
         vbox.setAlignment(Pos.BASELINE_CENTER);
-        vbox.setStyle("-fx-background-color: dodgerblue;");
+        vbox.setStyle("-fx-background-color: grey;");
         
         TextField textField = new TextField();
         GridPane gridPane = new GridPane();
@@ -58,13 +58,13 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
         Label currentShippingNumber;
 		
         checkInlabel = new Label("Εισάγετε τον επιθυμητό αριθμό αποστολής:");
-		checkInlabel.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
+		checkInlabel.setStyle("-fx-font-weight: bold; -fx-text-fill: white;");
         gridPane.add(checkInlabel, 0, 0);
         GridPane.setHalignment(checkInlabel, HPos.CENTER);
         
         try {	        
 	        currentShippingNumber = new Label("Τρέχον Αριθμός Αποστολής = "+myDB.getShippingInvoiceNumber());
-	        currentShippingNumber.setStyle("-fx-font-weight: bold; -fx-text-fill: yellow;");
+	        currentShippingNumber.setStyle("-fx-font-weight: bold; -fx-text-fill: white;");
 	        gridPane.add(currentShippingNumber, 0, 1);
 	        GridPane.setHalignment(currentShippingNumber, HPos.CENTER);
 		} catch (SQLException e2) {
