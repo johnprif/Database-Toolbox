@@ -35,7 +35,7 @@ public class EmptyBaseHandler implements EventHandler<ActionEvent>
 	
 	private void emptyDBconfirmationWindow() throws SQLException
 	{
-		Alert alert = new Alert(AlertType.WARNING);
+		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Προειδοποίηση");
 		alert.setHeaderText("Ολική Διαγραφή!");
 		alert.setContentText("Είστε σίγουρος ότι επιθυμείτε να διαγράψετε όλα τα δεδομένα που βρίσκονται στην βάση; \nΠιέστε 'ΟΚ' για να συνέχεια \nΠιέστε 'Cancel' για ακύρωση");
