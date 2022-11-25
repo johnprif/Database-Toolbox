@@ -27,8 +27,8 @@ public class Main extends Application
 	private DataBaseHandler myDB;
 	private String path;
 	private PathHandler pathHandler;
-	private String version = " -> v4";
-	private String programTitle = "SAITEC"+version;
+	private String version = "->v4.3";
+	private String programTitle = "Database Toolbox"+version;
 	private String pathToImportant = "ImportantFiles";
 	
 	private Button openOrdersButton;
@@ -191,10 +191,10 @@ public class Main extends Application
 	    //Setting the back ground color 
 	    gridPane.setStyle("-fx-background-color: grey;");
 
-	    if(imageViewMain !=null)
-	    {
-	    	gridPane.add(imageViewMain, 0, 0);	
-	    }
+//	    if(imageViewMain !=null)
+//	    {
+//	    	gridPane.add(imageViewMain, 0, 0);	
+//	    }
 	    	    
 //	    gridPane.add(imageView, 0, 0);	    
 	    gridPane.add(openOrdersButton, 0, 1);
@@ -206,7 +206,7 @@ public class Main extends Application
 	
 	private void createIcons()
 	{
-		createLogoForMain();
+//		createLogoForMain();
 		createLogoForStage();
 		createOpenOrdersButtonIcon();
 		createLoadDBButtonIcon();
@@ -215,7 +215,7 @@ public class Main extends Application
 	
 	private void createLogoForMain()
 	{
-		String saitecLogo = pathToImportant+"/Icons/SaitecLogo.png";
+		String saitecLogo = pathToImportant+"/Icons/MainLogo.png";
 		
 		File f = new File(saitecLogo);
 		
@@ -231,8 +231,8 @@ public class Main extends Application
 			imageMain = new Image(inputstreamMain); 
 			imageViewMain = new ImageView(imageMain);
 			//setting the fit height and width of the image view 
-		    imageViewMain.setFitHeight(50); 
-		    imageViewMain.setFitWidth(172);
+		    imageViewMain.setFitHeight(96); 
+		    imageViewMain.setFitWidth(96);
 		}else
 		{
 			imageMain=null;
@@ -357,9 +357,9 @@ public class Main extends Application
 	private void openAlreadyFile()
 	{
 		Alert alert = new Alert(Alert.AlertType.ERROR);
-    	alert.setTitle("Error");
+    	alert.setTitle("Σφάλμα");
     	alert.setHeaderText("Ανοιχτή βάση δεδομένων");
-    	alert.setContentText("Παρακαλώ κλείστε την βάση δεδομένων ή το πρόγραμμα το οποίο χρησιμοποιεί την συγκεκριμένη βάση δεδομενών ώστε να μην προκύψει κάποιο πρόβλημα πρωτού συνεχίσετε");
+    	alert.setContentText("Παρακαλώ κλείστε την βάση δεδομένων ή \nτο πρόγραμμα το οποίο χρησιμοποιεί την συγκεκριμένη \nβάση δεδομενών ώστε να μην προκύψει κάποιο πρόβλημα πρωτού συνεχίσετε");
     	alert.showAndWait();
 	}
 	

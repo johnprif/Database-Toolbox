@@ -376,14 +376,14 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	private void dateWindow(int mode)
 	{
 		Alert alert = new Alert(Alert.AlertType.WARNING);
-    	alert.setTitle("Warning");
-    	alert.setHeaderText("����� ����������");
+    	alert.setTitle("Προειδοποίηση");
+    	alert.setHeaderText("Λανθασμένοι χρόνοι!");
     	if(mode == 0)
     	{
-    		alert.setContentText("� ���������� ������� ��� ������� �� ����� ��� ���� ��� ��� ���������� ���������!");
+    		alert.setContentText("Η ημερομηνία έναρξης δεν γίνεται να είναι πιο μετά από την ημερομηνία εκτέλεσης!");
     	}else
     	{
-    		alert.setContentText("� ���������� ��������� ��� ������� �� ����� ��� ���� ��� ��� ���������� �������!\n�������� ��������� ����!");
+    		alert.setContentText("Η ημερομηνία εκτέλεσης δεν γίνεται να είναι πιο πριν από την ημερομηνία έναρξης!");
     	}
     	alert.showAndWait();
 	}

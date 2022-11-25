@@ -566,8 +566,8 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 	private void dateWindow(int mode)
 	{
 		Alert alert = new Alert(Alert.AlertType.WARNING);
-    	alert.setTitle("Warning");
-    	alert.setHeaderText("Λάθος ημερομηνία");
+    	alert.setTitle("Προειδοποίηση");
+    	alert.setHeaderText("Λανθασμένοι χρόνοι!");
     	if(mode == 0)
     	{
     		alert.setContentText("Η ημερομηνία έναρξης δεν γίνεται να είναι πιο μετά από την ημερομηνία εκτέλεσης!");
@@ -610,8 +610,8 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 	private void warningWindowForDate()
 	{
 		Alert alert = new Alert(Alert.AlertType.WARNING);
-    	alert.setTitle("Warning");
-    	alert.setHeaderText("Κενό πεδίο");
+    	alert.setTitle("Προειδοποίηση");
+    	alert.setHeaderText("Κενή ημερομηνία");
     	alert.setContentText("Δεν μπορείτε να καταχωρίσετε κενή ημερομηνία!\nΓια να συνεχίσετε πρέπει να επιλέξετε κάποια απο τις διαθέσιμες ημερομηνίες και να πατήσετε το πλήκτρο 'Επιλογή' αλλιώς πιέστε το πλήκτρο 'Ακύρωση'");
     	alert.showAndWait();
 	}
@@ -619,7 +619,7 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 	private void warningWindowForFlag()
 	{
 		Alert alert = new Alert(Alert.AlertType.WARNING);
-    	alert.setTitle("Warning");
+    	alert.setTitle("Προειδοποίηση");
     	alert.setHeaderText("Καμία επιλογή");
     	alert.setContentText("Δεν έχει επιλεγεί καμία απο τις παραγγελίες\nΠαρακαλώ επιλέξτε κάποια πρωτού συνεχίσετε");
     	alert.showAndWait();
@@ -633,7 +633,7 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 	private void emptyOnlyOneDate()
 	{
 		Alert alert = new Alert(Alert.AlertType.WARNING);
-    	alert.setTitle("Warning");
+    	alert.setTitle("Προειδοποίηση");
     	alert.setHeaderText("Κενή ώρα ή λεπτά");
     	alert.setContentText("Έχετε επιλέξει μόνο ώρα ή λεπτά!\nΠαρακαλώ συμπληρώστε και τα δύο αλλιώς αφήστε τα κενά ώστε να διατηρηθεί η τρέχουσα ώρα");
     	alert.showAndWait();
