@@ -27,7 +27,7 @@ public class Main extends Application
 	private DataBaseHandler myDB;
 	private String path;
 	private PathHandler pathHandler;
-	private String version = "->v4.5";
+	private String version = "->v4.6";
 	private String programTitle = "Database Toolbox"+version;
 	private String pathToImportant = "ImportantFiles";
 	
@@ -359,7 +359,7 @@ public class Main extends Application
 		Alert alert = new Alert(Alert.AlertType.ERROR);
     	alert.setTitle("Σφάλμα");
     	alert.setHeaderText("Ανοιχτή βάση δεδομένων");
-    	alert.setContentText("Παρακαλώ κλείστε την βάση δεδομένων ή \nτο πρόγραμμα το οποίο χρησιμοποιεί την συγκεκριμένη \nβάση δεδομενών ώστε να μην προκύψει κάποιο πρόβλημα πρωτού συνεχίσετε");
+    	alert.setContentText("Παρακαλώ κλείστε την βάση δεδομένων ή \nτο πρόγραμμα το οποίο χρησιμοποιεί την \nσυγκεκριμένη βάση.");
     	alert.showAndWait();
 	}
 	
