@@ -145,7 +145,7 @@ public class PathHandler implements EventHandler<ActionEvent>
 	private void warningWindow()
 	{
 		Alert alert = new Alert(Alert.AlertType.WARNING);
-    	alert.setTitle("Warning");
+    	alert.setTitle("Προειδοποίηση");
     	alert.setHeaderText("Δεν υπάρχει καταχωρημένη βάση δεδομένων");
     	alert.setContentText("Επιλέξτε κάποια βάση δεδομένων πριν προχωρήσετε διότι δεν θα μπορείτε να συνεχίσετε");
     	alert.showAndWait();

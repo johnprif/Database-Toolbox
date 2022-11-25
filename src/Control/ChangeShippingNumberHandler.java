@@ -166,7 +166,7 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
 	private void warningWindowForFlag(String text)
 	{
 		Alert alert = new Alert(Alert.AlertType.ERROR);
-    	alert.setTitle("Error");
+    	alert.setTitle("Σφάλμα");
     	alert.setHeaderText("Ο '"+text+"' δεν αποτελεί έγκυρο Αριθμό Αποστολής!");
     	alert.setContentText("Παρακαλώ εισάγετε έναν έγυρο Αριθμό Αποστολής πρωτού συνεχίσετε\nΕπιτρέπονται μόνο αριθμοί μέχρι 7 ψηφίων οι οποίοι είναι μετεξύ 0 και 9999999");
     	alert.showAndWait();
@@ -175,7 +175,7 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
 	private void rigthWindow(String text)
 	{
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    	alert.setTitle("Αριθμός Αποστολής");
+    	alert.setTitle("Ειδοποίηση");
     	alert.setHeaderText("Επιτυχής Ενημέρωση!");
     	alert.setContentText("Ο Αριθμός Αποστολής '" + text +"' ενημερώθηκε επιτυχώς!");
     	alert.showAndWait();
@@ -184,7 +184,7 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
 	private void maxNumberWindow(String text)
 	{
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    	alert.setTitle("Αριθμός Αποστολής");
+    	alert.setTitle("Ειδοποίηση");
     	alert.setHeaderText("Επιτυχής Ενημέρωση!\nΜέγιστη καταχώρηση!");
     	alert.setContentText("Ο Αριθμός Αποστολής '" + text +"' ενημερώθηκε επιτυχώς!\nΗ τρέχουσα παραγγελία θα ενημερωθεί με αυτόν τον αριθμό αποστολής.\nΕπειδή όμως καταχωρήσατε τον μέγιστο επιτρεπτό Αριθμό Αποστολής δεν θα προσαυξηθεί κατά 1  όπως πάντα αλλά θα καταχωρηθεί η τιμή 1 αυτόματα στην επόμενη παραγγελία!");
     	alert.showAndWait();

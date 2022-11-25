@@ -142,27 +142,9 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	private void warningWindowForFlag()
 	{
 		Alert alert = new Alert(Alert.AlertType.WARNING);
-    	alert.setTitle("Warning");
+    	alert.setTitle("Προειδοποίηση");
     	alert.setHeaderText("Καμία επιλογή");
     	alert.setContentText("Δεν έχει επιλεγεί καμία απο τις παραγγελίες\nΠαρακαλώ επιλέξτε κάποια πρωτού συνεχίσετε");
-    	alert.showAndWait();
-	}
-
-	private void noHumidityWindow(String orderCode)
-	{
-		Alert alert = new Alert(Alert.AlertType.WARNING);
-    	alert.setTitle("Υγρασία");
-    	alert.setHeaderText("Αδύνατη αλλαγή υγρασίας! -> "+orderCode);
-    	alert.setContentText("Δεν γίνεται να αλλάξετε την υγρασία διότι δεν υπάρχει κάποιο σιλό που περιέχει αισθητήρα ούτε επιτρέπεται η χειροκίνητη ρύθμιση");
-    	alert.showAndWait();
-	}
-
-	private void warningWindowForComboBox()
-	{
-		Alert alert = new Alert(Alert.AlertType.ERROR);
-    	alert.setTitle("Error");
-    	alert.setHeaderText("Αδύνατη αλλαγή υγρασίας!");
-    	alert.setContentText("Παρακαλώ επιλέξτε κάποιο σιλό πρωτού συνεχίσετε!");
     	alert.showAndWait();
 	}
 }

@@ -1244,7 +1244,7 @@ public class DataBaseHandler
 	private void alertWindow()
 	{
 		Alert alert = new Alert(Alert.AlertType.ERROR);
-    	alert.setTitle("Error in connection");
+    	alert.setTitle("Σφάλμα");
     	alert.setHeaderText("Πρόβλημα με την βάση δεδομένων!");
     	alert.setContentText("Πιθανόν να έχει διαγραφή ή να έχει μετακινηθεί σε άλλο κατάλογο");
     	alert.showAndWait();
@@ -1301,7 +1301,7 @@ public class DataBaseHandler
 	private void sucCleanBadOrders(String OrderCode)
 	{
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    	alert.setTitle("Successful");
+    	alert.setTitle("Ειδοποίηση");
     	alert.setHeaderText("Επιτυχής επιδιόρθωση!");
     	alert.setContentText("Η παραγγελία '"+OrderCode+"' ενημερώθηκε επιτυχώς.\nΤώρα μπορείτε να την εκτελέσετε επιτυχώς");
     	alert.showAndWait();
