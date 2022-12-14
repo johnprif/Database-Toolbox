@@ -27,7 +27,7 @@ public class Main extends Application
 	private DataBaseHandler myDB;
 	private String path;
 	private PathHandler pathHandler;
-	private String version = "->v4.6";
+	private String version = "->v4.7";
 	private String programTitle = "Database Toolbox"+version;
 	private String pathToImportant = "ImportantFiles";
 	

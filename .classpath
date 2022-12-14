@@ -47,23 +47,23 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/commons-lang3-3.12.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/commons-logging-1.2.1.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/hsqldb-2.6.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/jackcess-4.0.4.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/mysql-connector-java-8.0.30.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/ojdbc11-21.7.0.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/ons-21.7.0.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/oraclepki-21.7.0.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/orai18n-21.7.0.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/osdt_cert-21.7.0.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/osdt_core-21.7.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/ojdbc11-21.8.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/ons-21.8.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/oraclepki-21.8.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/orai18n-21.8.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/osdt_cert-21.8.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/osdt_core-21.8.0.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/protobuf-java-3.19.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/rsi-21.7.0.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/simplefan-21.7.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/rsi-21.8.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/simplefan-21.8.0.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/sqltool-2.6.0-jdk11.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/ucanaccess-5.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/ucp-21.7.0.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/xdb-21.7.0.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/xmlparserv2-21.7.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/ucp-21.8.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/xdb-21.8.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Joanis Prifti/Documents/GitHub/Saitec/jars/xmlparserv2-21.8.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
