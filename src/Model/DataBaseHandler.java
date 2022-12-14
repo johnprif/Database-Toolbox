@@ -1164,6 +1164,7 @@ public class DataBaseHandler
 				
 				max = (int) (1.04*Quantity);
 				min = (int) (0.96*Quantity);
+
 				range = (max - min) + 1;
 					
 				QuantityActual = (int) ((Math.random() * range) + min);
@@ -1183,12 +1184,12 @@ public class DataBaseHandler
 				}					
 			}					
 			tempAdWater = (int)(Double.parseDouble(Quantitys.get(waterSiloIndexAtQuantitys)[2])-waterPerCycleTemp);
+//			tempAdWater = (int)(Double.parseDouble(Quantitys.get((SiloID.size()*i)+waterSiloIndexAtQuantitys)[2])-waterPerCycleTemp);
 
 //			tempAdWater = (int)(Double.parseDouble(SiloQuantity.get(waterSiloIndexAtQuantitys))-waterPerCycleTemp);	
 //			System.out.println("Water == "+Quantitys.get((SiloID.size()*i)+waterSiloIndexAtQuantitys)[2]);
 				
-//			tempMax = (int) (1.03*tempAdWater);
-//			tempMin = (int) (0.97*tempAdWater);
+
 			tempMax = (int) (1.02*tempAdWater);
 			tempMin = (int) (0.98*tempAdWater);
 			tempRange = (tempMax - tempMin) + 1;
