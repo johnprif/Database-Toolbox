@@ -44,7 +44,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	@Override
 	public void handle(ActionEvent arg0)
 	{			
-		if(flag == false)
+		if(flag == false || table.getSelectionModel().isEmpty())
 		{
 			uncompleteWindow();
 		}else //true
