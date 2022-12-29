@@ -13,3 +13,6 @@
 - front-end: JavaFX 19
 - Microsoft Access Data Base: ucanaccess-5.0.1 && sqltool-2.6.0 && mysql-connector-java-8.0.30 && jackcess-4.0.4 && hsqldb-2.6.0
 - and more...
+
+#### Finally, for the executable
+- Launch4j 3.14
