@@ -6,3 +6,9 @@
 - Manages a database which it reads and writes appropriately
 - It displays the data in a simple way giving the user the ability to customize their display as well as to edit them through various options given by the current program
 - Displays appropriate messages to make the current action clear each time
+
+#### Regarding the code part, it uses the following
+- back-end: Java 13.0.2
+- front-end: JavaFX 19
+- Microsoft Access Data Base: ucanaccess-5.0.1 && sqltool-2.6.0 && mysql-connector-java-8.0.30 && jackcess-4.0.4 && hsqldb-2.6.0
+- and more...
