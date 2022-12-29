@@ -15,4 +15,5 @@
 - and more...
 
 #### Finally, for the executable
-- Launch4j 3.14
+- .exe: Launch4j 3.14
+- JVM args: --module-path "ImportantFiles\javafx-sdk-19\lib" --add-modules=javafx.controls,javafx.fxml
