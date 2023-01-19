@@ -163,8 +163,10 @@ public class Main extends Application
 	         {
 	        	 JOptionPane.showMessageDialog(frame, "Ο φάκελος '"+pathToImportant+"' δεν βρίσκεται στον τρέχον κατάλογο ή έχει μεταβληθεί το περιεχόμενό του. \nΠαρακαλώ τοποθετήστε τον στον τρέχον κατάλογο!",
 		                 "Σφάλμα Βιβλιοθηκών-Γραφικών", JOptionPane.ERROR_MESSAGE);
+	        	 file.delete();
 	        	 System.exit(0);
-	         }         
+	         } 
+	         file.delete();
 	         System.out.println(file.exists());
 	      } catch(Exception e) {
 	         e.printStackTrace();
