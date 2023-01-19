@@ -4,7 +4,10 @@ import javafx.stage.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -13,6 +16,7 @@ import Control.PathHandler;
 import Control.PendingOrdersFactory;
 import Model.DataBaseHandler;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.stage.Modality;
@@ -64,8 +68,6 @@ public class Main extends Application
 	@Override
 	public void start(Stage primaryStage) 
 	{
-		checkIfImportantDirectoryExists();
-		
 		myDB = DataBaseHandler.getInstance();
 		pathHandler = PathHandler.getInstance();
 		pathHandler.checkPathFile();
@@ -153,7 +155,7 @@ public class Main extends Application
 		
 	}
 	
-	private void checkIfImportantDirectoryExists()
+	private static void checkIfImportantDirectoryExists()
 	{
 		JFrame frame = new JFrame("Swing Tester");
 		try {
@@ -161,7 +163,7 @@ public class Main extends Application
 	         file.createNewFile();
 	         if(!file.exists())
 	         {
-	        	 JOptionPane.showMessageDialog(frame, "Ο φάκελος '"+pathToImportant+"' δεν βρίσκεται στον τρέχον κατάλογο ή έχει μεταβληθεί το περιεχόμενό του. \nΠαρακαλώ τοποθετήστε τον στον τρέχον κατάλογο!",
+	        	 JOptionPane.showMessageDialog(frame, "Ο φάκελος 'ImportantFiles' δεν βρίσκεται στον τρέχον κατάλογο ή έχει μεταβληθεί το περιεχόμενό του. \nΠαρακαλώ τοποθετήστε τον στον τρέχον κατάλογο!",
 		                 "Σφάλμα Βιβλιοθηκών-Γραφικών", JOptionPane.ERROR_MESSAGE);
 	        	 file.delete();
 	        	 System.exit(0);
@@ -390,6 +392,7 @@ public class Main extends Application
 	
 	public static void main(String[] args)
 	{
+//		checkIfImportantDirectoryExists();
 		launch(args);	
 	}
 }
