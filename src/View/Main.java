@@ -6,6 +6,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import Control.PathHandler;
 import Control.PendingOrdersFactory;
 import Model.DataBaseHandler;
@@ -27,7 +30,7 @@ public class Main extends Application
 	private DataBaseHandler myDB;
 	private String path;
 	private PathHandler pathHandler;
-	private String version = "->v4.8";
+	private String version = "->v4.9";
 	private String programTitle = "Database Toolbox"+version;
 	private String pathToImportant = "ImportantFiles";
 	
@@ -61,6 +64,8 @@ public class Main extends Application
 	@Override
 	public void start(Stage primaryStage) 
 	{
+		checkIfImportantDirectoryExists();
+		
 		myDB = DataBaseHandler.getInstance();
 		pathHandler = PathHandler.getInstance();
 		pathHandler.checkPathFile();
@@ -146,6 +151,24 @@ public class Main extends Application
 	          }
 	      });        
 		
+	}
+	
+	private void checkIfImportantDirectoryExists()
+	{
+		JFrame frame = new JFrame("Swing Tester");
+		try {
+	         File file = new File("pathToImportant");
+	         file.createNewFile();
+	         if(!file.exists())
+	         {
+	        	 JOptionPane.showMessageDialog(frame, "Ο φάκελος '"+pathToImportant+"' δεν βρίσκεται στον τρέχον κατάλογο ή έχει μεταβληθεί το περιεχόμενό του. \nΠαρακαλώ τοποθετήστε τον στον τρέχον κατάλογο!",
+		                 "Σφάλμα Βιβλιοθηκών-Γραφικών", JOptionPane.ERROR_MESSAGE);
+	         }
+	         System.exit(0);
+	         System.out.println(file.exists());
+	      } catch(Exception e) {
+	         e.printStackTrace();
+	      }
 	}
 	
 	private void createButtons()
