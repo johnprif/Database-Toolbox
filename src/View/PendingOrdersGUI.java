@@ -39,6 +39,7 @@ import javafx.stage.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -281,203 +282,76 @@ public class PendingOrdersGUI
 	}
 	
 	private void refreshButtonIcon()
-	{
-		String resreshImage = pathToImportant+"/Icons/RefreshButton.png";
-		File f = new File(resreshImage);
-		
-		if(f.exists() && !f.isDirectory())
-		{
-			try {
-				inputstreamRefreshButton = new FileInputStream(resreshImage);						
-			}catch (FileNotFoundException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}			
-			imageRefreshButton = new Image(inputstreamRefreshButton); 
-			viewRefreshButton = new ImageView(imageRefreshButton);
-			viewRefreshButton.setFitHeight(20); 
-			viewRefreshButton.setFitWidth(20);
-		}else
-		{
-			imageRefreshButton = null;
-			viewRefreshButton = null;
-		}
+	{	
+		URL url = getClass().getResource("/Icons/RefreshButton.png");			
+		imageRefreshButton = new Image(url.toString()); 
+		viewRefreshButton = new ImageView(imageRefreshButton);
+		viewRefreshButton.setFitHeight(20); 
+		viewRefreshButton.setFitWidth(20);
 	}
 	
 	private void changeTimeCreationButtonIcon()
-	{
-		String createImage = pathToImportant+"/Icons/CreateTimeButton.png";
-		File f = new File(createImage);
-		
-		if(f.exists() && !f.isDirectory())
-		{
-			try {
-				inputstreamChangeTimeCreationButton = new FileInputStream(createImage);						
-			}catch (FileNotFoundException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}			
-			imageChangeTimeCreationButton = new Image(inputstreamChangeTimeCreationButton); 
-			viewChangeTimeCreationButton = new ImageView(imageChangeTimeCreationButton);
-			viewChangeTimeCreationButton.setFitHeight(20); 
-			viewChangeTimeCreationButton.setFitWidth(20);
-		}else
-		{
-			imageChangeTimeCreationButton = null;
-			viewChangeTimeCreationButton = null;
-		}
+	{	
+		URL url = getClass().getResource("/Icons/CreateTimeButton.png");	
+		imageChangeTimeCreationButton = new Image(url.toString()); 
+		viewChangeTimeCreationButton = new ImageView(imageChangeTimeCreationButton);
+		viewChangeTimeCreationButton.setFitHeight(20); 
+		viewChangeTimeCreationButton.setFitWidth(20);
 	}
 	
 	private void changeTimeExecutionButtonIcon()
 	{
-		String executionImage = pathToImportant+"/Icons/ExecuteTimeButton.png";
-		File f = new File(executionImage);
-		
-		if(f.exists() && !f.isDirectory())
-		{
-			try {
-				inputstreamChangeTimeExecutionButton = new FileInputStream(executionImage);						
-			}catch (FileNotFoundException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}						
-			imageChangeTimeExecutionButton = new Image(inputstreamChangeTimeExecutionButton); 
-			viewChangeTimeExecutionButton = new ImageView(imageChangeTimeExecutionButton);
-			viewChangeTimeExecutionButton.setFitHeight(20); 
-			viewChangeTimeExecutionButton.setFitWidth(20);
-		}else
-		{
-			imageChangeTimeExecutionButton = null;
-			viewChangeTimeExecutionButton = null;
-		}
+		URL url = getClass().getResource("/Icons/ExecuteTimeButton.png");						
+		imageChangeTimeExecutionButton = new Image(url.toString()); 
+		viewChangeTimeExecutionButton = new ImageView(imageChangeTimeExecutionButton);
+		viewChangeTimeExecutionButton.setFitHeight(20); 
+		viewChangeTimeExecutionButton.setFitWidth(20);
 	}
 	
 	private void changeShippingNumberButtonIcon()
-	{
-		String shippingImage = pathToImportant+"/Icons/ShippingButton.png";
-		File f = new File(shippingImage);
-		
-		if(f.exists() && !f.isDirectory())
-		{
-			try {
-				inputstreamChangeShippingNumberButton = new FileInputStream(shippingImage);						
-			}catch (FileNotFoundException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}						
-			imageChangeShippingNumberButton = new Image(inputstreamChangeShippingNumberButton); 
-			viewChangeShippingNumberButton = new ImageView(imageChangeShippingNumberButton);
-			viewChangeShippingNumberButton.setFitHeight(20); 
-			viewChangeShippingNumberButton.setFitWidth(20);
-		}else
-		{
-			imageChangeShippingNumberButton = null;
-			viewChangeShippingNumberButton = null;
-		}
+	{		
+		URL url = getClass().getResource("/Icons/ShippingButton.png");						
+		imageChangeShippingNumberButton = new Image(url.toString()); 
+		viewChangeShippingNumberButton = new ImageView(imageChangeShippingNumberButton);
+		viewChangeShippingNumberButton.setFitHeight(20); 
+		viewChangeShippingNumberButton.setFitWidth(20);
 	}
 	
 	private void changeHumidityButtonIcon()
-	{
-	    String humidityImage = pathToImportant+"/Icons/HumidityButton.png";
-		File f = new File(humidityImage);
-		
-		if(f.exists() && !f.isDirectory())
-		{
-			try {
-				inputstreamChangeHumidityButton = new FileInputStream(humidityImage);						
-			}catch (FileNotFoundException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}			
-			imageChangeHumidityButton = new Image(inputstreamChangeHumidityButton); 
-			viewChangeHumidityButton = new ImageView(imageChangeHumidityButton);
-			viewChangeHumidityButton.setFitHeight(20); 
-			viewChangeHumidityButton.setFitWidth(20);
-		}else
-		{
-			imageChangeHumidityButton = null;
-			viewChangeHumidityButton = null;
-		}
+	{	
+		URL url = getClass().getResource("/Icons/HumidityButton.png");			
+		imageChangeHumidityButton = new Image(url.toString()); 
+		viewChangeHumidityButton = new ImageView(imageChangeHumidityButton);
+		viewChangeHumidityButton.setFitHeight(20); 
+		viewChangeHumidityButton.setFitWidth(20);
+
 	}
 	
 	private void executeButtonIcon() 
 	{    
-	    String executeImage = pathToImportant+"/Icons/ExecuteButton.png";
-		File f = new File(executeImage);
-		
-		if(f.exists() && !f.isDirectory())
-		{
-			try {
-				inputstreamExecuteButton = new FileInputStream(executeImage);						
-			}catch (FileNotFoundException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}			
-			imageExecuteButton = new Image(inputstreamExecuteButton); 
-			viewExecuteButton = new ImageView(imageExecuteButton);
-			viewExecuteButton.setFitHeight(20); 
-			viewExecuteButton.setFitWidth(20);
-		}else
-		{
-			imageExecuteButton = null;
-			viewExecuteButton = null;
-		}
+		URL url = getClass().getResource("/Icons/ExecuteButton.png");			
+		imageExecuteButton = new Image(url.toString()); 
+		viewExecuteButton = new ImageView(imageExecuteButton);
+		viewExecuteButton.setFitHeight(20); 
+		viewExecuteButton.setFitWidth(20);
 	}
 	
 	private void backButtonIcon()
-	{
-	    String backImage = pathToImportant+"/Icons/BackButton.png";
-		File f = new File(backImage);
-		
-		if(f.exists() && !f.isDirectory())
-		{
-			try {
-				inputstreamBackButton = new FileInputStream(backImage);						
-			}catch (FileNotFoundException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}			
-			imageBackButton = new Image(inputstreamBackButton); 
-			viewBackButton = new ImageView(imageBackButton);
-			viewBackButton.setFitHeight(20); 
-			viewBackButton.setFitWidth(20);
-		}else
-		{
-			imageBackButton = null;
-			viewBackButton = null;
-		}
+	{		
+		URL url = getClass().getResource("/Icons/BackButton.png");				
+		imageBackButton = new Image(url.toString()); 
+		viewBackButton = new ImageView(imageBackButton);
+		viewBackButton.setFitHeight(20); 
+		viewBackButton.setFitWidth(20);
 	}
 	
 	private void emptyBaseButtonIcon()
-	{   
-	    String deleteImage = pathToImportant+"/Icons/DeleteButton.png";
-		File f = new File(deleteImage);
-		
-		if(f.exists() && !f.isDirectory())
-		{
-			try {
-				inputstreamEmptyBaseButton = new FileInputStream(deleteImage);						
-			}catch (FileNotFoundException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}			
-			imageEmptyBaseButton = new Image(inputstreamEmptyBaseButton); 
-			viewEmptyBaseButton = new ImageView(imageEmptyBaseButton);
-			viewEmptyBaseButton.setFitHeight(20); 
-			viewEmptyBaseButton.setFitWidth(20);
-		}else
-		{
-			imageEmptyBaseButton = null;
-			viewEmptyBaseButton = null;
-		}
+	{   		
+		URL url = getClass().getResource("/Icons/DeleteButton.png");			
+		imageEmptyBaseButton = new Image(url.toString()); 
+		viewEmptyBaseButton = new ImageView(imageEmptyBaseButton);
+		viewEmptyBaseButton.setFitHeight(20); 
+		viewEmptyBaseButton.setFitWidth(20);
 	}
 	
 	private void createButtons()
@@ -509,45 +383,15 @@ public class PendingOrdersGUI
 	    backButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");	    
 	    emptyBaseButton.setStyle("-fx-font-weight: bold; -fx-text-fill: red; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
 	    
-	    if(viewRefreshButton!=null)
-	    {
-	    	refreshButton.setGraphic(viewRefreshButton);
-	    }
-	    	    
-	    if(viewChangeTimeCreationButton!=null)
-	    {
-	    	changeTimeCreationButton.setGraphic(viewChangeTimeCreationButton);
-	    }
+	    refreshButton.setGraphic(viewRefreshButton);
+	    changeTimeCreationButton.setGraphic(viewChangeTimeCreationButton);
+	    changeTimeExecutionButton.setGraphic(viewChangeTimeExecutionButton);
+	    changeShippingNumberButton.setGraphic(viewChangeShippingNumberButton);
+	    changeHumidityButton.setGraphic(viewChangeHumidityButton);
+	    executeButton.setGraphic(viewExecuteButton);
+	    backButton.setGraphic(viewBackButton);
+	    emptyBaseButton.setGraphic(viewEmptyBaseButton);
 	    
-	    if(viewChangeTimeExecutionButton!=null)
-	    {
-	    	changeTimeExecutionButton.setGraphic(viewChangeTimeExecutionButton);
-	    }
-	    
-	    if(viewChangeShippingNumberButton!=null)
-	    {
-	    	changeShippingNumberButton.setGraphic(viewChangeShippingNumberButton);
-	    }
-	    
-	    if(viewChangeHumidityButton!=null)
-	    {
-	    	changeHumidityButton.setGraphic(viewChangeHumidityButton);
-	    }
-	    
-	    if(viewExecuteButton!=null)
-	    {
-	    	executeButton.setGraphic(viewExecuteButton);
-	    }
-	    
-	    if(viewBackButton!=null)
-	    {
-	    	backButton.setGraphic(viewBackButton);
-	    }
-	    
-	    if(viewEmptyBaseButton!=null)
-	    {
-	    	emptyBaseButton.setGraphic(viewEmptyBaseButton);
-	    }	    
 	}
 	
 	private void createHumidityLabel()
