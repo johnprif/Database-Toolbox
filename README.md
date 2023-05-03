@@ -9,7 +9,7 @@
 
 #### Regarding the code part, it uses the following
 - IDE: Eclipse IDE 2022-06
-- back-end: Java 13.0.2
+- back-end: Java 17.0.7
 - front-end: JavaFX 19
 - Microsoft Access Data Base: ucanaccess-5.0.1 && sqltool-2.6.0 && mysql-connector-java-8.0.30 && jackcess-4.0.4 && hsqldb-2.6.0
 - and more...
