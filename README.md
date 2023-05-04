@@ -21,6 +21,7 @@
 #### Below you can see some images from the project
 
 
-![Screenshot (2)](https://user-images.githubusercontent.com/56134761/209997914-4407a800-bbb3-4abd-afa0-9dfb9ecbcd6e.png)
-![Screenshot (3)](https://user-images.githubusercontent.com/56134761/209997917-fbcfc6cc-da68-4df5-9ce6-d8118152313b.png)
+![Screenshot (70)](https://user-images.githubusercontent.com/56134761/236204795-4dc94678-7d2e-482b-a555-fc02ab05cb8b.png)
+![Screenshot (69)](https://user-images.githubusercontent.com/56134761/236204843-2c8b1ae3-2608-472f-baa8-12a7d24e015a.png)
+
 
