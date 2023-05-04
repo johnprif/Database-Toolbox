@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -234,15 +235,14 @@ public class PendingOrdersGUI
         refreshHandler.setTable(table);
         
         scene = new Scene(border);
+        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
         setLastThingsOnTable();
         
         
         
 //        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, changeTimeExecutionButton, changeShippingNumberButton, changeHumidityButton, executeButton, backButton, tempLabel_1,  emptyBaseButton);
         
-        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, changeTimeExecutionButton, changeShippingNumberButton, changeHumidityButton, executeButton, backButton, humidityLabel, vbox4, tempLabel_1, emptyBaseButton);
-
-        
+        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, changeTimeExecutionButton, changeShippingNumberButton, changeHumidityButton, executeButton, backButton, humidityLabel, vbox4, tempLabel_1, emptyBaseButton);      
         
         border.setStyle("-fx-background-color: grey;");
 		border.setPadding(new Insets(5));
@@ -324,7 +324,6 @@ public class PendingOrdersGUI
 		viewChangeHumidityButton = new ImageView(imageChangeHumidityButton);
 		viewChangeHumidityButton.setFitHeight(20); 
 		viewChangeHumidityButton.setFitWidth(20);
-
 	}
 	
 	private void executeButtonIcon() 
@@ -365,6 +364,8 @@ public class PendingOrdersGUI
 		backButton = new Button("Πίσω");
 		emptyBaseButton = new Button("Άδειασμα Βάσης");
 		
+		emptyBaseButton.setId("exitButton");
+		
 		refreshButton.setMaxWidth(Double.MAX_VALUE);
 		changeTimeCreationButton.setMaxWidth(Double.MAX_VALUE);
 	    changeTimeExecutionButton.setMaxWidth(Double.MAX_VALUE);
@@ -373,16 +374,7 @@ public class PendingOrdersGUI
 	    executeButton.setMaxWidth(Double.MAX_VALUE);
 	    backButton.setMaxWidth(Double.MAX_VALUE);
 	    emptyBaseButton.setMaxWidth(Double.MAX_VALUE);
-	    
-	    refreshButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    changeTimeCreationButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    changeTimeExecutionButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    changeShippingNumberButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    changeHumidityButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    executeButton.setStyle("-fx-font-weight: bold; -fx-text-fill: green; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    backButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");	    
-	    emptyBaseButton.setStyle("-fx-font-weight: bold; -fx-text-fill: red; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    
+	    	    
 	    refreshButton.setGraphic(viewRefreshButton);
 	    changeTimeCreationButton.setGraphic(viewChangeTimeCreationButton);
 	    changeTimeExecutionButton.setGraphic(viewChangeTimeExecutionButton);
@@ -392,6 +384,14 @@ public class PendingOrdersGUI
 	    backButton.setGraphic(viewBackButton);
 	    emptyBaseButton.setGraphic(viewEmptyBaseButton);
 	    
+	    refreshButton.setCursor(Cursor.HAND);
+	    changeTimeCreationButton.setCursor(Cursor.HAND);
+	    changeTimeExecutionButton.setCursor(Cursor.HAND);
+	    changeShippingNumberButton.setCursor(Cursor.HAND);
+	    changeHumidityButton.setCursor(Cursor.HAND);
+	    executeButton.setCursor(Cursor.HAND);
+	    backButton.setCursor(Cursor.HAND);
+	    emptyBaseButton.setCursor(Cursor.HAND);	    
 	}
 	
 	private void createHumidityLabel()
@@ -406,14 +406,11 @@ public class PendingOrdersGUI
 	{
 		vbox4 = new VBox(15);
 		vbox4.setMaxWidth(Double.MAX_VALUE);
-		vbox4.setAlignment(Pos.CENTER);
-//		vbox4.setStyle("-fx-border-style: lightblue;");
-		vbox4.setStyle("-fx-border-color: white; -fx-border-radius:4; -fx-background-color: #3399ff");
+		vbox4.setId("vbox4");
 		
 		HashMap <String, String> humiditySilos = new HashMap<String, String>(changeHumidityHandler.getHumiditySilos());
 		ArrayList <String> humidityIDs = new ArrayList<String>(changeHumidityHandler.getHumidityIDs());
-		
-		
+			
 		spinners = new ArrayList<Spinner<Double>>();
 		spinnersValueFactories = new ArrayList<SpinnerValueFactory<Double>>();
 		spinnersLabels = new ArrayList<Label>();
@@ -422,20 +419,12 @@ public class PendingOrdersGUI
 		if(humidityIDs.size()==0)
 		{
 			Label label2 = new Label("Δεν μπορεί να τροποποιηθεί η");
-			label2.setStyle("-fx-text-fill: black ; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-			label2.setAlignment(Pos.CENTER);
 			
 			Label label3 = new Label("υγρασία σε καμία παραγγελία\nδιότι δεν υπάρχουν αισθητήρες");
-			label3.setStyle("-fx-text-fill: black ; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-			label3.setAlignment(Pos.CENTER);
 			
 			Label label4 = new Label("διότι δεν υπάρχουν αισθητήρες ούτε");
-			label4.setStyle("-fx-text-fill: black ; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-			label4.setAlignment(Pos.CENTER);
 			
 			Label label5 = new Label("μπορεί να ρυθμιστεί χειροκίνητα");
-			label5.setStyle("-fx-text-fill: black ; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-			label5.setAlignment(Pos.CENTER);
 			
 			vbox4.getChildren().addAll(label2, label3, label4, label5);
 		}else
@@ -443,8 +432,6 @@ public class PendingOrdersGUI
 			for(int i=0; i<humidityIDs.size(); i++)
 			{
 				Label label1 = new Label(humiditySilos.get(humidityIDs.get(i)));
-				label1.setStyle("-fx-text-fill: black ; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-				label1.setAlignment(Pos.CENTER);
 				
 				Spinner<Double> spinner1 = new Spinner();
 				SpinnerValueFactory<Double> valueFactory1 = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 10.0, 0.0, 0.1);;
@@ -480,19 +467,6 @@ public class PendingOrdersGUI
         table.setEditable(true);
         table.setTableMenuButtonVisible(true);
 	}
-
-//	private void createGridPane()
-//	{
-//		
-//		gridPane = new GridPane();
-//		gridPane.setAlignment(Pos.BASELINE_CENTER);
-//		gridPane.add(button1, 0, 0);
-//		gridPane.add(button2, 0, 1);
-//		gridPane.add(button3, 0, 2);
-//		gridPane.add(button4, 0, 3);
-//		
-//		kati = new VBox(button1, button2, button3, button4);
-//	}
 	
 	private void createAndFillCells()
 	{
@@ -500,66 +474,42 @@ public class PendingOrdersGUI
         OrderCode = new TableColumn<Order, String>("    ΚΩΔΙΚΟΣ\nΠΑΡΑΓΓΕΛΙΑΣ");
         OrderCode.setCellFactory(TextFieldTableCell.forTableColumn());
         OrderCode.setCellValueFactory(new PropertyValueFactory<Order, String>("OrderCode"));
-        OrderCode.setEditable(false);
-        
+        OrderCode.setEditable(false);  
                 
         RecipeCode = new TableColumn<Order, String>("ΣΥΝΘΕΣΗ");
         RecipeCode.setCellFactory(TextFieldTableCell.forTableColumn());
         RecipeCode.setCellValueFactory(new PropertyValueFactory<Order, String>("RecipeCode"));
         RecipeCode.setEditable(false);
-        
-        
+               
         Quantity = new TableColumn<Order, String>("ΠΟΣΟΤΗΤΑ");
         Quantity.setCellFactory(TextFieldTableCell.forTableColumn());
         Quantity.setCellValueFactory(new PropertyValueFactory<Order, String>("Quantity"));
         Quantity.setEditable(false);
-        
-        
+               
         ProjectCode = new TableColumn<Order, String>("ΚΩΔΙΚΟΣ\n  ΕΡΓΟΥ");
         ProjectCode.setCellFactory(TextFieldTableCell.forTableColumn());
         ProjectCode.setCellValueFactory(new PropertyValueFactory<Order, String>("ProjectCode"));
         ProjectCode.setEditable(false);
-        
-        
+               
         CustomerCode = new TableColumn<Order, String>("ΚΩΔΙΚΟΣ\n ΠΕΛΑΤΗ");
         CustomerCode.setCellFactory(TextFieldTableCell.forTableColumn());
         CustomerCode.setCellValueFactory(new PropertyValueFactory<Order, String>("CustomerCode"));
         CustomerCode.setEditable(false);
-        
-        
+               
         VehicleCode = new TableColumn<Order, String>("  ΚΩΔΙΚΟΣ\nΟΧΗΜΑΤΟΣ");
         VehicleCode.setCellFactory(TextFieldTableCell.forTableColumn());
         VehicleCode.setCellValueFactory(new PropertyValueFactory<Order, String>("VehicleCode"));
         VehicleCode.setEditable(false);
-        
-        
+               
         DriverCode = new TableColumn<Order, String>("ΚΩΔΙΚΟΣ\nΟΔΗΓΟΥ");
         DriverCode.setCellFactory(TextFieldTableCell.forTableColumn());
         DriverCode.setCellValueFactory(new PropertyValueFactory<Order, String>("DriverCode"));
         DriverCode.setEditable(false);
-        
-        
+              
         DateCreation = new TableColumn<Order, String>("ΗΜΕΡΟΜΗΝΙΑ\nΔΗΜΙΟΥΡΓΙΑΣ");
         DateCreation.setCellFactory(TextFieldTableCell.forTableColumn());
         DateCreation.setCellValueFactory(new PropertyValueFactory<Order, String>("DateCreation"));
         DateCreation.setEditable(false);
-//        DateCreation.setOnEditCommit(
-//            new EventHandler<CellEditEvent<Order, String>>() {
-//                @Override
-//                public void handle(CellEditEvent<Order, String> t) {
-//                    ((Order) t.getTableView().getItems().get(
-//                        t.getTablePosition().getRow())
-//                        ).setDateCreation(t.getNewValue());
-//                    try {
-//						myDB.updateDataBase(t.getRowValue().getOrderCode(), "DateCreation", t.getNewValue());
-//					} catch (SQLException e) 
-//                    {
-//						alertWindow();
-//						e.printStackTrace();
-//					}
-//                }
-//            }
-//        );
         
         TimeCreation = new TableColumn<Order, String>("        ΩΡΑ\nΔΗΜΙΟΥΡΓΙΑΣ");
         TimeCreation.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -570,24 +520,6 @@ public class PendingOrdersGUI
         ExecutionDate.setCellFactory(TextFieldTableCell.forTableColumn());
     	ExecutionDate.setCellValueFactory(new PropertyValueFactory<Order, String>("ExecutionDate"));
     	ExecutionDate.setEditable(false);
-//    	ExecutionDate.setOnEditCommit(
-//            new EventHandler<CellEditEvent<Order, String>>() {
-//                @Override
-//                public void handle(CellEditEvent<Order, String> t) {
-//                    ((Order) t.getTableView().getItems().get(
-//                        t.getTablePosition().getRow())
-//                        ).setDateCreation(t.getNewValue());
-//                    try {
-//    					myDB.updateDataBase(t.getRowValue().getOrderCode(), "ExecutionDate", t.getNewValue());
-//    				} catch (SQLException e) 
-//                    {
-//    					alertWindow();
-//    					e.printStackTrace();
-//    				}
-//                }
-//            }
-//        );
-//        ExecutionDate.setCellValueFactory(new PropertyValueFactory<Order, String>("DateCreation"));      
     	
     	ExecutionTime = new TableColumn<Order, String>("      ΩΡΑ\nΕΚΤΕΛΕΣΗΣ");
     	ExecutionTime.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -621,29 +553,5 @@ public class PendingOrdersGUI
 	    				executeHandler.setFlag(flag);
 	    			}	
 	    		});
-	}
-	
-//	
-//	private void getCurrentHumidityValues(String orderCode)
-//	{
-//		HashMap <String, String> humiditySilos = new HashMap<String, String>(changeHumidityHandler.getHumiditySilos());
-//		ArrayList <String> humidityIDs = new ArrayList<String>(changeHumidityHandler.getHumidityIDs());
-//		
-//		HashMap<String, String> inner = new HashMap<String, String>();
-//		
-//		for(int i=0; i<spinners.size(); i++)
-//		{
-//			inner.put(humidityIDs.get(i), spinners.get(i).getValue()+"");
-//			currentHumidityValues.put(orderCode, inner);
-//		}
-//	}
-	
-	private void alertWindow()
-	{
-		Alert alert = new Alert(Alert.AlertType.ERROR);
-    	alert.setTitle("������ ���� ��� ����������");
-    	alert.setHeaderText("�������� �� ��� ����");
-    	alert.setContentText("������� � ����� ��� �������� �� ����� �����������");
-    	alert.showAndWait();
 	}
 }

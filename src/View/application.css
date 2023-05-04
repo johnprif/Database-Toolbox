@@ -1,1 +1,82 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.root{  
+	-fx-alignment: center; 
+    -fx-background: grey;
+}  
+
+.button {
+	-fx-alignment: center;     
+	-fx-text-fill: blue; 
+	-fx-font-family: 'Lucida Sans Unicode'; 
+	-fx-font-size: 11px; /* 18 pixels font size */
+	-fx-font-weight: bold;
+	-fx-padding: 6px; /* 10 pixels padding */
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );   
+    -fx-background-radius: 10 10 10 10;
+    -fx-background-color: #f5f5f5; /* whitesmoke  */
+}
+
+.button:hover {
+    -fx-background-color: #2980b9; /* Light blue color */
+    -fx-text-fill: black; /* Black text color */
+}
+.button:active {
+    -fx-background-color: #2980b9; /* Light blue color */
+    -fx-text-fill: black; /* Black text color */
+}
+
+.button:pressed {
+    -fx-background-color: navy; /* Light blue color */
+    -fx-text-fill: darkgrey; /* Black text color */
+}
+
+#exitButton {
+	-fx-alignment: center;	
+	-fx-text-fill: red; 
+	-fx-font-family: 'Lucida Sans Unicode';
+	-fx-font-weight: bold;  
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+	-fx-background-radius: 10 10 10 10;
+}
+
+#exitButton:hover {
+	-fx-text-fill: Orange; 
+	-fx-background-color: red; 
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+#exitButton:active {
+	-fx-text-fill: yellow; 
+	-fx-background-color: red; 
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+#exitButton:pressed {
+	-fx-text-fill: yellow; 
+	-fx-background-color: darkred; 
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+.label {	
+	-fx-alignment: center;  
+	-fx-text-fill: black; 
+	-fx-font-family: 'Lucida Sans Unicode'; 
+	-fx-font-weight: bold;
+	-fx-border-radius: 5; 
+}
+
+.label:hover {
+    -fx-text-fill: blue; /* yellow */
+}
+
+.label:pressed {
+	-fx-text-fill: darkblue; /* gold */
+}
+
+#vbox4 {
+	-fx-alignment: center; 
+    -fx-border-color: white; 
+    -fx-border-radius:4; 
+    
+    -fx-background-color: #3399ff
+}

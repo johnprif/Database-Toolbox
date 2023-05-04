@@ -22,9 +22,11 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -178,61 +180,40 @@ public class Main extends Application
 	    loadDBButton = new Button("Φόρτωση Βάσης Δεδομένων");
 	    exitButton = new Button("Έξοδος");
 	    
+	    exitButton.setId("exitButton");
+	    
 	    openOrdersButton.setMaxWidth(Double.MAX_VALUE);
 	    loadDBButton.setMaxWidth(Double.MAX_VALUE);		    
 	    exitButton.setMaxWidth(Double.MAX_VALUE);
 	    
-	    openOrdersButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    loadDBButton.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    exitButton.setStyle("-fx-font-weight: bold; -fx-text-fill: red; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-
 	    openOrdersButton.setGraphic(viewOpenOrdersButton);
 	    loadDBButton.setGraphic(viewLoadDBButton);
 	    exitButton.setGraphic(viewExitButton);
 	    
+	    openOrdersButton.setCursor(Cursor.HAND);
+	    loadDBButton.setCursor(Cursor.HAND);
+	    exitButton.setCursor(Cursor.HAND);	    
 	}
 	
 	private void createGridPane()
 	{
 		gridPane = new GridPane();
 
-	    //Setting the Grid alignment 
-	    gridPane.setAlignment(Pos.CENTER); 
 	  //Spaces between the buttons 
 	    gridPane.setHgap(10);
-	    gridPane.setVgap(10);	    
-	    //Setting the back ground color 
-	    gridPane.setStyle("-fx-background-color: grey;");
-
-//	    if(imageViewMain !=null)
-//	    {
-//	    	gridPane.add(imageViewMain, 0, 0);	
-//	    }
-	    	    
-//	    gridPane.add(imageView, 0, 0);	    
+	    gridPane.setVgap(10);	   
+	    	        
 	    gridPane.add(openOrdersButton, 0, 1);
 	    gridPane.add(loadDBButton, 0, 2);
 	    gridPane.add(exitButton, 0, 3);
-
-	    
 	}
 	
 	private void createIcons()
 	{
-//		createLogoForMain();
 		createLogoForStage();
 		createOpenOrdersButtonIcon();
 		createLoadDBButtonIcon();
 		createExitButtonIcon();
-	}
-	
-	private void createLogoForMain()
-	{
-		URL url = getClass().getResource("/Icons/MainLogo.png");	
-		imageMain = new Image(inputstreamMain); 
-		imageViewMain = new ImageView(imageMain);
-		imageViewMain.setFitHeight(96); 
-		imageViewMain.setFitWidth(96);	
 	}
 	
 	private void createLogoForStage()
@@ -240,9 +221,7 @@ public class Main extends Application
 		URL url = getClass().getResource("/Icons/StageLogo.png");	
 		imageStage = new Image(url.toString()); 
 		imageViewStage = new ImageView(imageStage);		
-	}
-	
-	
+	}	
 	
 	private void createOpenOrdersButtonIcon()
 	{		
