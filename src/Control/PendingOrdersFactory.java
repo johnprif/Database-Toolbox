@@ -26,14 +26,15 @@ public class PendingOrdersFactory implements EventHandler<ActionEvent>
 		
 	}
 	
-	public void setStage(Stage stage)
-	{
-		this.stage = stage;
-	}
+//	public void setStage(Stage stage)
+//	{
+//		this.stage = stage;
+//	}
 	
 	@Override
 	public void handle(ActionEvent arg0)
 	{	
+		stage = new Stage();
 		myDB.clearOldData();
 		myDB.setPath(takeThePath.getPath());
 		myDB.initialize();

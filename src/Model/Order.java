@@ -4,30 +4,23 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Order 
 {
-	private SimpleStringProperty OrderCode; //
-	private SimpleStringProperty RecipeCode; //
-	private SimpleStringProperty Quantity; //
+	private SimpleStringProperty OrderCode;
+	private SimpleStringProperty RecipeCode;
+	private SimpleStringProperty Quantity;
 	private SimpleStringProperty MixerCapacity;
 	private SimpleStringProperty BatchQuantity;
 	private SimpleStringProperty NoOfBatches;
-	private SimpleStringProperty ProjectCode; //
-	private SimpleStringProperty CustomerCode; //
-	private SimpleStringProperty VehicleCode; //
-	private SimpleStringProperty DriverCode; //
-//	private String MixTime;
-//	private String Price;
-	private SimpleStringProperty DateCreation; //
+	private SimpleStringProperty ProjectCode;
+	private SimpleStringProperty CustomerCode;
+	private SimpleStringProperty VehicleCode;
+	private SimpleStringProperty DriverCode;
+	private SimpleStringProperty DateCreation;
 	private SimpleStringProperty TimeCreation;
 	private SimpleStringProperty DateLastEdit;
-//	private String DateScheduledExecution;
 	private SimpleStringProperty ExecutionDate;
 	private SimpleStringProperty ExecutionTime;
-//	private String ExecutionState;
-//	private String BatchesProduced;
-//	private String UsedInRT;
-//	private String ShippingInvoiceNumber;
 	private SimpleStringProperty Humidity;
-//	
+	
 	public Order(String OrderCode, String RecipeCode, String Quantity, String ProjectCode, String CustomerCode, String VehicleCode, String DriverCode, String DateCreation, String ExecutionDate, String TimeCreation, String ExecutionTime, String MixerCapacity, String BatchQuantity, String NoOfBatches, String DateLastEdit, String Humidity)
 	{
 		this.OrderCode = new SimpleStringProperty(OrderCode);

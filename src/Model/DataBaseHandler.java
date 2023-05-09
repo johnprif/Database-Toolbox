@@ -5,16 +5,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Optional;
-
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import java.nio.charset.StandardCharsets;
 import java.sql.PreparedStatement;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -23,7 +18,6 @@ public class DataBaseHandler
 {
 	private Connection connection;
 	private ResultSet pendingSet;
-	private ResultSet hashesPendingSet;
 	private ObservableList<Order> data;
 	private String OrderCode;
 	private String RecipeCode;
@@ -37,11 +31,9 @@ public class DataBaseHandler
 	private String DriverCode;
 	private String DateCreation;
 	private String ExecutionDate;
-	private String sql;
 	private String TimeCreation;
 	private String DateLastEdit;
 	private String ExecutionTime;
-//	private String Humidity;
 	double doubleQuantity=0;
 	private String path;	
 	private ArrayList<String> SiloID = new ArrayList<String>();
@@ -49,27 +41,18 @@ public class DataBaseHandler
 	private ArrayList<String> SiloQuantityCopy = new ArrayList<String>();
 	private HashMap<String, String> siloIDs;
 	private ArrayList<String> siloIDsArrayList;
-	private HashMap<String, ArrayList<String>> siloIDsForAllOrders;
 	private HashMap<String, ArrayList<String>> humiditySilosPerOrder;
 	private HashMap<String, HashMap<String, String>> currentHumidityValues;
 	private ArrayList<Double> waterPerCycle;
-	//create an object of SingleObject
+
 	private static DataBaseHandler instance = new DataBaseHandler();
 	private String WaterAdjustSiloID;
 	
-	//make the constructor private so that this class cannot be
-	//instantiated
 	private DataBaseHandler()
 	{
 		data = FXCollections.observableArrayList();	
 	}
 	
-//	public DataBaseHandler()
-//	{
-//		data = FXCollections.observableArrayList();	
-//	}
-	
-	//Get the only object available
 	public static DataBaseHandler getInstance()
 	{
 	      return instance;
@@ -104,11 +87,10 @@ public class DataBaseHandler
         }
 
 	}
-	
-	
+		
 	//PROBLEM! IT NO TAKES ALL THE # PROPERLY
 	//TODO FIX
-	public void checkHashes()
+	private void checkHashes()
 	{
 		int i=0;
 		try {
@@ -155,12 +137,10 @@ public class DataBaseHandler
 		try 
 		{
 			//Using SQL SELECT QUERY
-//			PreparedStatement preparedStatement = connection.prepareStatement("select * from Orders where ExecutionState=0 or ExecutionState=1");
 			PreparedStatement preparedStatement = connection.prepareStatement("SELECT OrderCode, RecipeCode, Quantity, MixerCapacity, BatchQuantity, NoOfBatches, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, TimeCreation, DateLastEdit, ExecutionDate, ExecutionTime FROM Orders WHERE ExecutionState=0");
 			
 			//Creating Java ResultSet object
 			pendingSet = preparedStatement.executeQuery();
-
 		}catch(Exception e)
 		{
 			System.out.println(e.getMessage());
@@ -199,13 +179,10 @@ public class DataBaseHandler
 	    TimeCreation = pendingSet.getString("TimeCreation");
 	    DateLastEdit = pendingSet.getString("DateLastEdit");
 	    ExecutionDate = pendingSet.getString("ExecutionDate");
-	    ExecutionTime = pendingSet.getString("ExecutionTime");
-//	    Humidity = checkIfSilosContainHumidityPerOrder(OrderCode);
-	    
+	    ExecutionTime = pendingSet.getString("ExecutionTime");	    
 	    
 	    Order order = new Order(OrderCode, RecipeCode, Quantity, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, ExecutionDate, TimeCreation, ExecutionTime, MixerCapacity, BatchQuantity, NoOfBatches, DateLastEdit, "ΟΧΙ");
 	    data.add(order);
-//	    System.out.println("Order: ", OrderCode, RecipeCode, Quantity, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, ExecutionDate, TimeCreation, ExecutionTime, MixerCapacity, BatchQuantity, NoOfBatches, DateLastEdit);
 	}
 	
 	public ObservableList<Order> getData()
@@ -216,29 +193,18 @@ public class DataBaseHandler
 	public void updateDataBase(Order order) throws SQLException
 	{
 		cooking(order);
-//		System.out.println("EDW EIMAI");
 		Statement update = connection.createStatement();
 		String sql1 = "UPDATE Orders SET DateCreation="+order.getDateCreation()+" , TimeCreation="+order.getTimeCreation()+" , DateLastEdit="+order.getExecutionDate()+" , ExecutionDate="+order.getExecutionDate()+" , ExecutionTime="+order.getExecutionTime()+" , ExecutionDuration="+computeDurationTime(Integer.parseInt(order.getNoOfBatches()))+" , ExecutionState=2 , BatchesProduced="+order.getNoOfBatches()+" , ShippingInvoiceNumber="+setShippingInvoiceNumber()+" where OrderCode="+"\""+order.getOrderCode()+"\"";
-		byte[] bytes = sql1.getBytes(StandardCharsets.UTF_8);
-		String utf8EncodedString = new String(bytes, StandardCharsets.UTF_8);
-		
-		//update.executeUpdate(utf8EncodedString);
-//		System.out.println("EDW EIMAI");
 		update.executeUpdate(sql1);
-		
-		
-		
+	
 		connection.commit();
 		
 		printOrder(order);
-		
-//		cooking(order);
 	}
 	
 	public void setCurrentHumidityValuesToDB(HashMap<String, HashMap<String, String>> currentHumidityValues)
 	{
-		this.currentHumidityValues = currentHumidityValues;
-		System.out.println("I AM setCurrentHumidityValuesToDB AND SIZE OF currentHumidityValues == "+currentHumidityValues.size());
+		this.currentHumidityValues = currentHumidityValues;	
 	}
 
 	public void updateDataBase2(Order order) throws SQLException
@@ -246,8 +212,6 @@ public class DataBaseHandler
 		cooking2(order);
 		Statement update = connection.createStatement();
 		String sql1 = "UPDATE Orders SET DateCreation="+order.getDateCreation()+" , TimeCreation="+order.getTimeCreation()+" , DateLastEdit="+order.getExecutionDate()+" , ExecutionDate="+order.getExecutionDate()+" , ExecutionTime="+order.getExecutionTime()+" , ExecutionDuration="+computeDurationTime(Integer.parseInt(order.getNoOfBatches()))+" , ExecutionState=2 , BatchesProduced="+order.getNoOfBatches()+" , ShippingInvoiceNumber="+setShippingInvoiceNumber()+" where OrderCode="+"\""+order.getOrderCode()+"\"";
-		byte[] bytes = sql1.getBytes(StandardCharsets.UTF_8);
-		String utf8EncodedString = new String(bytes, StandardCharsets.UTF_8);
 		update.executeUpdate(sql1);		
 		connection.commit();		
 		printOrder(order);
@@ -318,10 +282,6 @@ public class DataBaseHandler
 			next = ShippingInvoiceNumber+1;
 		}
 		String sql1 = "UPDATE Parameters SET NextOrderShippingInvoiceNumber="+next;
-		
-//		byte[] bytes = sql1.getBytes(StandardCharsets.UTF_8);
-//		String utf8EncodedString = new String(bytes, StandardCharsets.UTF_8);
-//		update.executeUpdate(utf8EncodedString);
 		update.executeUpdate(sql1);
 		connection.commit();
 		
@@ -332,9 +292,7 @@ public class DataBaseHandler
 	{
 		Statement update = connection.createStatement();
 		String sql1 = "UPDATE Parameters SET NextOrderShippingInvoiceNumber="+newNumber;
-		byte[] bytes = sql1.getBytes(StandardCharsets.UTF_8);
-		String utf8EncodedString = new String(bytes, StandardCharsets.UTF_8);
-		update.executeUpdate(utf8EncodedString);
+		update.executeUpdate(sql1);
 		connection.commit();
 	}
 	
@@ -422,31 +380,6 @@ public class DataBaseHandler
 		
 	}
 	
-//	public HashMap<String, ArrayList<String>> getHumiditySilosForAllOrders() throws SQLException
-//	{
-//		PreparedStatement preparedStatement = connection.prepareStatement("SELECT SiloID FROM OrderIngredients");
-//		ResultSet pendingSet3 = preparedStatement.executeQuery();
-//	
-//		ArrayList<String> temp = new ArrayList<String>();
-//		siloIDsForAllOrders = new HashMap<String, ArrayList<String>>();
-//		
-//		try {
-//			while(pendingSet3.next())
-//			{
-//				temp.add(pendingSet3.getString("SiloID"));
-//				siloIDsForAllOrders.put(pendingSet3.getString("OrderCode"), temp);
-//				
-//				siloIDs.add(pendingSet3.getString("SiloID"));
-//				System.out.println("HERE IS THE HUMIDITY SILOS -> "+ pendingSet3.getString("SiloID"));
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		System.out.println("HERE IS THE HUMIDITY SILOS length-> "+ siloIDs.size());
-//		return siloIDsForAllOrders;
-//	
-//	}
-	
 	public int getShippingInvoiceNumber() throws SQLException
 	{
 		int ShippingInvoiceNumber;
@@ -464,10 +397,9 @@ public class DataBaseHandler
 	
 	private void cooking(Order order) throws SQLException
 	{	
-		WaterAdjustSiloID=getWaterAdjustSiloID();
+		WaterAdjustSiloID = getWaterAdjustSiloID();
 		
 		parseOrderIngredients(order.getOrderCode());
-		//System.out.println("EDW EIMAI");
 		addEntriesToBatchIngredientsTable(order);
 		addEntriesToBatchData(order);
 		clearOldBatches();
@@ -475,11 +407,9 @@ public class DataBaseHandler
 	
 	private void cooking2(Order order) throws SQLException
 	{	
-		WaterAdjustSiloID=getWaterAdjustSiloID();
-		
-		
+		WaterAdjustSiloID = getWaterAdjustSiloID();
+				
 		parseOrderIngredients(order.getOrderCode());
-		//System.out.println("EDW EIMAI");
 		addEntriesToBatchIngredientsTable2(order);
 		addEntriesToBatchData2(order);
 		clearOldBatches();
@@ -488,9 +418,7 @@ public class DataBaseHandler
 	
 	private void parseOrderIngredients(String OrderCode) throws SQLException
 	{
-		//Using SQL SELECT QUERY
 		PreparedStatement preparedStatement = connection.prepareStatement("SELECT SiloID, Quantity FROM OrderIngredients WHERE OrderCode='"+OrderCode+"'");
-//		System.out.println("EDW EIMAI");
 		ResultSet pendingSet2 = preparedStatement.executeQuery();
 		try {
 			while(pendingSet2.next())
@@ -517,7 +445,6 @@ public class DataBaseHandler
 		int Quantity;
 		int ActualQuantity;
 		double UsedHumidity;
-		System.out.println("O AM LINE ----515--- AND THE Quantitys.size() == "+Quantitys.size());
 
 		for(int i=0; i<Quantitys.size(); i++)
 		{
@@ -528,9 +455,9 @@ public class DataBaseHandler
 			
 			
 			UsedHumidityTemp = currentHumidityValues.get(order.getOrderCode()).get(siloID+"");
-			if(UsedHumidityTemp==null)
+			if(UsedHumidityTemp == null)
 			{
-				UsedHumidity=0;
+				UsedHumidity = 0;
 			}else
 			{
 				UsedHumidity = 10*Double.parseDouble(UsedHumidityTemp);
@@ -552,8 +479,7 @@ public class DataBaseHandler
 		int siloID;
 		int Quantity;
 		int ActualQuantity;
-//		System.out.println("EDW EIMAI");
-		System.out.println("O AM LINE ----522--- AND THE Quantitys.size() == "+Quantitys.size());
+
 		for(int i=0; i<Quantitys.size(); i++)
 		{
 			batchNumber = Integer.parseInt(Quantitys.get(i)[0]);
@@ -567,11 +493,8 @@ public class DataBaseHandler
 	}
 	
 	private void addEntriesToBatchData2(Order order) throws SQLException
-	{
-//		WaterAdjustSiloID=getWaterAdjustSiloID();
-		
+	{	
 		int noOfBatches = Integer.parseInt(order.getNoOfBatches());
-		int mixingStartTime;
 		int max;
 		int min;
 		int range;
@@ -582,19 +505,13 @@ public class DataBaseHandler
 		String temp;
 		String[] tempMixingStartTime;
 		double percentageOfWater = 10*computeWaterAdjustement(order);
-	//	mixingStartTime = Integer.parseInt(order.getExecutionTime());
-	//	newCoockedTime = mixingStartTime + "";
 		newCoockedTime = order.getExecutionTime();
 
 		for(int i=0; i<noOfBatches; i++)
 		{
 			Statement statement = connection.createStatement();
-//			statement.executeUpdate("INSERT INTO BatchData " + "VALUES ( "+order.getOrderCode()+" , "+(i+1)+" , "+newCoockedTime+" , "+0+" , "+0+" , "+(getWaterAdjustSiloID()*(1-percentageOfWater))+")");
-//			statement.executeUpdate("INSERT INTO BatchData " + "VALUES ( "+order.getOrderCode()+" , "+(i+1)+" , "+newCoockedTime+" , "+0+" , -"+waterPerCycle.get(i)+" , "+WaterAdjustSiloID+")");
 			statement.executeUpdate("INSERT INTO BatchData " + "VALUES ( "+order.getOrderCode()+" , "+(i+1)+" , "+newCoockedTime+" , "+0+" , -"+waterPerCycle.get(0)+" , "+WaterAdjustSiloID+")");
 
-			
-			
 			tempMixingStartTime = newCoockedTime.split("");
 				
 			if(tempMixingStartTime.length == 5) //4 54 18
@@ -608,12 +525,10 @@ public class DataBaseHandler
 				if(randomMinutes>59)
 				{
 					newHours = Integer.parseInt(tempMixingStartTime[0])+1;
-//					newMinutes = (int) Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2])-60;
 					newMinutes = randomMinutes-60;
 				}else
 				{
 					newHours = Integer.parseInt(tempMixingStartTime[0]);
-//					newMinutes = (int) Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2]);
 					newMinutes = randomMinutes;
 				}
 				tempMixingStartTime[0] = newHours + ""; //Hours
@@ -624,8 +539,6 @@ public class DataBaseHandler
 				}else
 				{
 					String[] tempNewMinutes = (newMinutes+"").split("");
-//					tempMixingStartTime[1] = (newMinutes / 10) + ""; //firstMinute
-//					tempMixingStartTime[2] = (newMinutes % 10) + ""; //secondMinute
 					tempMixingStartTime[1] = tempNewMinutes[0]; //firstMinute
 					tempMixingStartTime[2] = tempNewMinutes[1]; //secondMinute
 				}
@@ -664,8 +577,6 @@ public class DataBaseHandler
 				}else
 				{
 					String[] tempNewHour = (newHours+"").split("");
-//					tempMixingStartTime[0] = (newHours / 10) + ""; //firsHours
-//					tempMixingStartTime[1] = (newHours % 10) + ""; //secondHours
 					tempMixingStartTime[0] = tempNewHour[0];
 					tempMixingStartTime[1] = tempNewHour[1];
 				}
@@ -676,8 +587,6 @@ public class DataBaseHandler
 				}else
 				{
 					String[] tempNewMinutes = (newMinutes+"").split("");
-//					tempMixingStartTime[2] = (int)(newMinutes / 10) + ""; //firstMinute
-//					tempMixingStartTime[3] = (int)(newMinutes % 10) + ""; //secondMinute
 					tempMixingStartTime[2] = tempNewMinutes[0]; //firstMinute
 					tempMixingStartTime[3] = tempNewMinutes[1]; //secondMinute
 				}
@@ -692,8 +601,7 @@ public class DataBaseHandler
 				range = (max - min) + 1;
 
 				int randomMinutes = (int) (Math.random() * range) + min;
-//				int oldHours = Integer.parseInt(tempMixingStartTime[0]+tempMixingStartTime[1]);
-				int oldHours = 0;
+
 				if(randomMinutes > 59)
 				{				
 					newHours = 1;	
@@ -797,28 +705,21 @@ public class DataBaseHandler
 				percentageOfWater += Double.parseDouble(currentHumidityValues.get(order.getOrderCode()).get(siloIDsArrayList.get(i)));
 			}
 		}	
-		System.out.println("I AM THE line -706- AND THE percentageOfWater/1000 == "+percentageOfWater/1000);
+
 		return percentageOfWater;
 	}
 	
 	private void addEntriesToBatchData(Order order) throws SQLException
-	{
-//		WaterAdjustSiloID=getWaterAdjustSiloID();
-		
+	{	
 		int noOfBatches = Integer.parseInt(order.getNoOfBatches());
-		int mixingStartTime;
 		int max;
 		int min;
 		int range;
 		int newHours;
 		int newMinutes;
-		int newSeconds;
 		String newCoockedTime;
-		String temp;
 		String[] tempMixingStartTime;
 		newCoockedTime = order.getExecutionTime();
-	//	mixingStartTime = Integer.parseInt(order.getExecutionTime());
-	//	newCoockedTime = mixingStartTime + "";
 
 		for(int i=0; i<noOfBatches; i++)
 		{
@@ -838,12 +739,10 @@ public class DataBaseHandler
 				if(randomMinutes>59)
 				{
 					newHours = Integer.parseInt(tempMixingStartTime[0])+1;
-//					newMinutes = (int) Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2])-60;
 					newMinutes = randomMinutes-60;
 				}else
 				{
 					newHours = Integer.parseInt(tempMixingStartTime[0]);
-//					newMinutes = (int) Integer.parseInt(tempMixingStartTime[1]+tempMixingStartTime[2]);
 					newMinutes = randomMinutes;
 				}
 				tempMixingStartTime[0] = newHours + ""; //Hours
@@ -854,8 +753,6 @@ public class DataBaseHandler
 				}else
 				{
 					String[] tempNewMinutes = (newMinutes+"").split("");
-//					tempMixingStartTime[1] = (newMinutes / 10) + ""; //firstMinute
-//					tempMixingStartTime[2] = (newMinutes % 10) + ""; //secondMinute
 					tempMixingStartTime[1] = tempNewMinutes[0]; //firstMinute
 					tempMixingStartTime[2] = tempNewMinutes[1]; //secondMinute
 				}
@@ -894,8 +791,6 @@ public class DataBaseHandler
 				}else
 				{
 					String[] tempNewHour = (newHours+"").split("");
-//					tempMixingStartTime[0] = (newHours / 10) + ""; //firsHours
-//					tempMixingStartTime[1] = (newHours % 10) + ""; //secondHours
 					tempMixingStartTime[0] = tempNewHour[0];
 					tempMixingStartTime[1] = tempNewHour[1];
 				}
@@ -906,8 +801,6 @@ public class DataBaseHandler
 				}else
 				{
 					String[] tempNewMinutes = (newMinutes+"").split("");
-//					tempMixingStartTime[2] = (int)(newMinutes / 10) + ""; //firstMinute
-//					tempMixingStartTime[3] = (int)(newMinutes % 10) + ""; //secondMinute
 					tempMixingStartTime[2] = tempNewMinutes[0]; //firstMinute
 					tempMixingStartTime[3] = tempNewMinutes[1]; //secondMinute
 				}
@@ -922,8 +815,7 @@ public class DataBaseHandler
 				range = (max - min) + 1;
 
 				int randomMinutes = (int) (Math.random() * range) + min;
-//				int oldHours = Integer.parseInt(tempMixingStartTime[0]+tempMixingStartTime[1]);
-				int oldHours = 0;
+
 				if(randomMinutes > 59)
 				{				
 					newHours = 1;	
@@ -1009,8 +901,6 @@ public class DataBaseHandler
 				newCoockedTime = randomMinutes+tempMixingStartTime[0];	
 			}
 		}
-
-		//	mixingStartTime = Integer.parseInt(newCoockedTime);
 				
 		connection.commit();
 	}
@@ -1043,7 +933,7 @@ public class DataBaseHandler
 		int max;
 		int min;
 		int range;
-		System.out.println("I AM LINE ---858---- AND TH NoOfBatches == "+NoOfBatches);
+
 		for(int i=0; i<NoOfBatches; i++)
 		{
 			for(int j=0; j<SiloID.size(); j++)
@@ -1058,20 +948,6 @@ public class DataBaseHandler
 				{
 					Quantity = (int) (((intSiloQuantity * 1.0)/100)*intBatchQuantity);
 				}
-				
-//				if(i == NoOfBatches-1)
-//				{
-////					max = (int) (1.005*Quantity);
-////					min = (int) (0.995*Quantity);
-//					max = (int) (1.04*Quantity);
-//					min = (int) (0.96*Quantity);
-//					range = (max - min) + 1;
-//				}else
-//				{
-//					max = (int) (1.04*Quantity);
-//					min = (int) (0.96*Quantity);
-//					range = (max - min) + 1;
-//				}
 				
 				max = (int) (1.04*Quantity);
 				min = (int) (0.96*Quantity);
@@ -1135,7 +1011,7 @@ public class DataBaseHandler
 		
 				if(SiloID.get(j).equals(WaterAdjustSiloID))
 				{
-					waterSiloIndexAtQuantitys=j;
+					waterSiloIndexAtQuantitys = j;
 				}
 				
 				if(i>0)
@@ -1143,8 +1019,8 @@ public class DataBaseHandler
 					if(humidityTemp!=null)
 					{
 						humidity = Double.parseDouble(humidityTemp)/100;
-//						Quantity = (int) (oldNewQuantity.get(SiloID.get(j))*((1+humidity)));	
 						Quantity = (int) (oldNewQuantity.get(SiloID.get(j)));
+						
 						if(Quantity*(1+humidity)-Quantity>95)
 						{
 							Quantity =(int) (Quantity+(Quantity*humidity)+(Quantity*humidity*humidity)+(Quantity*humidity*humidity*humidity));
@@ -1158,12 +1034,11 @@ public class DataBaseHandler
 					}
 				}else
 				{
-					if(humidityTemp!=null)
+					if(humidityTemp != null)
 					{
 						humidity = Double.parseDouble(humidityTemp)/100;
-//						Quantity = (int) ((((intSiloQuantity * 1.0)/100)*intBatchQuantity)*((1+humidity)));
-//						waterPerCycleTempNEW = (int) ((((intSiloQuantity * 1.0)/100)*intBatchQuantity));
 						Quantity = (int) ((((intSiloQuantity * 1.0)/100)*intBatchQuantity));
+						
 						if(Quantity*(1+humidity)-Quantity>95)
 						{
 							Quantity =(int) (Quantity+(Quantity*humidity)+(Quantity*humidity*humidity)+(Quantity*humidity*humidity*humidity));
@@ -1196,20 +1071,11 @@ public class DataBaseHandler
 				if(humidityTemp != null)
 				{
 					humidity = Double.parseDouble(humidityTemp)/100;
-//					waterPerCycleTemp+=Double.parseDouble(idQuaAcQua[2])*humidity;
-					System.out.println("---waterPerCycleTemp---before = "+waterPerCycleTemp);
-					waterPerCycleTemp+=waterPerCycleTempNEW*humidity;				
+					waterPerCycleTemp += waterPerCycleTempNEW*humidity;				
 				}	
-				System.out.println("---waterPerCycleTemp---after = "+waterPerCycleTemp);
 			}	
 			
 			tempAdWater = (int)(Double.parseDouble(Quantitys.get(waterSiloIndexAtQuantitys)[2])-waterPerCycleTemp);
-			System.out.println("---tempAdWater--- = "+tempAdWater);
-			//			tempAdWater = (int)(Double.parseDouble(Quantitys.get((SiloID.size()*i)+waterSiloIndexAtQuantitys)[2])-waterPerCycleTemp);
-
-//			tempAdWater = (int)(Double.parseDouble(SiloQuantity.get(waterSiloIndexAtQuantitys))-waterPerCycleTemp);	
-//			System.out.println("Water == "+Quantitys.get((SiloID.size()*i)+waterSiloIndexAtQuantitys)[2]);
-				
 
 			tempMax = (int) (1.02*tempAdWater);
 			tempMin = (int) (0.98*tempAdWater);
@@ -1217,13 +1083,9 @@ public class DataBaseHandler
 			tempRange = (tempMax - tempMin) + 1;
 										
 			tempAcWater = (int) ((Math.random() * tempRange) + tempMin);
-				
-//			String[] tempIdQuanAcQua = {(waterSiloIndexAtQuantitys+i+1)+"" , WaterAdjustSiloID+"", tempAdWater+"", tempAcWater+""};	
+
 			String[] tempIdQuanAcQua = {(i+1)+"" , WaterAdjustSiloID, tempAdWater+"", tempAcWater+""};
-//			Quantitys.set(6*(1+i), tempIdQuanAcQua);
 			Quantitys.set((SiloID.size()*i)+waterSiloIndexAtQuantitys, tempIdQuanAcQua);
-			
-			
 			
 			waterSiloIndexAtQuantitys = 0;
 			waterPerCycleTempNEW=0;

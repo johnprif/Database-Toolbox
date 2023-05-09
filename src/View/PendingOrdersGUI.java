@@ -26,27 +26,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
-
-import javafx.beans.binding.Bindings;
 import java.util.HashMap; // import the HashMap class
-
 import Control.ChangeTimeHandler;
 import Control.ExecuteHandler;
 import Control.BackHandler;
@@ -74,7 +64,6 @@ public class PendingOrdersGUI
 	private TableColumn<Order, String> ExecutionDate;    
 	private TableColumn<Order, String> ExecutionTime;
 	private TableColumn<Order, String> Humidity;
-	private TableColumn<String, String> siloIDs;
 	
 	private Scene scene;
 	private Stage stage;	
@@ -88,12 +77,8 @@ public class PendingOrdersGUI
 	private Button executeButton;
 	private Button backButton;
 	private Button emptyBaseButton;
-	
-	private GridPane gridPane;
-    private int counter = 0;
-    private String order;
+
     private VBox vbox2;
-    private VBox vbox3;
     private VBox vbox4;
     
     private RefreshHandler refreshHandler;
@@ -104,26 +89,16 @@ public class PendingOrdersGUI
     private ExecuteHandler executeHandler;
     private BackHandler backHandler; 
     private EmptyBaseHandler emptyBaseHandler;
-    
-    private VBox kati ;
-    private ArrayList<String[]> changes;
-    private ArrayList<Order> changes2;
+
     private HashMap<String, Order> changes3;
-//    private HashMap<String, HashMap<String, String>> currentHumidityValues = new HashMap<String, HashMap<String, String>>();
+
     private boolean flag = false; 
-    private Stage dateStage;
-    private Stage shippingStage;
     private Label tempLabel_1 = new Label("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     private Label humidityLabel;
-    private Label temp;
-    private Label kati1;
-    private Label kati2;
     
     private ArrayList<Spinner<Double>> spinners;
     private ArrayList<SpinnerValueFactory<Double>> spinnersValueFactories;
     private ArrayList<Label> spinnersLabels;
-    
-    private String pathToImportant = "ImportantFiles";
        
     private FileInputStream inputstreamRefreshButton;
   	private Image imageRefreshButton;
@@ -157,22 +132,13 @@ public class PendingOrdersGUI
 	private Image imageBackButton;
     private ImageView viewBackButton;
     
-//    Spinner spinner = new Spinner(0, 10, 0, 1); //min, max, start, step
-
-    
+    //Spinner spinner = new Spinner(0, 10, 0, 1); //min, max, start, step
     //https://o7planning.org/11185/javafx-spinner
-    
-    private ArrayList<Label> labelsArrayList;
-
     
 	public PendingOrdersGUI(Stage stage)
 	{
 		changes3 = new HashMap<String, Order>();
-//		currentHumidityValues = new HashMap<String, HashMap<String, String>>();
 		this.myDB = DataBaseHandler.getInstance();
-//		myDB.initialize();
-		dateStage = new Stage();
-		shippingStage = new Stage();
 		this.stage = stage;
 	}
 	
@@ -184,89 +150,35 @@ public class PendingOrdersGUI
 		createStage();
 		createIcons();
 		createButtons();
-		createHumidityLabel();
-		
-		refreshHandler = new RefreshHandler(stage);
-		changeTimeCreationHandler = new ChangeTimeHandler(changeTimeCreationButton, dateStage);
-		changeTimeExecutionHandler = new ChangeTimeHandler(changeTimeExecutionButton, dateStage);
-		changeShippingNumberHandler = new ChangeShippingNumberHandler(shippingStage);
-		changeHumidityHandler = new ChangeHumidityHandler(shippingStage);
-		executeHandler = new ExecuteHandler();
-		backHandler = new BackHandler(stage);
-		emptyBaseHandler = new EmptyBaseHandler(refreshHandler);
-		
-		changeTimeCreationHandler.setChanges3(changes3);
-		changeTimeExecutionHandler.setChanges3(changes3);
-		changeHumidityHandler.setChanges3(changes3);
-//		changeHumidityHandler.setCurrentHumidityValues(currentHumidityValues);
-		executeHandler.setChanges3(changes3);
-//		executeHandler.setCurrentHumidityValues(currentHumidityValues);
-//		executeHandler.setSpinners(spinners);
-		backHandler.setChanges3(changes3);
+		createHumidityLabel();		
+		createHandlers();		
+		setChanges3();		
 		
 		BorderPane border = new BorderPane();
-		refreshButton.setOnAction(refreshHandler);
+		border.setId("pendingBorder");
 		
-		
-		//=====================IT WORKS FINE===================================
-		changeTimeCreationButton.setOnAction(changeTimeCreationHandler);
-	    changeTimeExecutionButton.setOnAction(changeTimeExecutionHandler);
-	  //=========================================================================
-
-	    changeShippingNumberButton.setOnAction(changeShippingNumberHandler);
-	    changeHumidityButton.setOnAction(changeHumidityHandler);
-	    executeButton.setOnAction(executeHandler);
-	    backButton.setOnAction(backHandler);
-	    emptyBaseButton.setOnAction(emptyBaseHandler);;
+		setHandlers();
 		
 		myDB.findAndParse();
 		data = myDB.getData();		
 		
-		createHumidityCells();
-		
+		createHumidityCells();		
 		createTable();
         createAndFillCells();
-        
-        changeTimeCreationHandler.setTable(table);
-        changeTimeExecutionHandler.setTable(table);
-        changeHumidityHandler.setTable(table);
-        executeHandler.setTable(table);
-        executeHandler.setSpinners(spinners);
-        refreshHandler.setTable(table);
-        
+        setTable();
+              
         scene = new Scene(border);
-        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+        scene.getStylesheets().add("application.css");
         setLastThingsOnTable();
         
-        
-        
-//        vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, changeTimeExecutionButton, changeShippingNumberButton, changeHumidityButton, executeButton, backButton, tempLabel_1,  emptyBaseButton);
-        
         vbox2 = new VBox(15, refreshButton, changeTimeCreationButton, changeTimeExecutionButton, changeShippingNumberButton, changeHumidityButton, executeButton, backButton, humidityLabel, vbox4, tempLabel_1, emptyBaseButton);      
-        
-        border.setStyle("-fx-background-color: grey;");
-		border.setPadding(new Insets(5));
+        vbox2.setId("vbox2");
+                
         border.setCenter(table);
         border.setRight(vbox2); //gridPane
-
-	    stage.setResizable(true);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
-	    stage.show();
-	    
-	    dateStage.initOwner(stage);
-	    dateStage.initModality(Modality.WINDOW_MODAL);
-	    
-	    shippingStage.initOwner(stage);
-	    shippingStage.initModality(Modality.WINDOW_MODAL);
-	    
-	    stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-	          public void handle(WindowEvent we) 
-	          {
-	        	  dateStage.close();
-	              stage.close();
-	              
-	          }
-	      });	
+	    stage.show();	    
 	}
 	
 	private void createIcons()
@@ -364,6 +276,7 @@ public class PendingOrdersGUI
 		backButton = new Button("Πίσω");
 		emptyBaseButton = new Button("Άδειασμα Βάσης");
 		
+		executeButton.setId("executeButton");
 		emptyBaseButton.setId("exitButton");
 		
 		refreshButton.setMaxWidth(Double.MAX_VALUE);
@@ -402,6 +315,52 @@ public class PendingOrdersGUI
 	    humidityLabel.setAlignment(Pos.CENTER);
 	}
 	
+	private void createHandlers()
+	{
+		refreshHandler = new RefreshHandler(stage);
+		changeTimeCreationHandler = new ChangeTimeHandler(changeTimeCreationButton);
+		changeTimeExecutionHandler = new ChangeTimeHandler(changeTimeExecutionButton);
+		changeShippingNumberHandler = new ChangeShippingNumberHandler();
+		changeHumidityHandler = new ChangeHumidityHandler();
+		executeHandler = new ExecuteHandler();
+		backHandler = new BackHandler(stage);
+		emptyBaseHandler = new EmptyBaseHandler(refreshHandler);
+	}
+	
+	private void setChanges3()
+	{
+		changeTimeCreationHandler.setChanges3(changes3);
+		changeTimeExecutionHandler.setChanges3(changes3);
+		changeHumidityHandler.setChanges3(changes3);
+		executeHandler.setChanges3(changes3);
+		backHandler.setChanges3(changes3);
+	}
+	
+	private void setHandlers()
+	{
+		refreshButton.setOnAction(refreshHandler);
+		
+		//=====================IT WORKS FINE===================================
+		changeTimeCreationButton.setOnAction(changeTimeCreationHandler);
+	    changeTimeExecutionButton.setOnAction(changeTimeExecutionHandler);
+	    //=====================================================================
+
+	    changeShippingNumberButton.setOnAction(changeShippingNumberHandler);
+	    changeHumidityButton.setOnAction(changeHumidityHandler);
+	    executeButton.setOnAction(executeHandler);
+	    backButton.setOnAction(backHandler);
+	    emptyBaseButton.setOnAction(emptyBaseHandler);
+	    
+	    stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+	          public void handle(WindowEvent we) 
+	          {
+//	        	  backHandler.handle(null);
+//	        	  dateStage.close();
+//	              stage.close();	              
+	          }
+	      });	
+	}
+	
 	private void createHumidityCells()
 	{
 		vbox4 = new VBox(15);
@@ -411,7 +370,7 @@ public class PendingOrdersGUI
 		HashMap <String, String> humiditySilos = new HashMap<String, String>(changeHumidityHandler.getHumiditySilos());
 		ArrayList <String> humidityIDs = new ArrayList<String>(changeHumidityHandler.getHumidityIDs());
 			
-		spinners = new ArrayList<Spinner<Double>>();
+		spinners = new ArrayList<Spinner<Double>>();	
 		spinnersValueFactories = new ArrayList<SpinnerValueFactory<Double>>();
 		spinnersLabels = new ArrayList<Label>();
 		
@@ -433,10 +392,11 @@ public class PendingOrdersGUI
 			{
 				Label label1 = new Label(humiditySilos.get(humidityIDs.get(i)));
 				
-				Spinner<Double> spinner1 = new Spinner();
+				Spinner<Double> spinner1 = new Spinner<Double>();	
 				SpinnerValueFactory<Double> valueFactory1 = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 10.0, 0.0, 0.1);;
 				spinner1.setValueFactory(valueFactory1);
 				spinner1.editorProperty().get().setAlignment(Pos.CENTER);
+				spinner1.setCursor(Cursor.HAND);
 				
 				spinners.add(spinner1);
 				spinnersValueFactories.add(valueFactory1);
@@ -448,16 +408,24 @@ public class PendingOrdersGUI
 		}				
 	}
 	
+	private void setTable()
+	{
+		changeTimeCreationHandler.setTable(table);
+        changeTimeExecutionHandler.setTable(table);
+        changeHumidityHandler.setTable(table);
+        executeHandler.setTable(table);
+        executeHandler.setSpinners(spinners);
+        refreshHandler.setTable(table);
+	}
+	
 	private void createStage()
 	{
-		//stage = new Stage();
         stage.setTitle("Λίστα Παραγγελιών σε Εκκρεμότητα -> "+myDB.getPath());
         stage.setMinWidth(800);
-        stage.setMinHeight(600);
-        
+        stage.setMinHeight(600);        
         stage.setWidth(1366);
         stage.setHeight(768);
-        
+        stage.setResizable(true);
 	}
 	
 	private void createTable()

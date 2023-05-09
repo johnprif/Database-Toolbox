@@ -57,6 +57,33 @@
 	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
+#executeButton	{
+	-fx-alignment: center;	
+	-fx-text-fill: darkgreen; 
+	-fx-font-family: 'Lucida Sans Unicode';
+	-fx-font-weight: bold;  
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+	-fx-background-radius: 10 10 10 10;
+}
+
+#executeButton:hover {
+	-fx-text-fill: Orange; 
+	-fx-background-color: green; 
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+#executeButton:active {
+	-fx-text-fill: yellow; 
+	-fx-background-color: green; 
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+#executeButton:pressed {
+	-fx-text-fill: yellow; 
+	-fx-background-color: darkgreen; 
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
 .label {	
 	-fx-alignment: center;  
 	-fx-text-fill: black; 
@@ -73,10 +100,22 @@
 	-fx-text-fill: darkblue; /* gold */
 }
 
+#vbox2 {
+	-fx-alignment: center; 
+    -fx-border-radius:4;     
+    -fx-background-color: grey;
+    -fx-padding: 5px;
+}
+
 #vbox4 {
 	-fx-alignment: center; 
     -fx-border-color: white; 
-    -fx-border-radius:4; 
-    
-    -fx-background-color: #3399ff
+    -fx-border-radius:4;     
+    -fx-background-color: #3399ff;
+}
+
+#pendingBorder	{
+	-fx-background-color: grey;
+	-fx-alignment: center;
+	-fx-padding: 5px; /* 5 pixels padding */
 }

@@ -18,12 +18,9 @@ import javafx.stage.Stage;
 public class PathHandler implements EventHandler<ActionEvent>
 {
 	private File myObj = new File("databaseLocation.txt");
-	private Button button;
 	private String path;
 	private DataBaseHandler myDB;
-	private Stage mainStage;
-	
-	
+
 	//create an object of SingleObject
 	private static PathHandler instance = new PathHandler();
 
@@ -40,13 +37,6 @@ public class PathHandler implements EventHandler<ActionEvent>
 	      return instance;
 	}
 	
-
-	
-//	public TakeThePath(Button button)
-//	{
-//		this.button = button;
-//	}
-	
 	@Override
 	public void handle(ActionEvent arg0)
 	{
@@ -60,20 +50,14 @@ public class PathHandler implements EventHandler<ActionEvent>
 			    ,new FileChooser.ExtensionFilter("Microsoft Access Data Base 2008-2021 Files", "*.accdb")
 			);
 		File selectedFile = fileChooser.showOpenDialog(stage);
-
-		
 		
 		if(selectedFile != null)
 		{
-			String temp = selectedFile.getAbsolutePath();
-			byte[] bytes = temp.getBytes(StandardCharsets.UTF_8);
-			path = new String(bytes, StandardCharsets.UTF_8);
+			path = selectedFile.getAbsolutePath();
 			setPath();
 		}else
 		{
-		}
-		
-		
+		}		
 	}
 	
 	private void setPath()
@@ -108,8 +92,7 @@ public class PathHandler implements EventHandler<ActionEvent>
 				
 				myDB.setPath(getPath());
 				myDB.clearOldData();
-				myDB.initialize();
-				
+				myDB.initialize();			
 			}else
 			{
 				//Read the path from the file

@@ -35,22 +35,15 @@ import javafx.event.ActionEvent;
 public class Main extends Application 
 {
 	private DataBaseHandler myDB;
-	private String path;
 	private PathHandler pathHandler;
-	private String version = "->v4.9";
+	private String version = "->v5.0";
 	private String programTitle = "Database Toolbox"+version;
-	private String pathToImportant = "ImportantFiles";
 	
 	private Button openOrdersButton;
 	private Button loadDBButton;
 	private Button exitButton;
 	
 	private GridPane gridPane;
-	private Stage pendingStage;
-	
-	private FileInputStream inputstreamMain;
-	private Image imageMain;
-	private ImageView imageViewMain;
 	
 	private Image imageStage;
 	private ImageView imageViewStage;
@@ -73,12 +66,6 @@ public class Main extends Application
 		checkIfAlreadyOpen(pathHandler.getPath());
 		
 		createIcons();
-		
-		pendingStage = new Stage();
-		if(imageStage != null)
-		{
-			pendingStage.getIcons().add(imageStage);
-		}
 			
 		//Creating Buttons     
 		createButtons();	    		    
@@ -87,26 +74,16 @@ public class Main extends Application
 		    
 		PendingOrdersFactory pendingOrdersFactory = new PendingOrdersFactory();
 	    pendingOrdersFactory.setDB();
-	    pendingOrdersFactory.setStage(pendingStage);
 	    
 	    openOrdersButton.setOnAction(pendingOrdersFactory);
-	    
-	    
-	    pendingStage.initOwner(primaryStage);
-	    pendingStage.initModality(Modality.WINDOW_MODAL);
-	    
-	    
-//		    createLogoForMain();
+
 		//Creating a Grid Pane 
 	    createGridPane();
 	    
 	    //Creating a scene object 
 		Scene scene = new Scene(gridPane,300,300);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		
-//			createLogoForStage();
-		
-		
+		scene.getStylesheets().add("application.css");
+	
 		if(imageStage != null)
 		{
 			primaryStage.getIcons().add(imageStage);
@@ -273,7 +250,6 @@ public class Main extends Application
 	
 	public static void main(String[] args)
 	{
-//		checkIfImportantDirectoryExists();
 		launch(args);	
 	}
 }

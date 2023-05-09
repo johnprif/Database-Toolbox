@@ -2,7 +2,6 @@ package Control;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import Model.Order;
@@ -10,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -20,38 +20,36 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 {
-	private DatePicker checkInDatePicker;
+	private DatePicker myDatePicker;
 	private Label checkInlabel;
 	private Stage stage;
 	private Button button;
-	private ArrayList<String[]> changes;
-	private ArrayList<Order> changes2;
+	private Button choose;
+	private Button cancel;
 	private Order order;
 	private boolean flag = false;
 	private TableView<Order> table;
 	private String newValue;
 	private HashMap<String, Order> changes3;
-	private ComboBox hours;
-	private ComboBox minutes;
+	private ComboBox<String> hours;
+	private ComboBox<String> minutes;
 	Random rand;
-	
-	
-	public ChangeTimeHandler(Button button, Stage stage)
+		
+	public ChangeTimeHandler(Button button)
 	{
 		rand = new Random();
-		//stage = new Stage();
-		this.stage = stage;
 		this.button = button;
 	}
 	
 	@Override
 	public void handle(ActionEvent arg0)
 	{	
-		
+		stage = new Stage();
 		if(flag == false)
 		{
 			warningWindowForFlag();
@@ -60,26 +58,24 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 		{
 			order = table.getSelectionModel().getSelectedItem();
 
-			Button button1 = new Button("Επιλογή");
-			Button button2 = new Button("Ακύρωση");
-			button1.setMaxWidth(Double.MAX_VALUE);
-		    button2.setMaxWidth(Double.MAX_VALUE);
-		    button1.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-		    button2.setStyle("-fx-font-weight: bold; -fx-text-fill: darkslategrey; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
+			createButtons();
 		    
 		    createAndFillTimeBox();
 		    
-			HBox hbox = new HBox(5, button1, button2);
+			HBox hbox = new HBox(5, choose, cancel);
 			hbox.setAlignment(Pos.BASELINE_CENTER);
+			
 			VBox vbox = new VBox(20);
-	        vbox.setStyle("-fx-padding: 10;");
-	        Scene scene = new Scene(vbox, 400, 400);
+			vbox.setId("vbox2");
+	        
+			Scene scene = new Scene(vbox, 400, 400);
+	        scene.getStylesheets().add("application.css");
+	        
 	        stage.setScene(scene);
 	        stage.setTitle("Αλλαγή Ημερμηνίας -> "+order.getOrderCode());
-	        vbox.setAlignment(Pos.BASELINE_CENTER);
-	        vbox.setStyle("-fx-background-color: grey;");
-	        checkInDatePicker = new DatePicker();
-	        checkInDatePicker.setEditable(false);
+	        
+	        createDatePicker();
+	        
 	        GridPane gridPane = new GridPane();
 	        gridPane.setHgap(10);
 	        gridPane.setVgap(10);
@@ -101,32 +97,30 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 	        HBox timeVbox = new HBox(5, hours, minutes);
 	        timeVbox.setAlignment(Pos.BASELINE_CENTER);
 	        
-	        gridPane.add(checkInDatePicker, 0, 1);
+	        gridPane.add(myDatePicker, 0, 1);
 	        gridPane.add(timeVbox, 0, 2);
-//	        gridPane.add(minutes, 0, 3);
 	        gridPane.add(hbox, 0, 3);
-//	        gridPane.add(hbox, 0, 2);
 	        gridPane.setAlignment(Pos.CENTER); 
+	        
 	        vbox.getChildren().add(gridPane);
-	        //stage.setHeight(150);
-	        //stage.setWidth(168);
+	        stage.initModality(Modality.APPLICATION_MODAL);
 	        stage.setHeight(400);
 	        stage.setWidth(300);
 	        stage.setResizable(false);
 	        stage.show();
 			
-			button2.setOnAction(new EventHandler<ActionEvent>() {
+			cancel.setOnAction(new EventHandler<ActionEvent>() {
 		        @Override public void handle(ActionEvent e) {
 		            stage.close();
 		        }
 		    });
 			
 			
-			button1.setOnAction(new EventHandler<ActionEvent>() {
+			choose.setOnAction(new EventHandler<ActionEvent>() {
 		        @Override public void handle(ActionEvent e) {
-		        	if(checkInDatePicker.getValue() != null)
+		        	if(myDatePicker.getValue() != null)
 		        	{		        		
-		        		String preDate = checkInDatePicker.getValue()+"";
+		        		String preDate = myDatePicker.getValue()+"";
 		        		String[] temp = preDate.split("-");
 		        		//temp[0] == year
 		        		//temp[1] == month
@@ -213,98 +207,36 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 	
 	private void createAndFillTimeBox()
 	{
-		hours = new ComboBox();
-		minutes = new ComboBox();
+		hours = new ComboBox<String>();
+		minutes = new ComboBox<String>();
 		
-		hours.getItems().add("0");
-		hours.getItems().add("1");
-		hours.getItems().add("2");
-		hours.getItems().add("3");
-		hours.getItems().add("4");
-		hours.getItems().add("5");
-		hours.getItems().add("6");
-		hours.getItems().add("7");
-		hours.getItems().add("8");
-		hours.getItems().add("9");
-		hours.getItems().add("10");
-		hours.getItems().add("11");
-		hours.getItems().add("12");
-		hours.getItems().add("13");
-		hours.getItems().add("14");
-		hours.getItems().add("15");
-		hours.getItems().add("16");
-		hours.getItems().add("17");
-		hours.getItems().add("18");
-		hours.getItems().add("19");
-		hours.getItems().add("20");
-		hours.getItems().add("21");
-		hours.getItems().add("22");
-		hours.getItems().add("23");
+		for(int i=0; i<24; i++)
+		{
+			hours.getItems().add(""+i);
+		}
 		
+		for(int i=0; i<10; i++)
+		{
+			minutes.getItems().add("0"+i);
+		}
 		
-		minutes.getItems().add("00");
-		minutes.getItems().add("01");
-		minutes.getItems().add("02");
-		minutes.getItems().add("03");
-		minutes.getItems().add("04");
-		minutes.getItems().add("05");
-		minutes.getItems().add("06");
-		minutes.getItems().add("07");
-		minutes.getItems().add("08");
-		minutes.getItems().add("09");
-		minutes.getItems().add("10");
-		minutes.getItems().add("11");
-		minutes.getItems().add("12");
-		minutes.getItems().add("13");
-		minutes.getItems().add("14");
-		minutes.getItems().add("15");
-		minutes.getItems().add("16");
-		minutes.getItems().add("17");
-		minutes.getItems().add("18");
-		minutes.getItems().add("19");
-		minutes.getItems().add("20");
-		minutes.getItems().add("21");
-		minutes.getItems().add("22");
-		minutes.getItems().add("23");
-		minutes.getItems().add("24");
-		minutes.getItems().add("25");
-		minutes.getItems().add("26");
-		minutes.getItems().add("27");
-		minutes.getItems().add("28");
-		minutes.getItems().add("29");
-		minutes.getItems().add("30");
-		minutes.getItems().add("31");
-		minutes.getItems().add("32");
-		minutes.getItems().add("33");
-		minutes.getItems().add("34");
-		minutes.getItems().add("35");
-		minutes.getItems().add("36");
-		minutes.getItems().add("37");
-		minutes.getItems().add("38");
-		minutes.getItems().add("39");
-		minutes.getItems().add("40");
-		minutes.getItems().add("41");
-		minutes.getItems().add("42");
-		minutes.getItems().add("43");
-		minutes.getItems().add("44");
-		minutes.getItems().add("45");
-		minutes.getItems().add("46");
-		minutes.getItems().add("47");
-		minutes.getItems().add("48");
-		minutes.getItems().add("49");
-		minutes.getItems().add("50");
-		minutes.getItems().add("51");
-		minutes.getItems().add("52");
-		minutes.getItems().add("53");
-		minutes.getItems().add("54");
-		minutes.getItems().add("55");
-		minutes.getItems().add("56");
-		minutes.getItems().add("57");
-		minutes.getItems().add("58");
-		minutes.getItems().add("59");
+		for(int i=10; i<60; i++)
+		{
+			minutes.getItems().add(""+i);
+		}
 		
 		hours.setPromptText("ΩΡΑ");
 		minutes.setPromptText("ΛΕΠΤΑ");
+		
+		hours.setCursor(Cursor.HAND);
+		minutes.setCursor(Cursor.HAND);
+	}
+	
+	private void createDatePicker()
+	{
+		myDatePicker = new DatePicker();
+        myDatePicker.setEditable(false);
+        myDatePicker.setCursor(Cursor.HAND);
 	}
 	
 	private boolean checkDate(String[] medianDate, Order order, int mode, String hours, String minutes)
@@ -556,6 +488,20 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 			}
 		}
 		return false;
+	}
+	
+	private void createButtons()
+	{
+		choose = new Button("Επιλογή");
+		cancel = new Button("Ακύρωση");
+		
+		choose.setMaxWidth(Double.MAX_VALUE);
+	    cancel.setMaxWidth(Double.MAX_VALUE);
+	    
+	    choose.setCursor(Cursor.HAND);	
+	    cancel.setCursor(Cursor.HAND);	
+	    
+	    cancel.setId("exitButton");
 	}
 	
 	private boolean checkTime(String[] medianTime, Order order, int mode)
