@@ -1,11 +1,14 @@
 package Control;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Scanner;
 import Model.DataBaseHandler;
@@ -112,19 +115,36 @@ public class PathHandler implements EventHandler<ActionEvent>
 		}
 	}
 	
-	private void readPath()
-	{
-		try {
-			Scanner myReader = new Scanner(myObj);
-			while (myReader.hasNextLine()) 
-			{
-		        path = myReader.nextLine();
-			}
-			myReader.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+//	private void readPath2()
+//	{
+//		try {
+//			Scanner myReader = new Scanner(myObj);
+//			while (myReader.hasNextLine()) 
+//			{
+//		        path = myReader.nextLine();
+//			}
+//			myReader.close();
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//	}
+
+	public void readPath() 
+	{	        
+	        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("databaseLocation.txt"), "UTF-8"))) {
+	            String line;
+	            
+	            while ((line = reader.readLine()) != null) 
+	            {
+	            	path = line;
+	                System.out.println(line);
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    
 	}
+
 	
 	private void warningWindow()
 	{
