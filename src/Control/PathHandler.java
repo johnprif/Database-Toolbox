@@ -2,16 +2,16 @@ package Control;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.io.OutputStreamWriter;
 import java.util.Scanner;
-
 import Model.DataBaseHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -28,7 +28,7 @@ public class PathHandler implements EventHandler<ActionEvent>
 	   //instantiated
 	private PathHandler()
 	{
-		myDB.getInstance();
+		myDB = DataBaseHandler.getInstance();
 	}
 
 	   //Get the only object available
@@ -63,7 +63,8 @@ public class PathHandler implements EventHandler<ActionEvent>
 	private void setPath()
 	{
 		try {
-		      FileWriter myWriter = new FileWriter("databaseLocation.txt");
+//		      FileWriter myWriter = new FileWriter("databaseLocation.txt");
+		      BufferedWriter myWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("databaseLocation.txt"), "UTF-8"));
 		      myWriter.write(path);
 		      myWriter.close();
 		      System.out.println("Successfully wrote to the file.");

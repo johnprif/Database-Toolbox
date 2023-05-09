@@ -310,9 +310,8 @@ public class PendingOrdersGUI
 	private void createHumidityLabel()
 	{
 		humidityLabel = new Label("ΥΓΡΑΣΙΕΣ");
+		humidityLabel.setId("humidityLabel");
 		humidityLabel.setMaxWidth(Double.MAX_VALUE);
-	    humidityLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: white; -fx-border-radius: 5; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );");
-	    humidityLabel.setAlignment(Pos.CENTER);
 	}
 	
 	private void createHandlers()

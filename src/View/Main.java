@@ -34,6 +34,9 @@ import javafx.event.ActionEvent;
 
 public class Main extends Application 
 {
+	private Stage primaryStage;
+	private Scene scene;
+	
 	private DataBaseHandler myDB;
 	private PathHandler pathHandler;
 	private String version = "->v5.0";
@@ -60,58 +63,43 @@ public class Main extends Application
 	@Override
 	public void start(Stage primaryStage) 
 	{
-		myDB = DataBaseHandler.getInstance();
-		pathHandler = PathHandler.getInstance();
-		pathHandler.checkPathFile();
-		checkIfAlreadyOpen(pathHandler.getPath());
-		
-		createIcons();
-			
-		//Creating Buttons     
+		this.primaryStage = primaryStage;
+		initialize();		
+		createIcons();    
 		createButtons();	    		    
-		    
-		loadDBButton.setOnAction(pathHandler);
-		    
-		PendingOrdersFactory pendingOrdersFactory = new PendingOrdersFactory();
-	    pendingOrdersFactory.setDB();
-	    
-	    openOrdersButton.setOnAction(pendingOrdersFactory);
+		createHandlers();
 
 		//Creating a Grid Pane 
 	    createGridPane();
 	    
 	    //Creating a scene object 
-		Scene scene = new Scene(gridPane,300,300);
-		scene.getStylesheets().add("application.css");
+		scene = new Scene(gridPane,300,300);
+		scene.getStylesheets().add("application.css");	
+		
+		createStage();
+		
+		//Displaying the contents of the stage
+		primaryStage.show();		
+	}
 	
+	private void initialize()
+	{	
+		myDB = DataBaseHandler.getInstance();
+		pathHandler = PathHandler.getInstance();
+		pathHandler.checkPathFile();
+		checkIfAlreadyOpen(pathHandler.getPath());
+	}
+	
+	private void createStage()
+	{
 		if(imageStage != null)
 		{
 			primaryStage.getIcons().add(imageStage);
 		}
 		
-		//Setting title to the Stage 
 		primaryStage.setTitle(programTitle);
-		
-		//Adding scene to the stage 
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
-		//Displaying the contents of the stage
-		primaryStage.show();
-		
-		exitButton.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
-		    	primaryStage.close();
-		    	try {
-		    		if(!myDB.isClosed())
-		    		{
-		    			myDB.closeDB();			    			
-		    		}
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-		    	 System.exit(0);
-		    }
-		});
 		
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 	          public void handle(WindowEvent we) 
@@ -127,28 +115,7 @@ public class Main extends Application
 				}
 	              System.exit(0);
 	          }
-	      });        
-		
-	}
-	
-	private static void checkIfImportantDirectoryExists()
-	{
-		JFrame frame = new JFrame("Swing Tester");
-		try {
-	         File file = new File("pathToImportant");
-	         file.createNewFile();
-	         if(!file.exists())
-	         {
-	        	 JOptionPane.showMessageDialog(frame, "Ο φάκελος 'ImportantFiles' δεν βρίσκεται στον τρέχον κατάλογο ή έχει μεταβληθεί το περιεχόμενό του. \nΠαρακαλώ τοποθετήστε τον στον τρέχον κατάλογο!",
-		                 "Σφάλμα Βιβλιοθηκών-Γραφικών", JOptionPane.ERROR_MESSAGE);
-	        	 file.delete();
-	        	 System.exit(0);
-	         } 
-	         file.delete();
-	         System.out.println(file.exists());
-	      } catch(Exception e) {
-	         e.printStackTrace();
-	      }
+	      }); 
 	}
 	
 	private void createButtons()
@@ -169,7 +136,32 @@ public class Main extends Application
 	    
 	    openOrdersButton.setCursor(Cursor.HAND);
 	    loadDBButton.setCursor(Cursor.HAND);
-	    exitButton.setCursor(Cursor.HAND);	    
+	    exitButton.setCursor(Cursor.HAND);	 	    
+	}
+	
+	private void createHandlers()
+	{
+		loadDBButton.setOnAction(pathHandler);
+	    
+		PendingOrdersFactory pendingOrdersFactory = new PendingOrdersFactory();
+	    pendingOrdersFactory.setDB();
+	    
+	    openOrdersButton.setOnAction(pendingOrdersFactory);
+	    
+	    exitButton.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	primaryStage.close();
+		    	try {
+		    		if(!myDB.isClosed())
+		    		{
+		    			myDB.closeDB();			    			
+		    		}
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+		    	 System.exit(0);
+		    }
+		}); 
 	}
 	
 	private void createGridPane()

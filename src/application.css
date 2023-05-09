@@ -119,3 +119,12 @@
 	-fx-alignment: center;
 	-fx-padding: 5px; /* 5 pixels padding */
 }
+
+#humidityLabel	{
+	-fx-font-weight: bold; 
+	-fx-text-fill: white; 
+	-fx-font-family: 'Lucida Sans Unicode'; 
+	-fx-alignment: center;
+	-fx-border-radius: 5; 
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
