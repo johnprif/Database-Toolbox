@@ -6,7 +6,7 @@
 
 .button {
 	-fx-alignment: center;     
-	-fx-text-fill: blue; 
+	-fx-text-fill: black; 
 	-fx-font-family: 'Lucida Sans Unicode'; 
 	-fx-font-size: 11px; /* 18 pixels font size */
 	-fx-font-weight: bold;
@@ -18,16 +18,16 @@
 
 .button:hover {
     -fx-background-color: #2980b9; /* Light blue color */
-    -fx-text-fill: black; /* Black text color */
+    -fx-text-fill: white; /* Black text color */
 }
 .button:active {
     -fx-background-color: #2980b9; /* Light blue color */
-    -fx-text-fill: black; /* Black text color */
+    -fx-text-fill: white; /* Black text color */
 }
 
 .button:pressed {
     -fx-background-color: navy; /* Light blue color */
-    -fx-text-fill: darkgrey; /* Black text color */
+    -fx-text-fill: lightgrey; /* Black text color */
 }
 
 #exitButton {
@@ -40,19 +40,19 @@
 }
 
 #exitButton:hover {
-	-fx-text-fill: Orange; 
+	-fx-text-fill: white; 
 	-fx-background-color: red; 
 	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
 #exitButton:active {
-	-fx-text-fill: yellow; 
+	-fx-text-fill: white; 
 	-fx-background-color: red; 
 	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
 #exitButton:pressed {
-	-fx-text-fill: yellow; 
+	-fx-text-fill: lightgrey; 
 	-fx-background-color: darkred; 
 	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
@@ -67,19 +67,19 @@
 }
 
 #executeButton:hover {
-	-fx-text-fill: Orange; 
+	-fx-text-fill: white; 
 	-fx-background-color: green; 
 	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
 #executeButton:active {
-	-fx-text-fill: yellow; 
+	-fx-text-fill: white; 
 	-fx-background-color: green; 
 	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
 #executeButton:pressed {
-	-fx-text-fill: yellow; 
+	-fx-text-fill: lightgrey; 
 	-fx-background-color: darkgreen; 
 	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
@@ -128,3 +128,80 @@
 	-fx-border-radius: 5; 
 	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
+/* Table View */
+.table-view {
+    -fx-background-color: #a9a9a9;
+    -fx-padding: 3px;
+}
+
+/* Table Row Striping */
+.table-row-cell:even {
+    -fx-background-color: lightgrey;
+}
+
+.table-row-cell:odd {
+	-fx-backround-color: #ffefd5;
+}
+
+/* Header Style */
+.table-view .column-header {
+    -fx-background-color: grey;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* Header Hover */
+.table-view .column-header {
+    -fx-cursor: hand;
+}
+
+/* Cell Style */
+.table-row-cell {
+    -fx-text-fill: #333333;
+}
+
+/* Hover Style */
+.table-row-cell:hover {
+    -fx-background-color: #3399ff;
+}
+
+/* Clicked Row Style */
+.table-row-cell:selected {
+    -fx-background-color: #2980b9;
+}
+
+/* Scroll Bar Track */
+.table-view .scroll-bar:vertical .track,
+.table-view .scroll-bar:horizontal .track {
+    -fx-background-color: #f7f7f7;
+}
+
+/* Scroll Bar Thumb */
+.table-view .scroll-bar:vertical .thumb,
+.table-view .scroll-bar:horizontal .thumb {
+    -fx-background-color: #c4c4c4;
+    -fx-background-radius: 0;
+}
+
+/* Scroll Bar Buttons */
+.table-view .scroll-bar:vertical .increment-button,
+.table-view .scroll-bar:vertical .decrement-button,
+.table-view .scroll-bar:horizontal .increment-button,
+.table-view .scroll-bar:horizontal .decrement-button {
+    -fx-background-color: #e1e1e1;
+    -fx-background-radius: 0;
+}
+
+/* Scroll Bar Hover */
+.table-view .scroll-bar:vertical,
+.table-view .scroll-bar:horizontal {
+    -fx-cursor: hand;
+}
+
+/* Scroll Bar Dragging */
+.table-view .scroll-bar:vertical:pressed,
+.table-view .scroll-bar:horizontal:pressed {
+    -fx-cursor: closed-hand;
+}
+
+
