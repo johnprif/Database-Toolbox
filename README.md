@@ -19,8 +19,5 @@
 - JVM args: --module-path "ImportantFiles\javafx-sdk-19\lib" --add-modules=javafx.controls,javafx.fxml
 
 #### Below you can see some images from the project
-![Screenshot (17)](https://github.com/johnprif/Database-Toolbox/assets/56134761/2d732533-2c2e-4f98-80bb-107edf784e21)
-![Screenshot (18)](https://github.com/johnprif/Database-Toolbox/assets/56134761/f75c470c-5f5e-483f-817f-91491eed9444)
-
-
-
+![Screenshot (72)](https://github.com/johnprif/Database-Toolbox/assets/56134761/63f7b2dd-b4cc-4c0e-8ccb-0cb46dd66acc)
+![Screenshot (71)](https://github.com/johnprif/Database-Toolbox/assets/56134761/c9729b62-3a98-40f9-a24f-6723a13916ec)
