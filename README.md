@@ -1,5 +1,5 @@
 # Database Toolbox
-**It is a program for Company named ****** that calculates in a minimum of time the appropriate quantities per cycle for the production of construction material.**
+**It is a program for Saitec that calculates in a minimum of time the appropriate quantities per cycle for the production of construction material.**
 #### More specifically, it offers the following features
 - Offers a simple and efficient graphical interface
 - Allows the user to select a database from anywhere on the computer
