@@ -1,5 +1,5 @@
 # Database Toolbox
-**It is a program for Saitec that calculates in a minimum of time the appropriate quantities per cycle for the production of construction material.**
+**It is an application that calculates in a minimum of time the appropriate quantities per cycle for the production of construction material. It has been developed using Java, JavaFX, css, sql as well as the code architecture follows the MVC and Singleton pattern and is able to be installed and run on any Windows computer. It is able to load MS Access Databases of predefined template and process them through an easy to use GUI.**
 #### More specifically, it offers the following features
 - Offers a simple and efficient graphical interface
 - Allows the user to select a database from anywhere on the computer
