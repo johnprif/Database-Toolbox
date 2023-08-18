@@ -72,7 +72,7 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 	        scene.getStylesheets().add("application.css");
 	        
 	        stage.setScene(scene);
-	        stage.setTitle("Αλλαγή Ημερμηνίας -> "+order.getOrderCode());
+	        stage.setTitle("Change Date -> "+order.getOrderCode());
 	        
 	        createDatePicker();
 	        
@@ -80,12 +80,12 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 	        gridPane.setHgap(10);
 	        gridPane.setVgap(10);
 
-	        if(button.getText().equals("Αλλαγή Χρόνου Δημιουργίας"))
+	        if(button.getText().equals("Change Creation Time"))
 	        {
-	        	checkInlabel = new Label("Αλλαγή Χρόνου Δημιουργίας");
+	        	checkInlabel = new Label("Change Creation Time");
 	        }else
 	        {
-	        	checkInlabel = new Label("Αλλαγή Χρόνου Εκτέλεσης");
+	        	checkInlabel = new Label("Change Execution Time");
 	        }
 	        
 	        checkInlabel.setStyle("-fx-font-weight: bold; -fx-text-fill: white;");
@@ -132,7 +132,7 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 		        		
 //		        		Order order = table.getSelectionModel().getSelectedItem();
 		        		
-		        		if(button.getText().equals("Αλλαγή Χρόνου Δημιουργίας"))
+		        		if(button.getText().equals("Change Creation Time"))
 		        		{
 		        			if(checkDate(temp, order, 0, stringHours, stringMinutes))
 		        			{
@@ -157,7 +157,7 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 		        				table.getItems().set(table.getSelectionModel().getSelectedIndex(), order);
 		        				changes3.put(order.getOrderCode(), order);
 		        			}
-		        		}else if(button.getText().equals("Αλλαγή Χρόνου Εκτέλεσης"))
+		        		}else if(button.getText().equals("Change Execution Time"))
 		        		{
 		        			if(checkDate(temp, order, 1, stringHours, stringMinutes))
 		        			{
@@ -225,8 +225,8 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 			minutes.getItems().add(""+i);
 		}
 		
-		hours.setPromptText("ΩΡΑ");
-		minutes.setPromptText("ΛΕΠΤΑ");
+		hours.setPromptText("HOURS");
+		minutes.setPromptText("MINUTES");
 		
 		hours.setCursor(Cursor.HAND);
 		minutes.setCursor(Cursor.HAND);
@@ -492,8 +492,8 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 	
 	private void createButtons()
 	{
-		choose = new Button("Επιλογή");
-		cancel = new Button("Ακύρωση");
+		choose = new Button("Select");
+		cancel = new Button("Cancel");
 		
 		choose.setMaxWidth(Double.MAX_VALUE);
 	    cancel.setMaxWidth(Double.MAX_VALUE);
@@ -512,14 +512,14 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 	private void dateWindow(int mode)
 	{
 		Alert alert = new Alert(Alert.AlertType.WARNING);
-    	alert.setTitle("Προειδοποίηση");
-    	alert.setHeaderText("Λανθασμένοι χρόνοι!");
+    	alert.setTitle("Warning");
+    	alert.setHeaderText("Wrong times!");
     	if(mode == 0)
     	{
-    		alert.setContentText("Η ημερομηνία έναρξης δεν γίνεται να είναι πιο μετά από την ημερομηνία εκτέλεσης!");
+    		alert.setContentText("The start date cannot be later than the execution date!");
     	}else
     	{
-    		alert.setContentText("Η ημερομηνία εκτέλεσης δεν γίνεται να είναι πιο πριν από την ημερομηνία έναρξης!");
+    		alert.setContentText("The execution date cannot be earlier than the start date!");
     	}
     	alert.showAndWait();
 	}
@@ -556,18 +556,18 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 	private void warningWindowForDate()
 	{
 		Alert alert = new Alert(Alert.AlertType.WARNING);
-    	alert.setTitle("Προειδοποίηση");
-    	alert.setHeaderText("Κενή ημερομηνία");
-    	alert.setContentText("Δεν μπορείτε να καταχωρίσετε κενή ημερομηνία!\nΓια να συνεχίσετε πρέπει να επιλέξετε κάποια απο τις διαθέσιμες ημερομηνίες και να πατήσετε το πλήκτρο 'Επιλογή' αλλιώς πιέστε το πλήκτρο 'Ακύρωση'");
+    	alert.setTitle("Warning");
+    	alert.setHeaderText("Empty date!");
+    	alert.setContentText("You cannot enter a blank date!\nTo continue you must select one of the available dates and press the 'Select' button or press the 'Cancel' button.");
     	alert.showAndWait();
 	}
 	
 	private void warningWindowForFlag()
 	{
 		Alert alert = new Alert(Alert.AlertType.WARNING);
-    	alert.setTitle("Προειδοποίηση");
-    	alert.setHeaderText("Καμία επιλογή");
-    	alert.setContentText("Δεν έχει επιλεγεί καμία απο τις παραγγελίες\nΠαρακαλώ επιλέξτε κάποια πρωτού συνεχίσετε");
+    	alert.setTitle("Warning");
+    	alert.setHeaderText("Empty choice!");
+    	alert.setContentText("None of the orders have been selected.\nPlease select one before continuing.");
     	alert.showAndWait();
 	}
 	
@@ -579,9 +579,9 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
 	private void emptyOnlyOneDate()
 	{
 		Alert alert = new Alert(Alert.AlertType.WARNING);
-    	alert.setTitle("Προειδοποίηση");
-    	alert.setHeaderText("Κενή ώρα ή λεπτά");
-    	alert.setContentText("Έχετε επιλέξει μόνο ώρα ή λεπτά!\nΠαρακαλώ συμπληρώστε και τα δύο αλλιώς αφήστε τα κενά ώστε να διατηρηθεί η τρέχουσα ώρα");
+    	alert.setTitle("Warning");
+    	alert.setHeaderText("Empty hours or minutes!");
+    	alert.setContentText("You have selected only time or minutes!\nPlease fill in both or leave blank to keep the current time.");
     	alert.showAndWait();
 	}
 }

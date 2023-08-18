@@ -181,7 +181,7 @@ public class DataBaseHandler
 	    ExecutionDate = pendingSet.getString("ExecutionDate");
 	    ExecutionTime = pendingSet.getString("ExecutionTime");	    
 	    
-	    Order order = new Order(OrderCode, RecipeCode, Quantity, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, ExecutionDate, TimeCreation, ExecutionTime, MixerCapacity, BatchQuantity, NoOfBatches, DateLastEdit, "ΟΧΙ");
+	    Order order = new Order(OrderCode, RecipeCode, Quantity, ProjectCode, CustomerCode, VehicleCode, DriverCode, DateCreation, ExecutionDate, TimeCreation, ExecutionTime, MixerCapacity, BatchQuantity, NoOfBatches, DateLastEdit, "NO");
 	    data.add(order);
 	}
 	
@@ -337,14 +337,14 @@ public class DataBaseHandler
 			{
 				if(siloIDs.get(pendingSet4.getString("SiloID")) != null)
 				{
-					return "ΝΑΙ";
+					return "YES";
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return "ΟΧΙ";
+		return "NO";
 	}
 	
 	public void findHumiditySilosPerOrder(String OrderCode) throws SQLException
@@ -1137,9 +1137,9 @@ public class DataBaseHandler
 	private void alertWindow()
 	{
 		Alert alert = new Alert(Alert.AlertType.ERROR);
-    	alert.setTitle("Σφάλμα");
-    	alert.setHeaderText("Πρόβλημα με την βάση δεδομένων!");
-    	alert.setContentText("Πιθανόν να έχει διαγραφή ή να έχει μετακινηθεί σε άλλο κατάλογο.");
+    	alert.setTitle("Error");
+    	alert.setHeaderText("Problem with the database!");
+    	alert.setContentText("It may have been deleted or moved to another directory.");
     	alert.showAndWait();
 	}
 	
@@ -1167,8 +1167,8 @@ public class DataBaseHandler
 	{
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle(table);
-		alert.setHeaderText("Πρόβλημα με την βάση δεδομένων!");
-		alert.setContentText("Στον πίνακα= '"+table+"' εντοπίστηκε παραβίαση του κλειδιού '"+OrderCode+"'\nΘα πρέπει να σβήσετε τις καταχωρήσεις στους\n-BacthData\n-BatchIngridient\nμε OrderCode='"+OrderCode+"' πρωτού συνεχίσετε.\nΠατήστε 'ΟΚ' εάν επιθυμείτε να σβηστούν αυτόματα.\nΠατήστε 'Cancel' εάν επιθυμείτε να μην σβηστούν αυτόματα.");
+		alert.setHeaderText("Problem with the database!");
+		alert.setContentText("A violation of the key '"+OrderCode+"' was detected in table='"+table+"'. You should delete the entries in \n-BacthData \n-BatchIngridient \nwith OrderCode='"+OrderCode+"' before continuing. \nClick 'OK' if you wish to have them automatically deleted. \nPress 'Cancel' if you do not want them to be automatically deleted.");
 
 		Optional<ButtonType> result = alert.showAndWait();	
 		
@@ -1194,9 +1194,9 @@ public class DataBaseHandler
 	private void sucCleanBadOrders(String OrderCode)
 	{
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    	alert.setTitle("Ειδοποίηση");
-    	alert.setHeaderText("Επιτυχής επιδιόρθωση!");
-    	alert.setContentText("Η παραγγελία '"+OrderCode+"' ενημερώθηκε επιτυχώς.\nΤώρα μπορείτε να την εκτελέσετε επιτυχώς.");
+    	alert.setTitle("Notice");
+    	alert.setHeaderText("Successful repair!");
+    	alert.setContentText("Order '"+OrderCode+"' has been successfully updated. \nYou can now execute it successfully.");
     	alert.showAndWait();
 	}
 }

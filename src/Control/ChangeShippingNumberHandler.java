@@ -64,13 +64,13 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
         Label checkInlabel;
         Label currentShippingNumber;
 		
-        checkInlabel = new Label("Εισάγετε τον επιθυμητό αριθμό αποστολής:");
+        checkInlabel = new Label("Enter the desired shipping number:");
 		checkInlabel.setStyle("-fx-font-weight: bold; -fx-text-fill: white;");
         gridPane.add(checkInlabel, 0, 0);
         GridPane.setHalignment(checkInlabel, HPos.CENTER);
         
         try {	        
-	        currentShippingNumber = new Label("Τρέχον Αριθμός Αποστολής = "+myDB.getShippingInvoiceNumber());
+	        currentShippingNumber = new Label("Current Shipment Number = "+myDB.getShippingInvoiceNumber());
 	        currentShippingNumber.setStyle("-fx-font-weight: bold; -fx-text-fill: white;");
 	        gridPane.add(currentShippingNumber, 0, 1);
 	        GridPane.setHalignment(currentShippingNumber, HPos.CENTER);
@@ -102,8 +102,8 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
 	
 	private void createButtons()
 	{
-		select = new Button("Επιλογή");
-		cancel = new Button("Ακύρωση");
+		select = new Button("Select");
+		cancel = new Button("Cancel");
 		
 		cancel.setId("exitButton");
 		
@@ -181,7 +181,7 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
 	private void createStage()
 	{
 		stage.setScene(scene);
-        stage.setTitle("Αλλαγή Αριθμού Αποστολής");
+        stage.setTitle("Change Shipping Number");
         stage.setHeight(370);
         stage.setWidth(300);
         stage.setResizable(false);
@@ -190,27 +190,27 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
 	private void warningWindowForFlag(String text)
 	{
 		Alert alert = new Alert(Alert.AlertType.ERROR);
-    	alert.setTitle("Σφάλμα");
-    	alert.setHeaderText("Ο '"+text+"' δεν αποτελεί έγκυρο Αριθμό Αποστολής!");
-    	alert.setContentText("Παρακαλώ εισάγετε έναν έγκυρο Αριθμό Αποστολής πρωτού συνεχίσετε.\nΕπιτρέπονται μόνο αριθμοί μέχρι 7 ψηφίων οι οποίοι είναι μεταξύ 0 και 9999999.");
+    	alert.setTitle("Error");
+    	alert.setHeaderText("'"+text+"' is not a valid Shipping Number!");
+    	alert.setContentText("Please enter a valid Shipping Number before continuing. \nOnly numbers up to 7 digits between 0 and 9999999 are allowed.");
     	alert.showAndWait();
 	}
 	
 	private void rigthWindow(String text)
 	{
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    	alert.setTitle("Επιτυχής Εκτέλεση!");
-    	alert.setHeaderText("Επιτυχής ενημέρωση Αριθμού Αποστολής!");
-    	alert.setContentText("Ο νέος Αριθμός Αποστολής -> '" + text +"'");
+    	alert.setTitle("Successful Execution!");
+    	alert.setHeaderText("'Successful Shipment Number update!");
+    	alert.setContentText("The new Shipment Number -> '" + text +"'");
     	alert.showAndWait();
 	}
 	
 	private void maxNumberWindow(String text)
 	{
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    	alert.setTitle("Ειδοποίηση");
-    	alert.setHeaderText("Επιτυχής ενημέρωση Αριθμού Αποστολής!\nΜέγιστη καταχώρηση!");
-    	alert.setContentText("Ο νέος Αριθμός Αποστολής -> '" + text +"'.\nΗ τρέχουσα παραγγελία θα ενημερωθεί με αυτόν τον αριθμό αποστολής.\nΕπειδή όμως καταχωρήσατε τον μέγιστο επιτρεπτό Αριθμό Αποστολής δεν θα προσαυξηθεί κατά 1 όπως πάντα αλλά θα καταχωρηθεί η τιμή 1 αυτόματα στην επόμενη παραγγελία!");
+    	alert.setTitle("Notice");
+    	alert.setHeaderText("Successfully updated Shipment Number! \nMaximum entry!");
+    	alert.setContentText("The new Shipment Number -> '"+text+"'. \nThe current order will be updated with this shipping number. \nBut because you entered the maximum allowed Shipping Number it will not be incremented by 1 as always but the value 1 will be entered automatically in the next order!");
     	alert.showAndWait();
 	}
 }

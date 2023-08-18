@@ -62,10 +62,10 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 						try {
 //							myDB.updateDataBase(changes3.get(selectedItem.getOrderCode()));
 //							myDB.updateDataBase(selectedItem);
-							if(currentHumidityValues.get(order.getOrderCode()) == null || order.getHumidity().equals("ΟΧΙ"))
+							if(currentHumidityValues.get(order.getOrderCode()) == null || order.getHumidity().equals("NO"))
 							{
 								myDB.updateDataBase(order);
-							}else if(order.getHumidity().equals("ΝΑΙ"))
+							}else if(order.getHumidity().equals("YES"))
 							{
 								myDB.updateDataBase2(order);
 							}
@@ -80,10 +80,10 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 					}else
 					{
 						try {
-							if(currentHumidityValues.get(order.getOrderCode()) == null || order.getHumidity().equals("ΟΧΙ"))
+							if(currentHumidityValues.get(order.getOrderCode()) == null || order.getHumidity().equals("NO"))
 							{
 								emptyDate(order);
-							}else if(order.getHumidity().equals("ΝΑΙ"))
+							}else if(order.getHumidity().equals("YES"))
 							{
 								emptyDate2(order, currentHumidityValues);	
 							}							
@@ -138,9 +138,9 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	private void completeWindow()
 	{
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Επιτυχής Εκτέλεση!");
+		alert.setTitle("Successful Execution!");
 		alert.setHeaderText(null);
-		alert.setContentText("Εκτελέστηκε επιτυχώς η παραγγελία -> " +order.getOrderCode());
+		alert.setContentText("The order was successfully executed -> " +order.getOrderCode());
 
 		alert.showAndWait();
 	}
@@ -148,9 +148,9 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	private void uncompleteWindow()
 	{
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Προειδοποίηση");
-		alert.setHeaderText("Κενή επιλογή!");
-		alert.setContentText("Δεν έχει επιλεχθεί ή τροποποιηθεί καμία παραγγελία ώστε να γίνει η εκτέλεση.");
+		alert.setTitle("Warning");
+		alert.setHeaderText("Empty choice!");
+		alert.setContentText("No orders have been selected or modified to be executed.");
 
 		alert.showAndWait();
 	}
@@ -158,9 +158,9 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	private void emptyDate(Order order) throws SQLException
 	{
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Παραγγελία προς εκτέλεση -> " +order.getOrderCode());
-		alert.setHeaderText("Κενή Ημερομηνία!");
-		alert.setContentText("Η 'Ημερομηνία Εκτέλεσης' είναι κενή!\nΠατήστε το 'ΟΚ' για να συμπληρωθούν αυτόματα με την τωρινή ημερομηνία.\nΠατήστε το 'Cancel' για ακύρωση.");
+		alert.setTitle("Order to be executed -> " +order.getOrderCode());
+		alert.setHeaderText("Empty Date!");
+		alert.setContentText("The 'Execution Date' is blank! \nClick 'OK' to have it automatically filled in with the current date. \nPress 'Cancel' to cancel.");
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK)
@@ -175,10 +175,10 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 			{
 				order.setExecutionDate(tempDate[0]+tempDate[1]+tempDate[2]);
 				order.setExecutionTime(tempTime[0]+tempTime[1]+tempTime[2]);				
-				if(currentHumidityValues.get(order.getOrderCode()) == null || order.getHumidity().equals("ΟΧΙ"))
+				if(currentHumidityValues.get(order.getOrderCode()) == null || order.getHumidity().equals("NO"))
 				{
 					myDB.updateDataBase(order);
-				}else if(order.getHumidity().equals("ΝΑΙ"))
+				}else if(order.getHumidity().equals("YES"))
 				{
 					myDB.updateDataBase2(order);
 				}
@@ -202,9 +202,9 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	private void emptyDate2(Order order, HashMap<String, HashMap<String, String>> currentHumidityValues) throws SQLException
 	{
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Παραγγελία προς εκτέλεση -> " +order.getOrderCode());
-		alert.setHeaderText("Κενή Ημερομηνία!");
-		alert.setContentText("Η 'Ημερομηνία Εκτέλεσης' είναι κενή!\nΠατήστε το 'ΟΚ' για να συμπληρωθούς αυτόματα με την τωρινή ημερομηνία\nΠατήστε το 'Cancel' για ακύρωση");
+		alert.setTitle("Order to be executed -> " +order.getOrderCode());
+		alert.setHeaderText("Empty Date!");
+		alert.setContentText("The 'Execution Date' is blank! \nClick 'OK' to have it automatically filled in with the current date. \nPress 'Cancel' to cancel.");
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK)
@@ -219,10 +219,10 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 			{
 				order.setExecutionDate(tempDate[0]+tempDate[1]+tempDate[2]);
 				order.setExecutionTime(tempTime[0]+tempTime[1]+tempTime[2]);
-				if(currentHumidityValues.get(order.getOrderCode()) == null || order.getHumidity().equals("ΟΧΙ"))
+				if(currentHumidityValues.get(order.getOrderCode()) == null || order.getHumidity().equals("NO"))
 				{
 					myDB.updateDataBase(order);
-				}else if(order.getHumidity().equals("ΝΑΙ"))
+				}else if(order.getHumidity().equals("YES"))
 				{
 					myDB.updateDataBase2(order);
 				}
@@ -376,14 +376,14 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 	private void dateWindow(int mode)
 	{
 		Alert alert = new Alert(Alert.AlertType.WARNING);
-    	alert.setTitle("Προειδοποίηση");
-    	alert.setHeaderText("Λανθασμένοι χρόνοι!");
+    	alert.setTitle("Warning");
+    	alert.setHeaderText("Wrong times!");
     	if(mode == 0)
     	{
-    		alert.setContentText("Η ημερομηνία έναρξης δεν γίνεται να είναι πιο μετά από την ημερομηνία εκτέλεσης!");
+    		alert.setContentText("The start date cannot be later than the execution date!");
     	}else
     	{
-    		alert.setContentText("Η ημερομηνία εκτέλεσης δεν γίνεται να είναι πιο πριν από την ημερομηνία δημιουργίας!");
+    		alert.setContentText("The execution date cannot be earlier than the start date!");
     	}
     	alert.showAndWait();
 	}

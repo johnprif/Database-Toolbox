@@ -47,7 +47,7 @@ public class PathHandler implements EventHandler<ActionEvent>
 		FileChooser fileChooser = new FileChooser();
         stage.setWidth(800);
         stage.setHeight(800);
-		fileChooser.setTitle("Επιλέξτε το αρχείο που περιέχει την βάση δεδομένων");
+		fileChooser.setTitle("Select the file containing the database");
 		fileChooser.getExtensionFilters().addAll(
 			     new FileChooser.ExtensionFilter("Microsoft Access Data Base 2000-2007 Files", "*.mdb")
 			    ,new FileChooser.ExtensionFilter("Microsoft Access Data Base 2008-2021 Files", "*.accdb")
@@ -149,9 +149,9 @@ public class PathHandler implements EventHandler<ActionEvent>
 	private void warningWindow()
 	{
 		Alert alert = new Alert(Alert.AlertType.WARNING);
-    	alert.setTitle("Προειδοποίηση");
-    	alert.setHeaderText("Δεν υπάρχει καταχωρημένη βάση δεδομένων!");
-    	alert.setContentText("Επιλέξτε κάποια βάση δεδομένων πριν προχωρήσετε διότι δεν θα μπορείτε να συνεχίσετε.");
+    	alert.setTitle("Warning");
+    	alert.setHeaderText("There is no registered database!");
+    	alert.setContentText("Select a database before proceeding because you will not be able to continue.");
     	alert.showAndWait();
 	}
 	

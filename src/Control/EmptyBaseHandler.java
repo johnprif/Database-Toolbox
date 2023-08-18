@@ -36,9 +36,9 @@ public class EmptyBaseHandler implements EventHandler<ActionEvent>
 	private void emptyDBconfirmationWindow() throws SQLException
 	{
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Προειδοποίηση");
-		alert.setHeaderText("Ολική Διαγραφή!");
-		alert.setContentText("Είστε σίγουρος ότι επιθυμείτε να διαγράψετε όλα τα δεδομένα που βρίσκονται στην βάση; \nΠιέστε 'ΟΚ' για να συνέχεια \nΠιέστε 'Cancel' για ακύρωση");
+		alert.setTitle("Warning");
+		alert.setHeaderText("Total Deletion!");
+		alert.setContentText("Are you sure you want to delete all the data in the database?\nPress 'OK' to continue.\nPress 'Cancel' to cancel.");
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK)

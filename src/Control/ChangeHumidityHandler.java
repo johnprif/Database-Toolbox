@@ -38,16 +38,16 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 		if(flag == false)
 		{
 			warningWindowForFlag();
-		}else if(order.getHumidity().equals("ΟΧΙ"))
+		}else if(order.getHumidity().equals("NO"))
 		{
 			if(true)//check if order includes sensor for humidity
 			{
-				order.setHumidity("ΝΑΙ");
+				order.setHumidity("YES");
 				table.getItems().set(table.getSelectionModel().getSelectedIndex(), order);
 			}
-		}else if(order.getHumidity().equals("ΝΑΙ"))
+		}else if(order.getHumidity().equals("YES"))
 		{
-			order.setHumidity("ΟΧΙ");
+			order.setHumidity("NO");
 			table.getItems().set(table.getSelectionModel().getSelectedIndex(), order);
 		}		
 	}
@@ -85,9 +85,9 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	private void warningWindowForFlag()
 	{
 		Alert alert = new Alert(Alert.AlertType.WARNING);
-    	alert.setTitle("Προειδοποίηση");
-    	alert.setHeaderText("Κενή επιλογή!");
-    	alert.setContentText("Δεν έχει επιλεγεί καμία απο τις παραγγελίες.\nΠαρακαλώ επιλέξτε κάποια πρωτού συνεχίσετε.");
+    	alert.setTitle("Warning");
+    	alert.setHeaderText("Empty choice!");
+    	alert.setContentText("None of the orders have been selected. \nPlease select one before continuing.");
     	alert.showAndWait();
 	}
 }

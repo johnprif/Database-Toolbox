@@ -120,9 +120,9 @@ public class Main extends Application
 	
 	private void createButtons()
 	{
-		openOrdersButton = new Button("Άνοιγμα παραγγελιών");
-	    loadDBButton = new Button("Φόρτωση Βάσης Δεδομένων");
-	    exitButton = new Button("Έξοδος");
+		openOrdersButton = new Button(" Open orders ");
+	    loadDBButton = new Button(" Load Database ");
+	    exitButton = new Button(" Exit ");
 	    
 	    exitButton.setId("exitButton");
 	    
@@ -234,9 +234,9 @@ public class Main extends Application
 	private void openAlreadyFile()
 	{
 		Alert alert = new Alert(Alert.AlertType.ERROR);
-    	alert.setTitle("Σφάλμα");
-    	alert.setHeaderText("Ανοιχτή βάση δεδομένων!");
-    	alert.setContentText("Παρακαλώ κλείστε την βάση δεδομένων ή \nτο πρόγραμμα το οποίο χρησιμοποιεί την \nσυγκεκριμένη βάση.");
+    	alert.setTitle("Error");
+    	alert.setHeaderText("Open database!");
+    	alert.setContentText("Please close the database or the program that uses this database.");
     	alert.showAndWait();
 	}
 	
