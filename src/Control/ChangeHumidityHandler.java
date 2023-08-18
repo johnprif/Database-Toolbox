@@ -86,8 +86,8 @@ public class ChangeHumidityHandler implements EventHandler<ActionEvent>
 	{
 		Alert alert = new Alert(Alert.AlertType.WARNING);
     	alert.setTitle("Προειδοποίηση");
-    	alert.setHeaderText("Καμία επιλογή");
-    	alert.setContentText("Δεν έχει επιλεγεί καμία απο τις παραγγελίες\nΠαρακαλώ επιλέξτε κάποια πρωτού συνεχίσετε");
+    	alert.setHeaderText("Κενή επιλογή!");
+    	alert.setContentText("Δεν έχει επιλεγεί καμία απο τις παραγγελίες.\nΠαρακαλώ επιλέξτε κάποια πρωτού συνεχίσετε.");
     	alert.showAndWait();
 	}
 }

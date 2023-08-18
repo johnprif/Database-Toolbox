@@ -519,7 +519,7 @@ public class ChangeTimeHandler  implements EventHandler<ActionEvent>
     		alert.setContentText("Η ημερομηνία έναρξης δεν γίνεται να είναι πιο μετά από την ημερομηνία εκτέλεσης!");
     	}else
     	{
-    		alert.setContentText("Η ημερομηνία εκτέλεσης δεν γίνεται να είναι πιο πριν από την ημερομηνία έναρξης!\nΠαρακαλώ δοκιμάστε ξάνα!");
+    		alert.setContentText("Η ημερομηνία εκτέλεσης δεν γίνεται να είναι πιο πριν από την ημερομηνία έναρξης!");
     	}
     	alert.showAndWait();
 	}

@@ -1139,7 +1139,7 @@ public class DataBaseHandler
 		Alert alert = new Alert(Alert.AlertType.ERROR);
     	alert.setTitle("Σφάλμα");
     	alert.setHeaderText("Πρόβλημα με την βάση δεδομένων!");
-    	alert.setContentText("Πιθανόν να έχει διαγραφή ή να έχει μετακινηθεί σε άλλο κατάλογο");
+    	alert.setContentText("Πιθανόν να έχει διαγραφή ή να έχει μετακινηθεί σε άλλο κατάλογο.");
     	alert.showAndWait();
 	}
 	
@@ -1168,7 +1168,7 @@ public class DataBaseHandler
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle(table);
 		alert.setHeaderText("Πρόβλημα με την βάση δεδομένων!");
-		alert.setContentText("Στον πίνακα= '"+table+"' εντοπίστηκε παραβίαση του κλειδιού '"+OrderCode+"'\nΘα πρέπει να σβήσετε τις καταχωρήσεις στους\n-BacthData\n-BatchIngridient\nμε OrderCode='"+OrderCode+"' πρωτού συνεχίσετε\nΠατήστε 'ΟΚ' εάν επιθυμείτε να σβηστούν αυτόματα\nΠατήστε 'Cancel' εάν επιθυμείτε να μην σβηστούν αυτόματα");
+		alert.setContentText("Στον πίνακα= '"+table+"' εντοπίστηκε παραβίαση του κλειδιού '"+OrderCode+"'\nΘα πρέπει να σβήσετε τις καταχωρήσεις στους\n-BacthData\n-BatchIngridient\nμε OrderCode='"+OrderCode+"' πρωτού συνεχίσετε.\nΠατήστε 'ΟΚ' εάν επιθυμείτε να σβηστούν αυτόματα.\nΠατήστε 'Cancel' εάν επιθυμείτε να μην σβηστούν αυτόματα.");
 
 		Optional<ButtonType> result = alert.showAndWait();	
 		
@@ -1196,7 +1196,7 @@ public class DataBaseHandler
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
     	alert.setTitle("Ειδοποίηση");
     	alert.setHeaderText("Επιτυχής επιδιόρθωση!");
-    	alert.setContentText("Η παραγγελία '"+OrderCode+"' ενημερώθηκε επιτυχώς.\nΤώρα μπορείτε να την εκτελέσετε επιτυχώς");
+    	alert.setContentText("Η παραγγελία '"+OrderCode+"' ενημερώθηκε επιτυχώς.\nΤώρα μπορείτε να την εκτελέσετε επιτυχώς.");
     	alert.showAndWait();
 	}
 }

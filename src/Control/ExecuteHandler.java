@@ -140,17 +140,17 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Επιτυχής Εκτέλεση!");
 		alert.setHeaderText(null);
-		alert.setContentText("Ενημερώθηκε επιτυχώς 1 παραγγελία");
+		alert.setContentText("Εκτελέστηκε επιτυχώς η παραγγελία -> " +order.getOrderCode());
 
 		alert.showAndWait();
 	}
 	
 	private void uncompleteWindow()
 	{
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Error");
-		alert.setHeaderText("Καμία αλλαγή!");
-		alert.setContentText("Δεν έχει επιλεχθεί ή τροποποιηθεί καμία παραγγελία ώστε να γίνει η εκτέλεση");
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Προειδοποίηση");
+		alert.setHeaderText("Κενή επιλογή!");
+		alert.setContentText("Δεν έχει επιλεχθεί ή τροποποιηθεί καμία παραγγελία ώστε να γίνει η εκτέλεση.");
 
 		alert.showAndWait();
 	}
@@ -160,7 +160,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Παραγγελία προς εκτέλεση -> " +order.getOrderCode());
 		alert.setHeaderText("Κενή Ημερομηνία!");
-		alert.setContentText("Η 'Ημερομηνία Εκτέλεσης' είναι κενή!\nΠατήστε το 'ΟΚ' για να συμπληρωθούς αυτόματα με την τωρινή ημερομηνία\nΠατήστε το 'Cancel' για ακύρωση");
+		alert.setContentText("Η 'Ημερομηνία Εκτέλεσης' είναι κενή!\nΠατήστε το 'ΟΚ' για να συμπληρωθούν αυτόματα με την τωρινή ημερομηνία.\nΠατήστε το 'Cancel' για ακύρωση.");
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK)

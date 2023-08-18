@@ -235,7 +235,7 @@ public class Main extends Application
 	{
 		Alert alert = new Alert(Alert.AlertType.ERROR);
     	alert.setTitle("Σφάλμα");
-    	alert.setHeaderText("Ανοιχτή βάση δεδομένων");
+    	alert.setHeaderText("Ανοιχτή βάση δεδομένων!");
     	alert.setContentText("Παρακαλώ κλείστε την βάση δεδομένων ή \nτο πρόγραμμα το οποίο χρησιμοποιεί την \nσυγκεκριμένη βάση.");
     	alert.showAndWait();
 	}

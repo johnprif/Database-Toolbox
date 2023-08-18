@@ -43,7 +43,7 @@ public class BackHandler implements EventHandler<ActionEvent>
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("ΠΟΣΟΧΗ!");
 		alert.setHeaderText("Μη αποθηκευμένες αλλαγές!");
-		alert.setContentText("Έχετε κάνει αλλαγές για τις οποίες δεν έχετε επιλέξει ΄Εκτέλεση'\nΕάν επιθυμείτε να αποχωρήσετε πατήστε το πλήκτρο 'ΟΚ'\nΕάν επιθυμείτε να κάνετε και άλλες αλλαγές πατήστε 'Cancel'");
+		alert.setContentText("Έχετε κάνει αλλαγές για τις οποίες δεν έχετε επιλέξει ΄Εκτέλεση'.\nΕάν επιθυμείτε να αποχωρήσετε πατήστε το πλήκτρο 'ΟΚ'.\nΕάν επιθυμείτε να κάνετε και άλλες αλλαγές πατήστε 'Cancel'.");
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
