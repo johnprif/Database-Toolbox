@@ -75,6 +75,7 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
 	        gridPane.add(currentShippingNumber, 0, 1);
 	        GridPane.setHalignment(currentShippingNumber, HPos.CENTER);
 		} catch (SQLException e2) {
+			errorWindow(e2.getMessage());
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
@@ -147,6 +148,7 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
 					rigthWindow(text);
 					stage.close();
 				} catch (NumberFormatException | SQLException e1) {
+					errorWindow(e1.getMessage());
 					e1.printStackTrace();
 				}
         	}else if(text.length()==7 && Long.parseLong(text)==9999999)
@@ -156,6 +158,7 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
 					maxNumberWindow(text);
 					stage.close();
 				} catch (SQLException e1) {
+					errorWindow(e1.getMessage());
 					e1.printStackTrace();
 				}
         	}else
@@ -211,6 +214,15 @@ public class ChangeShippingNumberHandler implements EventHandler<ActionEvent>
     	alert.setTitle("Notice");
     	alert.setHeaderText("Successfully updated Shipment Number! \nMaximum entry!");
     	alert.setContentText("The new Shipment Number -> '"+text+"'. \nThe current order will be updated with this shipping number. \nBut because you entered the maximum allowed Shipping Number it will not be incremented by 1 as always but the value 1 will be entered automatically in the next order!");
+    	alert.showAndWait();
+	}
+	
+	private void errorWindow(String errorMessage)
+	{
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+    	alert.setTitle("Error");
+    	alert.setHeaderText(null);
+    	alert.setContentText(errorMessage);
     	alert.showAndWait();
 	}
 }
