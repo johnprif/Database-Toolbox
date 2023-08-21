@@ -111,6 +111,7 @@ public class Main extends Application
 			    			myDB.closeDB();			    			
 			    		}
 				} catch (SQLException e) {
+					errorWindow(e.getMessage());
 					e.printStackTrace();
 				}
 	              System.exit(0);
@@ -157,6 +158,7 @@ public class Main extends Application
 		    			myDB.closeDB();			    			
 		    		}
 				} catch (SQLException e1) {
+					errorWindow(e1.getMessage());
 					e1.printStackTrace();
 				}
 		    	 System.exit(0);
@@ -243,6 +245,15 @@ public class Main extends Application
 	public static void main(String[] args)
 	{
 		launch(args);	
+	}
+	
+	private void errorWindow(String errorMessage)
+	{
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+    	alert.setTitle("Σφάλμα");
+    	alert.setHeaderText(null);
+    	alert.setContentText(errorMessage);
+    	alert.showAndWait();
 	}
 }
 

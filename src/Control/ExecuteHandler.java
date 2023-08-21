@@ -74,6 +74,7 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 							table.getItems().remove(order); 
 							changes3.clear();					
 						} catch (SQLException e) {
+							errorWindow(e.getMessage());
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
@@ -88,12 +89,14 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
 								emptyDate2(order, currentHumidityValues);	
 							}							
 						} catch (SQLException e) {
+							errorWindow(e.getMessage());
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					} 
 				}
 			} catch (SQLException e1) {
+				errorWindow(e1.getMessage());
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
@@ -385,6 +388,15 @@ public class ExecuteHandler  implements EventHandler<ActionEvent>
     	{
     		alert.setContentText("Η ημερομηνία εκτέλεσης δεν γίνεται να είναι πιο πριν από την ημερομηνία δημιουργίας!");
     	}
+    	alert.showAndWait();
+	}
+	
+	private void errorWindow(String errorMessage)
+	{
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+    	alert.setTitle("Σφάλμα");
+    	alert.setHeaderText(null);
+    	alert.setContentText(errorMessage);
     	alert.showAndWait();
 	}
 }

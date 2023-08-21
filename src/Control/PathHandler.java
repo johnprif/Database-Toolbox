@@ -2,15 +2,12 @@ package Control;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.Scanner;
 import Model.DataBaseHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -72,8 +69,9 @@ public class PathHandler implements EventHandler<ActionEvent>
 		      myWriter.close();
 		      System.out.println("Successfully wrote to the file.");
 		    } catch (IOException e) {
-		      System.out.println("An error occurred.");
-		      e.printStackTrace();
+		    	errorWindow(e.getMessage());
+		    	System.out.println("An error occurred.");
+		    	e.printStackTrace();
 		    }
 	}
 	
@@ -110,6 +108,7 @@ public class PathHandler implements EventHandler<ActionEvent>
 					handle(null);
 				} catch (IOException e) 
 				{
+					errorWindow(e.getMessage());
 					e.printStackTrace();
 				}
 		}
@@ -140,6 +139,7 @@ public class PathHandler implements EventHandler<ActionEvent>
 	                System.out.println(line);
 	            }
 	        } catch (IOException e) {
+	        	errorWindow(e.getMessage());
 	            e.printStackTrace();
 	        }
 	    
@@ -152,6 +152,15 @@ public class PathHandler implements EventHandler<ActionEvent>
     	alert.setTitle("Προειδοποίηση");
     	alert.setHeaderText("Δεν υπάρχει καταχωρημένη βάση δεδομένων!");
     	alert.setContentText("Επιλέξτε κάποια βάση δεδομένων πριν προχωρήσετε διότι δεν θα μπορείτε να συνεχίσετε.");
+    	alert.showAndWait();
+	}
+	
+	private void errorWindow(String errorMessage)
+	{
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+    	alert.setTitle("Σφάλμα");
+    	alert.setHeaderText(null);
+    	alert.setContentText(errorMessage);
     	alert.showAndWait();
 	}
 	

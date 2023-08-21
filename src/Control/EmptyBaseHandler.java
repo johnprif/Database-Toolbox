@@ -28,6 +28,7 @@ public class EmptyBaseHandler implements EventHandler<ActionEvent>
 		try {
 			emptyDBconfirmationWindow();
 		} catch (SQLException e) {
+			errorWindow(e.getMessage());
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -49,5 +50,14 @@ public class EmptyBaseHandler implements EventHandler<ActionEvent>
 		} else {
 		    // ... user chose CANCEL or closed the dialog
 		}
+	}
+	
+	private void errorWindow(String errorMessage)
+	{
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+    	alert.setTitle("Σφάλμα");
+    	alert.setHeaderText(null);
+    	alert.setContentText(errorMessage);
+    	alert.showAndWait();
 	}
 }

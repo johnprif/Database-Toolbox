@@ -82,7 +82,7 @@ public class DataBaseHandler
 //          checkHashes();
         }catch(Exception e)
 		{
-        	alertWindow();
+        	errorWindow(e.getMessage());
         	System.exit(0);
         }
 
@@ -109,6 +109,7 @@ public class DataBaseHandler
 			connection.commit();
 			System.out.println("It has not hashes - ok");
 		} catch (SQLException e) {
+			errorWindow(e.getMessage());
 			System.out.println(e.getMessage());
 			readOnlyWindow(e.getMessage(), i);
 		}
@@ -143,6 +144,7 @@ public class DataBaseHandler
 			pendingSet = preparedStatement.executeQuery();
 		}catch(Exception e)
 		{
+			errorWindow(e.getMessage());
 			System.out.println(e.getMessage());
 			System.out.println("Error in searching");
 		}
@@ -157,6 +159,7 @@ public class DataBaseHandler
 				addOrders();
 			}
 		} catch (SQLException e) {
+			errorWindow(e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -312,6 +315,7 @@ public class DataBaseHandler
 				System.out.println("HERE IS THE HUMIDITY SILOS -> "+ pendingSet2.getString("SiloID"));
 			}
 		} catch (SQLException e) {
+			errorWindow(e.getMessage());
 			e.printStackTrace();
 		}
 		System.out.println("HERE IS THE HUMIDITY SILOS length-> "+ siloIDs.size());
@@ -341,6 +345,7 @@ public class DataBaseHandler
 				}
 			}
 		} catch (SQLException e) {
+			errorWindow(e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -364,8 +369,9 @@ public class DataBaseHandler
 			} 
 			humiditySilosPerOrder.put(OrderCode, test2);
 		}catch (SQLException e) {
-				e.printStackTrace();
-			}
+			errorWindow(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	
 	public ArrayList<String> getHumiditySilosPerOrder(String OrderCode)
@@ -373,6 +379,7 @@ public class DataBaseHandler
 		try {
 			findHumiditySilosPerOrder(OrderCode);
 		} catch (SQLException e) {
+			errorWindow(e.getMessage());
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -428,6 +435,7 @@ public class DataBaseHandler
 				SiloQuantityCopy.add(pendingSet2.getString("Quantity"));
 			}
 		} catch (SQLException e) {
+			errorWindow(e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -1134,15 +1142,6 @@ public class DataBaseHandler
 		connection.commit();
 	}
 	
-	private void alertWindow()
-	{
-		Alert alert = new Alert(Alert.AlertType.ERROR);
-    	alert.setTitle("Σφάλμα");
-    	alert.setHeaderText("Πρόβλημα με την βάση δεδομένων!");
-    	alert.setContentText("Πιθανόν να έχει διαγραφή ή να έχει μετακινηθεί σε άλλο κατάλογο.");
-    	alert.showAndWait();
-	}
-	
 	public boolean checkOrderIfExists(String OrderCode) throws SQLException
 	{
 		PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT OrderCode FROM BatchData WHERE OrderCode='"+OrderCode+"'");
@@ -1197,6 +1196,15 @@ public class DataBaseHandler
     	alert.setTitle("Ειδοποίηση");
     	alert.setHeaderText("Επιτυχής επιδιόρθωση!");
     	alert.setContentText("Η παραγγελία '"+OrderCode+"' ενημερώθηκε επιτυχώς.\nΤώρα μπορείτε να την εκτελέσετε επιτυχώς.");
+    	alert.showAndWait();
+	}
+	
+	private void errorWindow(String errorMessage)
+	{
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+    	alert.setTitle("Σφάλμα");
+    	alert.setHeaderText(null);
+    	alert.setContentText(errorMessage);
     	alert.showAndWait();
 	}
 }
